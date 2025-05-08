@@ -52,8 +52,8 @@
             this.CompBox = new System.Windows.Forms.NumericUpDown();
             this.CompLbl = new System.Windows.Forms.Label();
             this.InfoList = new System.Windows.Forms.ListView();
-            this.InfoHdr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.StdDCHdr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.InfoHdr = new System.Windows.Forms.ColumnHeader();
+            this.StdDCHdr = new System.Windows.Forms.ColumnHeader();
             this.Toolbar = new System.Windows.Forms.ToolStrip();
             this.FileMenu = new System.Windows.Forms.ToolStripDropDownButton();
             this.FileExport = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,11 +64,11 @@
             this.SkillsPage = new System.Windows.Forms.TabPage();
             this.SkillSplitter = new System.Windows.Forms.SplitContainer();
             this.SkillList = new System.Windows.Forms.ListView();
-            this.SkillHdr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DCHdr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.SkillHdr = new System.Windows.Forms.ColumnHeader();
+            this.DCHdr = new System.Windows.Forms.ColumnHeader();
             this.SkillSourceList = new System.Windows.Forms.ListView();
-            this.SkillSourceHdr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.AbilityHdr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.SkillSourceHdr = new System.Windows.Forms.ColumnHeader();
+            this.AbilityHdr = new System.Windows.Forms.ColumnHeader();
             this.SkillsToolbar = new System.Windows.Forms.ToolStrip();
             this.RemoveBtn = new System.Windows.Forms.ToolStripButton();
             this.EditBtn = new System.Windows.Forms.ToolStripButton();
@@ -117,8 +117,8 @@
             // 
             this.OKBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OKBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OKBtn.Location = new System.Drawing.Point(469, 442);
-            this.OKBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OKBtn.Location = new System.Drawing.Point(635, 442);
+            this.OKBtn.Margin = new System.Windows.Forms.Padding(4);
             this.OKBtn.Name = "OKBtn";
             this.OKBtn.Size = new System.Drawing.Size(100, 28);
             this.OKBtn.TabIndex = 3;
@@ -130,8 +130,8 @@
             // 
             this.CancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelBtn.Location = new System.Drawing.Point(577, 442);
-            this.CancelBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CancelBtn.Location = new System.Drawing.Point(743, 442);
+            this.CancelBtn.Margin = new System.Windows.Forms.Padding(4);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(100, 28);
             this.CancelBtn.TabIndex = 4;
@@ -148,10 +148,10 @@
             this.Pages.Controls.Add(this.InfoPage);
             this.Pages.Controls.Add(this.NotesPage);
             this.Pages.Location = new System.Drawing.Point(16, 47);
-            this.Pages.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Pages.Margin = new System.Windows.Forms.Padding(4);
             this.Pages.Name = "Pages";
             this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(661, 388);
+            this.Pages.Size = new System.Drawing.Size(827, 388);
             this.Pages.TabIndex = 2;
             // 
             // OverviewPage
@@ -159,10 +159,10 @@
             this.OverviewPage.Controls.Add(this.OverviewSplitter);
             this.OverviewPage.Controls.Add(this.Toolbar);
             this.OverviewPage.Location = new System.Drawing.Point(4, 25);
-            this.OverviewPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OverviewPage.Margin = new System.Windows.Forms.Padding(4);
             this.OverviewPage.Name = "OverviewPage";
-            this.OverviewPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.OverviewPage.Size = new System.Drawing.Size(653, 359);
+            this.OverviewPage.Padding = new System.Windows.Forms.Padding(4);
+            this.OverviewPage.Size = new System.Drawing.Size(819, 359);
             this.OverviewPage.TabIndex = 5;
             this.OverviewPage.Text = "Overview";
             this.OverviewPage.UseVisualStyleBackColor = true;
@@ -171,7 +171,7 @@
             // 
             this.OverviewSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OverviewSplitter.Location = new System.Drawing.Point(4, 31);
-            this.OverviewSplitter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OverviewSplitter.Margin = new System.Windows.Forms.Padding(4);
             this.OverviewSplitter.Name = "OverviewSplitter";
             // 
             // OverviewSplitter.Panel1
@@ -182,8 +182,8 @@
             // OverviewSplitter.Panel2
             // 
             this.OverviewSplitter.Panel2.Controls.Add(this.InfoList);
-            this.OverviewSplitter.Size = new System.Drawing.Size(645, 324);
-            this.OverviewSplitter.SplitterDistance = 317;
+            this.OverviewSplitter.Size = new System.Drawing.Size(811, 324);
+            this.OverviewSplitter.SplitterDistance = 366;
             this.OverviewSplitter.SplitterWidth = 5;
             this.OverviewSplitter.TabIndex = 0;
             // 
@@ -196,10 +196,10 @@
             this.LevelGroup.Controls.Add(this.LevelBox);
             this.LevelGroup.Controls.Add(this.LevelLbl);
             this.LevelGroup.Location = new System.Drawing.Point(5, 107);
-            this.LevelGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LevelGroup.Margin = new System.Windows.Forms.Padding(4);
             this.LevelGroup.Name = "LevelGroup";
-            this.LevelGroup.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.LevelGroup.Size = new System.Drawing.Size(308, 96);
+            this.LevelGroup.Padding = new System.Windows.Forms.Padding(4);
+            this.LevelGroup.Size = new System.Drawing.Size(357, 96);
             this.LevelGroup.TabIndex = 10;
             this.LevelGroup.TabStop = false;
             this.LevelGroup.Text = "Level";
@@ -210,7 +210,7 @@
             this.XPLbl.Location = new System.Drawing.Point(92, 59);
             this.XPLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.XPLbl.Name = "XPLbl";
-            this.XPLbl.Size = new System.Drawing.Size(29, 16);
+            this.XPLbl.Size = new System.Drawing.Size(30, 17);
             this.XPLbl.TabIndex = 10;
             this.XPLbl.Text = "[xp]";
             // 
@@ -220,7 +220,7 @@
             this.XPInfoLbl.Location = new System.Drawing.Point(8, 59);
             this.XPInfoLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.XPInfoLbl.Name = "XPInfoLbl";
-            this.XPInfoLbl.Size = new System.Drawing.Size(27, 16);
+            this.XPInfoLbl.Size = new System.Drawing.Size(30, 17);
             this.XPInfoLbl.TabIndex = 9;
             this.XPInfoLbl.Text = "XP:";
             // 
@@ -229,7 +229,7 @@
             this.LevelBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LevelBox.Location = new System.Drawing.Point(96, 23);
-            this.LevelBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LevelBox.Margin = new System.Windows.Forms.Padding(4);
             this.LevelBox.Maximum = new decimal(new int[] {
             30,
             0,
@@ -241,7 +241,7 @@
             0,
             0});
             this.LevelBox.Name = "LevelBox";
-            this.LevelBox.Size = new System.Drawing.Size(204, 22);
+            this.LevelBox.Size = new System.Drawing.Size(253, 22);
             this.LevelBox.TabIndex = 8;
             this.LevelBox.Value = new decimal(new int[] {
             1,
@@ -256,7 +256,7 @@
             this.LevelLbl.Location = new System.Drawing.Point(8, 26);
             this.LevelLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LevelLbl.Name = "LevelLbl";
-            this.LevelLbl.Size = new System.Drawing.Size(43, 16);
+            this.LevelLbl.Size = new System.Drawing.Size(46, 17);
             this.LevelLbl.TabIndex = 7;
             this.LevelLbl.Text = "Level:";
             // 
@@ -269,10 +269,10 @@
             this.CompGroup.Controls.Add(this.CompBox);
             this.CompGroup.Controls.Add(this.CompLbl);
             this.CompGroup.Location = new System.Drawing.Point(4, 4);
-            this.CompGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CompGroup.Margin = new System.Windows.Forms.Padding(4);
             this.CompGroup.Name = "CompGroup";
-            this.CompGroup.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.CompGroup.Size = new System.Drawing.Size(309, 96);
+            this.CompGroup.Padding = new System.Windows.Forms.Padding(4);
+            this.CompGroup.Size = new System.Drawing.Size(358, 96);
             this.CompGroup.TabIndex = 9;
             this.CompGroup.TabStop = false;
             this.CompGroup.Text = "Complexity / Length";
@@ -283,7 +283,7 @@
             this.LengthLbl.Location = new System.Drawing.Point(92, 60);
             this.LengthLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LengthLbl.Name = "LengthLbl";
-            this.LengthLbl.Size = new System.Drawing.Size(51, 16);
+            this.LengthLbl.Size = new System.Drawing.Size(55, 17);
             this.LengthLbl.TabIndex = 5;
             this.LengthLbl.Text = "[length]";
             // 
@@ -293,7 +293,7 @@
             this.LengthInfoLbl.Location = new System.Drawing.Point(8, 60);
             this.LengthInfoLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LengthInfoLbl.Name = "LengthInfoLbl";
-            this.LengthInfoLbl.Size = new System.Drawing.Size(50, 16);
+            this.LengthInfoLbl.Size = new System.Drawing.Size(56, 17);
             this.LengthInfoLbl.TabIndex = 4;
             this.LengthInfoLbl.Text = "Length:";
             // 
@@ -302,7 +302,7 @@
             this.CompBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CompBox.Location = new System.Drawing.Point(96, 23);
-            this.CompBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CompBox.Margin = new System.Windows.Forms.Padding(4);
             this.CompBox.Maximum = new decimal(new int[] {
             20,
             0,
@@ -314,7 +314,7 @@
             0,
             0});
             this.CompBox.Name = "CompBox";
-            this.CompBox.Size = new System.Drawing.Size(205, 22);
+            this.CompBox.Size = new System.Drawing.Size(254, 22);
             this.CompBox.TabIndex = 3;
             this.CompBox.Value = new decimal(new int[] {
             1,
@@ -329,7 +329,7 @@
             this.CompLbl.Location = new System.Drawing.Point(8, 26);
             this.CompLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.CompLbl.Name = "CompLbl";
-            this.CompLbl.Size = new System.Drawing.Size(76, 16);
+            this.CompLbl.Size = new System.Drawing.Size(79, 17);
             this.CompLbl.TabIndex = 2;
             this.CompLbl.Text = "Complexity:";
             // 
@@ -348,10 +348,10 @@
             this.InfoList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.InfoList.HideSelection = false;
             this.InfoList.Location = new System.Drawing.Point(0, 0);
-            this.InfoList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.InfoList.Margin = new System.Windows.Forms.Padding(4);
             this.InfoList.MultiSelect = false;
             this.InfoList.Name = "InfoList";
-            this.InfoList.Size = new System.Drawing.Size(323, 324);
+            this.InfoList.Size = new System.Drawing.Size(440, 324);
             this.InfoList.TabIndex = 0;
             this.InfoList.UseCompatibleStateImageBehavior = false;
             this.InfoList.View = System.Windows.Forms.View.Details;
@@ -378,7 +378,7 @@
             this.ResetProgressBtn});
             this.Toolbar.Location = new System.Drawing.Point(4, 4);
             this.Toolbar.Name = "Toolbar";
-            this.Toolbar.Size = new System.Drawing.Size(645, 27);
+            this.Toolbar.Size = new System.Drawing.Size(811, 27);
             this.Toolbar.TabIndex = 1;
             this.Toolbar.Text = "toolStrip1";
             // 
@@ -390,13 +390,14 @@
             this.FileMenu.Image = ((System.Drawing.Image)(resources.GetObject("FileMenu.Image")));
             this.FileMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.FileMenu.Name = "FileMenu";
-            this.FileMenu.Size = new System.Drawing.Size(46, 24);
+            this.FileMenu.Size = new System.Drawing.Size(45, 24);
             this.FileMenu.Text = "File";
             // 
             // FileExport
             // 
+            this.FileExport.Enabled = false;
             this.FileExport.Name = "FileExport";
-            this.FileExport.Size = new System.Drawing.Size(144, 26);
+            this.FileExport.Size = new System.Drawing.Size(210, 24);
             this.FileExport.Text = "Export...";
             this.FileExport.Click += new System.EventHandler(this.FileExport_Click);
             // 
@@ -432,10 +433,10 @@
             this.SkillsPage.Controls.Add(this.SkillSplitter);
             this.SkillsPage.Controls.Add(this.SkillsToolbar);
             this.SkillsPage.Location = new System.Drawing.Point(4, 25);
-            this.SkillsPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SkillsPage.Margin = new System.Windows.Forms.Padding(4);
             this.SkillsPage.Name = "SkillsPage";
-            this.SkillsPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.SkillsPage.Size = new System.Drawing.Size(653, 359);
+            this.SkillsPage.Padding = new System.Windows.Forms.Padding(4);
+            this.SkillsPage.Size = new System.Drawing.Size(819, 359);
             this.SkillsPage.TabIndex = 3;
             this.SkillsPage.Text = "Skills";
             this.SkillsPage.UseVisualStyleBackColor = true;
@@ -444,7 +445,7 @@
             // 
             this.SkillSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SkillSplitter.Location = new System.Drawing.Point(4, 31);
-            this.SkillSplitter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SkillSplitter.Margin = new System.Windows.Forms.Padding(4);
             this.SkillSplitter.Name = "SkillSplitter";
             // 
             // SkillSplitter.Panel1
@@ -454,8 +455,8 @@
             // SkillSplitter.Panel2
             // 
             this.SkillSplitter.Panel2.Controls.Add(this.SkillSourceList);
-            this.SkillSplitter.Size = new System.Drawing.Size(645, 324);
-            this.SkillSplitter.SplitterDistance = 378;
+            this.SkillSplitter.Size = new System.Drawing.Size(811, 324);
+            this.SkillSplitter.SplitterDistance = 386;
             this.SkillSplitter.SplitterWidth = 5;
             this.SkillSplitter.TabIndex = 2;
             // 
@@ -480,10 +481,10 @@
             this.SkillList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.SkillList.HideSelection = false;
             this.SkillList.Location = new System.Drawing.Point(0, 0);
-            this.SkillList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SkillList.Margin = new System.Windows.Forms.Padding(4);
             this.SkillList.MultiSelect = false;
             this.SkillList.Name = "SkillList";
-            this.SkillList.Size = new System.Drawing.Size(378, 324);
+            this.SkillList.Size = new System.Drawing.Size(386, 324);
             this.SkillList.TabIndex = 1;
             this.SkillList.UseCompatibleStateImageBehavior = false;
             this.SkillList.View = System.Windows.Forms.View.Details;
@@ -520,10 +521,10 @@
             this.SkillSourceList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.SkillSourceList.HideSelection = false;
             this.SkillSourceList.Location = new System.Drawing.Point(0, 0);
-            this.SkillSourceList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SkillSourceList.Margin = new System.Windows.Forms.Padding(4);
             this.SkillSourceList.MultiSelect = false;
             this.SkillSourceList.Name = "SkillSourceList";
-            this.SkillSourceList.Size = new System.Drawing.Size(262, 324);
+            this.SkillSourceList.Size = new System.Drawing.Size(420, 324);
             this.SkillSourceList.TabIndex = 0;
             this.SkillSourceList.UseCompatibleStateImageBehavior = false;
             this.SkillSourceList.View = System.Windows.Forms.View.Details;
@@ -550,7 +551,7 @@
             this.BreakdownBtn});
             this.SkillsToolbar.Location = new System.Drawing.Point(4, 4);
             this.SkillsToolbar.Name = "SkillsToolbar";
-            this.SkillsToolbar.Size = new System.Drawing.Size(645, 27);
+            this.SkillsToolbar.Size = new System.Drawing.Size(811, 27);
             this.SkillsToolbar.TabIndex = 0;
             this.SkillsToolbar.Text = "toolStrip1";
             // 
@@ -593,10 +594,10 @@
             // 
             this.InfoPage.Controls.Add(this.InfoSplitter);
             this.InfoPage.Location = new System.Drawing.Point(4, 25);
-            this.InfoPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.InfoPage.Margin = new System.Windows.Forms.Padding(4);
             this.InfoPage.Name = "InfoPage";
-            this.InfoPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.InfoPage.Size = new System.Drawing.Size(653, 359);
+            this.InfoPage.Padding = new System.Windows.Forms.Padding(4);
+            this.InfoPage.Size = new System.Drawing.Size(819, 359);
             this.InfoPage.TabIndex = 4;
             this.InfoPage.Text = "Victory / Defeat Details";
             this.InfoPage.UseVisualStyleBackColor = true;
@@ -605,7 +606,7 @@
             // 
             this.InfoSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.InfoSplitter.Location = new System.Drawing.Point(4, 4);
-            this.InfoSplitter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.InfoSplitter.Margin = new System.Windows.Forms.Padding(4);
             this.InfoSplitter.Name = "InfoSplitter";
             // 
             // InfoSplitter.Panel1
@@ -617,8 +618,8 @@
             // 
             this.InfoSplitter.Panel2.Controls.Add(this.DefeatBox);
             this.InfoSplitter.Panel2.Controls.Add(this.DefeatButton);
-            this.InfoSplitter.Size = new System.Drawing.Size(645, 351);
-            this.InfoSplitter.SplitterDistance = 317;
+            this.InfoSplitter.Size = new System.Drawing.Size(811, 351);
+            this.InfoSplitter.SplitterDistance = 330;
             this.InfoSplitter.SplitterWidth = 5;
             this.InfoSplitter.TabIndex = 0;
             // 
@@ -629,11 +630,11 @@
             this.VictoryBox.DefaultText = "(enter victory information here)";
             this.VictoryBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VictoryBox.Location = new System.Drawing.Point(0, 25);
-            this.VictoryBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.VictoryBox.Margin = new System.Windows.Forms.Padding(4);
             this.VictoryBox.Multiline = true;
             this.VictoryBox.Name = "VictoryBox";
             this.VictoryBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.VictoryBox.Size = new System.Drawing.Size(317, 326);
+            this.VictoryBox.Size = new System.Drawing.Size(330, 326);
             this.VictoryBox.TabIndex = 1;
             this.VictoryBox.Text = "(enter victory information here)";
             // 
@@ -644,7 +645,7 @@
             this.toolStripLabel1});
             this.VictoryToolbar.Location = new System.Drawing.Point(0, 0);
             this.VictoryToolbar.Name = "VictoryToolbar";
-            this.VictoryToolbar.Size = new System.Drawing.Size(317, 25);
+            this.VictoryToolbar.Size = new System.Drawing.Size(330, 25);
             this.VictoryToolbar.TabIndex = 0;
             this.VictoryToolbar.Text = "toolStrip1";
             // 
@@ -661,11 +662,11 @@
             this.DefeatBox.DefaultText = "(enter defeat information here)";
             this.DefeatBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DefeatBox.Location = new System.Drawing.Point(0, 25);
-            this.DefeatBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DefeatBox.Margin = new System.Windows.Forms.Padding(4);
             this.DefeatBox.Multiline = true;
             this.DefeatBox.Name = "DefeatBox";
             this.DefeatBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DefeatBox.Size = new System.Drawing.Size(323, 326);
+            this.DefeatBox.Size = new System.Drawing.Size(476, 326);
             this.DefeatBox.TabIndex = 2;
             this.DefeatBox.Text = "(enter defeat information here)";
             // 
@@ -676,7 +677,7 @@
             this.toolStripLabel2});
             this.DefeatButton.Location = new System.Drawing.Point(0, 0);
             this.DefeatButton.Name = "DefeatButton";
-            this.DefeatButton.Size = new System.Drawing.Size(323, 25);
+            this.DefeatButton.Size = new System.Drawing.Size(476, 25);
             this.DefeatButton.TabIndex = 0;
             this.DefeatButton.Text = "toolStrip2";
             // 
@@ -690,10 +691,10 @@
             // 
             this.NotesPage.Controls.Add(this.NotesBox);
             this.NotesPage.Location = new System.Drawing.Point(4, 25);
-            this.NotesPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NotesPage.Margin = new System.Windows.Forms.Padding(4);
             this.NotesPage.Name = "NotesPage";
-            this.NotesPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.NotesPage.Size = new System.Drawing.Size(653, 359);
+            this.NotesPage.Padding = new System.Windows.Forms.Padding(4);
+            this.NotesPage.Size = new System.Drawing.Size(819, 359);
             this.NotesPage.TabIndex = 6;
             this.NotesPage.Text = "Notes";
             this.NotesPage.UseVisualStyleBackColor = true;
@@ -705,11 +706,11 @@
             this.NotesBox.DefaultText = "(enter details here)";
             this.NotesBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.NotesBox.Location = new System.Drawing.Point(4, 4);
-            this.NotesBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NotesBox.Margin = new System.Windows.Forms.Padding(4);
             this.NotesBox.Multiline = true;
             this.NotesBox.Name = "NotesBox";
             this.NotesBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.NotesBox.Size = new System.Drawing.Size(645, 351);
+            this.NotesBox.Size = new System.Drawing.Size(811, 351);
             this.NotesBox.TabIndex = 3;
             this.NotesBox.Text = "(enter details here)";
             // 
@@ -718,9 +719,9 @@
             this.NameBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.NameBox.Location = new System.Drawing.Point(75, 15);
-            this.NameBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NameBox.Margin = new System.Windows.Forms.Padding(4);
             this.NameBox.Name = "NameBox";
-            this.NameBox.Size = new System.Drawing.Size(601, 22);
+            this.NameBox.Size = new System.Drawing.Size(767, 22);
             this.NameBox.TabIndex = 5;
             // 
             // NameLbl
@@ -729,7 +730,7 @@
             this.NameLbl.Location = new System.Drawing.Point(16, 18);
             this.NameLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.NameLbl.Name = "NameLbl";
-            this.NameLbl.Size = new System.Drawing.Size(47, 16);
+            this.NameLbl.Size = new System.Drawing.Size(49, 17);
             this.NameLbl.TabIndex = 4;
             this.NameLbl.Text = "Name:";
             // 
@@ -739,13 +740,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.CancelBtn;
-            this.ClientSize = new System.Drawing.Size(693, 485);
+            this.ClientSize = new System.Drawing.Size(859, 485);
             this.Controls.Add(this.Pages);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.NameBox);
             this.Controls.Add(this.NameLbl);
             this.Controls.Add(this.OKBtn);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimizeBox = false;
             this.Name = "SkillChallengeBuilderForm";
             this.ShowIcon = false;

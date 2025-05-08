@@ -1417,11 +1417,11 @@ namespace Masterplan.Data
 			{
 				string title = (combat_data == null) ? Title : combat_data.DisplayName;
 
-				content.Add("<TABLE>");
+				content.Add("<TABLE style = \"width: 300px;\">");
 
-				#region Warnings
+                #region Warnings
 
-				if (mode == CardMode.Build)
+                if (mode == CardMode.Build)
 				{
 					bool has_basic_attack = false;
 					foreach (CreaturePower power in CreaturePowers)

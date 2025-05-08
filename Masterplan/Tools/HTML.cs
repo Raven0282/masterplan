@@ -2778,7 +2778,7 @@ namespace Masterplan.Tools
 				lines.Add("p.note               { }");
 				lines.Add("p.table              { text-align: center }");
 				lines.Add("p.figure             { text-align: center }");
-				lines.Add("table                { font-size: " + pt_sizes[8] + "pt; border-color: #BBBBBB; border-style: solid; border-width: 1px; border-collapse: collapse; table-layout: fixed; width: 99% }");
+				lines.Add("table                { font-size: " + pt_sizes[8] + "pt; border-color: #BBBBBB; border-style: solid; border-width: 1px; border-collapse: collapse; table-layout: fixed; min-width: 300px; max-width: 25% }");
 				lines.Add("table.clear          { border-style: none }");
 				lines.Add("table.initiative     { table-layout: auto; border-style: none }");
 				lines.Add("tr                   { background-color: #E1E7C5 }");

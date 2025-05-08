@@ -102,7 +102,11 @@ namespace Masterplan.UI
 			}
 			else
 			{
-				LevelBox.Enabled = false;
+				// Assigns 1 as a level for a
+				// new SC from a library - populates DC tables 
+				fChallenge.Level = 1;
+				LevelBox.Enabled = true;
+				LevelBox.Value = fChallenge.Level;
 			}
 
 			update_view();
@@ -342,6 +346,7 @@ namespace Masterplan.UI
 
 		private void FileExport_Click(object sender, EventArgs e)
 		{
+			
 			SaveFileDialog dlg = new SaveFileDialog();
 			dlg.Title = "Export Skill Challenge";
 			dlg.FileName = fChallenge.Name;
