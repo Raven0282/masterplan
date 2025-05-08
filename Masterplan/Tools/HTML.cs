@@ -2553,10 +2553,10 @@ namespace Masterplan.Tools
 
         
         /// <summary>
-		/// Converts line breaks in a string to HTML line breaks (<br>).
+		/// Converts line breaks in a string to HTML line breaks (br).
 		/// </summary>
 		/// <param name="input">The input string containing line breaks.</param>
-		/// <returns>The input string with line breaks converted to <BR> tags.</returns>
+		/// <returns>The input string with line breaks converted to BR tags.</returns>
         public static string ConvertLineBreaksToHtml(string input)
 		{
             // If the input is empty - do nothing
