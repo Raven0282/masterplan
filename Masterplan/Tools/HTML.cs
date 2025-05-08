@@ -9,6 +9,7 @@ using Masterplan.Data;
 using Masterplan.Tools.Generators;
 using Masterplan.UI;
 using Masterplan.Properties;
+using System.Text.RegularExpressions;
 
 namespace Masterplan.Tools
 {
@@ -203,7 +204,7 @@ namespace Masterplan.Tools
 			DisplaySize size)
 		{
 			List<string> lines = new List<string>();
-
+			
 			if (include_wrapper)
 			{
 				lines.Add("<HTML>");
@@ -226,6 +227,7 @@ namespace Masterplan.Tools
 				lines.Add("</HTML>");
 			}
 
+			// string parsedChallenge = ConvertLineBreaksToHtml(Concatenate(lines));
 			return Concatenate(lines);
 		}
 
@@ -2545,19 +2547,53 @@ namespace Masterplan.Tools
 		List<Pair<string, Plot>> fPlots = new List<Pair<string, Plot>>();
 		Dictionary<Guid, List<Guid>> fMaps = new Dictionary<Guid, List<Guid>>();
 
-		#endregion
+        #endregion
 
-		#region Common
+        #region Common
 
-		public static string Concatenate(List<string> lines)
+        
+        /// <summary>
+		/// Converts line breaks in a string to HTML line breaks (<br>).
+		/// </summary>
+		/// <param name="input">The input string containing line breaks.</param>
+		/// <returns>The input string with line breaks converted to <BR> tags.</returns>
+        public static string ConvertLineBreaksToHtml(string input)
+		{
+            // If the input is empty - do nothing
+            if (string.IsNullOrEmpty(input))
+			{
+				return input;
+			}
+
+            // Use regular expression to replace line breaks with <br>
+            string result = Regex.Replace(input, @"\r\n?|\n", "<BR>");
+            return result;
+
+            // Replace \r\n, \r, and \n with <br>
+            // string newText = input.Replace("\r\n", "<BR>").Replace("\r", "<BR>").Replace("\n", "<BR>");
+
+			// Encode the text to prevent HTML injection
+			// Can't encode - it displays encoded text, not interpreted
+			// HttpUtility.HtmlEncode(newText);
+			// return newText;
+
+        }
+        
+
+        public static string Concatenate(List<string> lines)
 		{
 			string text = "";
 			foreach (string line in lines)
 			{
-				if (text != "")
-					text += Environment.NewLine;
+				string toParseLine = line;
+				if (text != "") 
+				{
+					if (toParseLine.Contains("\r\n")) { toParseLine = ConvertLineBreaksToHtml(line); }					
+					// text += Environment.NewLine;  /// Readability formatting of HTML 
+					// Need to correct the exported HTML Formatting to improve readability (line breaks)
+				}
 
-				text += line;
+				text += toParseLine;
 			}
 
 			return text;
