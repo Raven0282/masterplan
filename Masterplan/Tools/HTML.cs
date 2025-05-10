@@ -2551,12 +2551,31 @@ namespace Masterplan.Tools
 
         #region Common
 
-        
+
         /// <summary>
-		/// Converts line breaks in a string to HTML line breaks (br).
-		/// </summary>
-		/// <param name="input">The input string containing line breaks.</param>
-		/// <returns>The input string with line breaks converted to BR tags.</returns>
+        /// Converts BR tags in HTML to line breaks.
+        /// </summary>
+        /// <param name="input">The input string containing BR tags.</param>
+        /// <returns>The input string with BR tags converted to line breaks.</returns>
+        ///
+        public static string ConvertBRToLineBreaks(string input)
+		{
+		  // If the input is empty - do nothing
+            if (string.IsNullOrEmpty(input))
+			{
+				return input;
+			}
+			string result = input.Replace("<BR>", Environment.NewLine);
+
+			return result;
+		}
+
+        /// <summary>
+        /// Converts line breaks in a string to HTML line breaks (br).
+        /// </summary>
+        /// <param name="input">The input string containing line breaks.</param>
+        /// <returns>The input string with line breaks converted to BR tags.</returns>
+        /// 
         public static string ConvertLineBreaksToHtml(string input)
 		{
             // If the input is empty - do nothing

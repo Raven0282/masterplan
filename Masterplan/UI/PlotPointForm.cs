@@ -28,8 +28,10 @@ namespace Masterplan.UI
 			fStartAtElement = start_at_element_page;
 
 			NameBox.Text = fPoint.Name;
-			DetailsBox.Text = fPoint.Details;
-			ReadAloudBox.Text = fPoint.ReadAloud;
+			string Details = HTML.ConvertBRToLineBreaks(fPoint.Details);
+			DetailsBox.Text = Details;
+			string ReadAloud = HTML.ConvertBRToLineBreaks(fPoint.ReadAloud);
+            ReadAloudBox.Text = ReadAloud;
 			XPBox.Value = fPoint.AdditionalXP;
 
 			if (fPlot.FindPoint(fPoint.ID) != null)
@@ -832,8 +834,10 @@ namespace Masterplan.UI
 		private void OKBtn_Click(object sender, EventArgs e)
 		{
 			fPoint.Name = NameBox.Text;
-			fPoint.Details = (DetailsBox.Text != DetailsBox.DefaultText) ? DetailsBox.Text : "";
-			fPoint.ReadAloud = (ReadAloudBox.Text != ReadAloudBox.DefaultText) ? ReadAloudBox.Text : "";
+			string Details = HTML.ConvertLineBreaksToHtml((DetailsBox.Text != DetailsBox.DefaultText) ? DetailsBox.Text : "");
+			fPoint.Details = Details;
+			string ReadAloud = HTML.ConvertLineBreaksToHtml((ReadAloudBox.Text != ReadAloudBox.DefaultText) ? ReadAloudBox.Text : "");
+			fPoint.ReadAloud = ReadAloud;
 			fPoint.AdditionalXP = (int)XPBox.Value;
         }
 

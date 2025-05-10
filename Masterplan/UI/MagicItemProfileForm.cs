@@ -15,7 +15,9 @@ namespace Masterplan.UI
 			TypeBox.Items.Add("Weapon");
 			TypeBox.Items.Add("Ammunition");
 			TypeBox.Items.Add("Consumable");
-			TypeBox.Items.Add("Magic Relic");
+            TypeBox.Items.Add("Consumable (Other)");
+			TypeBox.Items.Add("Consumable (Elixir)");
+            TypeBox.Items.Add("Magic Relic");
 			TypeBox.Items.Add("Alternative Reward:Fey Magic Gift");
 			TypeBox.Items.Add("Item Slot (head)");
 			TypeBox.Items.Add("Item Slot (neck)");

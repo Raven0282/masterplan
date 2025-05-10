@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 
 using Masterplan.Data;
+using Masterplan.Tools;
 
 namespace Masterplan.UI
 {
@@ -14,7 +15,8 @@ namespace Masterplan.UI
 			fBackground = bg.Copy();
 
 			TitleBox.Text = fBackground.Title;
-			DetailsBox.Text = fBackground.Details;
+			string parsedBRText = HTML.ConvertBRToLineBreaks(fBackground.Details);
+			DetailsBox.Text = parsedBRText;
 		}
 
 		public Background Background
@@ -27,6 +29,7 @@ namespace Masterplan.UI
 		{
 			fBackground.Title = TitleBox.Text;
 			fBackground.Details = (DetailsBox.Text != DetailsBox.DefaultText) ? DetailsBox.Text : "";
-		}
+            fBackground.Details = HTML.ConvertLineBreaksToHtml(fBackground.Details);
+        }
 	}
 }
