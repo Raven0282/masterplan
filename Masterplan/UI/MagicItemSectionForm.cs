@@ -15,6 +15,7 @@ namespace Masterplan.UI
 			HeaderBox.Items.Add("Enhancement");
 			HeaderBox.Items.Add("Property");
 			HeaderBox.Items.Add("Power");
+			HeaderBox.Items.Add("Critical");
 
 			fSection = section.Copy();
 

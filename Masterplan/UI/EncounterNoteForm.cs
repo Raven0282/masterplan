@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 
 using Masterplan.Data;
+using Masterplan.Tools;
 
 namespace Masterplan.UI
 {
@@ -14,7 +15,7 @@ namespace Masterplan.UI
 			fNote = bg.Copy();
 
 			TitleBox.Text = fNote.Title;
-			DetailsBox.Text = fNote.Contents;
+			DetailsBox.Text = HTML.ConvertBRToLineBreaks(fNote.Contents);
 		}
 
         public EncounterNote Note
@@ -26,7 +27,7 @@ namespace Masterplan.UI
 		private void OKBtn_Click(object sender, EventArgs e)
 		{
 			fNote.Title = TitleBox.Text;
-			fNote.Contents = (DetailsBox.Text != DetailsBox.DefaultText) ? DetailsBox.Text : "";
+			fNote.Contents = HTML.ConvertLineBreaksToHtml((DetailsBox.Text != DetailsBox.DefaultText) ? DetailsBox.Text : "");
 		}
 	}
 }
