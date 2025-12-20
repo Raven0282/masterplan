@@ -4,16 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Masterplan.Tools
 {
-
     /// <summary>
     /// This class contains reusable business logic for the export feature.
     /// Expanded to cover JPG format in addition to the original PNG Export (11/25/2025)
     /// </summary>
-    public class PngExporter1
+    public class PngExporter
     {
         /// <summary>
         /// CORE EXPORT METHOD: This is the reusable, async export process that accepts 
@@ -22,7 +22,7 @@ namespace Masterplan.Tools
         /// <param name="htmlToExport">The HTML string of the table to render.</param>
         public async Task<byte[]> StartPNGExport(string htmlToExport) // Renamed from StartExport
         {
-            Console.WriteLine("\n--- Export Initiated (Receiving HTML Content) ---");
+            Console.WriteLine("\n--- PNG Export Initiated (Receiving HTML Content) ---");
             try
             {
                 var exporter = new HtmlTableExporter();
@@ -50,4 +50,37 @@ namespace Masterplan.Tools
         }
     }
 
+    /// <summary>
+    /// Handles the specific logic for exporting HTML content to JPG format.
+    /// Added 11/25/2025
+    /// </summary>
+    public class JpgExporter
+    {
+        /// <summary>
+        /// CORE EXPORT METHOD: Async export process for JPG format.
+        /// </summary>
+        /// <param name="htmlToExport">The HTML string of the table to render.</param>
+        public async Task<byte[]> StartJPGExport(string htmlToExport)
+        {
+            Console.WriteLine("\n--- JPG Export Initiated (Receiving HTML Content) ---");
+            try
+            {
+                var exporter = new HtmlTableExporter();
+                // Assumes HtmlTableExporter has been updated with an ExportTableToJpg method
+                byte[]? imageBytes = await exporter.ExportTableToJpg(htmlToExport);
+
+                if (imageBytes == null)
+                {
+                    Console.WriteLine("\nFAILURE: Image generation failed in the service layer.");
+                    throw new InvalidOperationException("Image generation failed. Check the console for details.");
+                }
+
+                return imageBytes;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Failed during the JPG export process.", ex);
+            }
+        }
+    }
 }

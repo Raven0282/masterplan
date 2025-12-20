@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0-windows7.0</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <ApplicationIcon>Scroll.ico</ApplicationIcon>
+    <ApplicationIcon>MasterplanScroll.ico</ApplicationIcon>
     <NoWin32Manifest>true</NoWin32Manifest>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
@@ -11,12 +11,12 @@
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
 	<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
     <NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
-    <AssemblyVersion>13.0.2.0</AssemblyVersion>
+    <AssemblyVersion>13.0.2.1</AssemblyVersion>
     <Copyright>Copyright © 2021 - 2025 - Habitual Indolence / Gamers' Syndicate - All rights reserved. This product is protected by copyright and distributed under licences restricting copying, distribution and decompilation.</Copyright>
-    <FileVersion>13.0.2.0</FileVersion>
+    <FileVersion>13.0.2.1</FileVersion>
     <Title>Masterplan</Title>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>13.0.2.0</Version>
+    <Version>13.0.2.1</Version>
     <Product>Masterplan Adventure Design Studio</Product>
     <Description>A Dungeons &amp; Dragons 4e Adventure Design Tool</Description>
   </PropertyGroup>
@@ -25,7 +25,24 @@
     <DocumentationFile>bin\Release\Masterplan.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Tools\HtmlCore.cs" />
+    <Compile Remove="Tools\HtmlCreatures.cs" />
+    <Compile Remove="Tools\HtmlEncyclopedia.cs" />
+    <Compile Remove="Tools\HtmlGameplay.cs" />
+    <Compile Remove="Tools\HtmlItems.cs" />
+    <Compile Remove="Tools\HtmlPlayerOptions.cs" />
+    <Compile Remove="Tools\HtmlPlots_World.cs" />
+    <Compile Remove="Tools\HtmlProjectExport.cs" />
+    <Compile Remove="Tools\HtmlToPngExporter.cs" />
     <Compile Remove="Tools\LogSystem.cs" />
+    <Compile Remove="Tools\X_PngExporter.cs" />
+    <Compile Remove="UI\ExportOptions.cs" />
+    <Compile Remove="UI\Old_Exporter_RTF.cs" />
+    <Compile Remove="UI\x_ExportOptions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="UI\ExportOptions.resx" />
+    <EmbeddedResource Remove="UI\x_ExportOptions.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\masterplan_scroll.svg" />
@@ -152,7 +169,7 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\masterplan_scroll.svg" />
-    <EmbeddedResource Include="Scroll.ico" />
+    <EmbeddedResource Include="MasterplanScroll.ico" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Controls\LevelRangePanel.Designer.cs">
@@ -246,6 +263,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
+    <PackageReference Include="HtmlToOpenXml.dll" Version="3.2.8" />
     <PackageReference Include="MessagePack" Version="3.1.4" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.4" />
     <PackageReference Include="MessagePackAnalyzer" Version="3.1.4">

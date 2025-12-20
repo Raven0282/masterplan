@@ -91,6 +91,8 @@
             CreatureToolsPowerStatistics = new System.Windows.Forms.ToolStripMenuItem();
             CreatureToolsFilterList = new System.Windows.Forms.ToolStripMenuItem();
             CreatureToolsExport = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator37 = new System.Windows.Forms.ToolStripSeparator();
+            CreatureUniExportBtn = new System.Windows.Forms.ToolStripButton();
             TemplatesPage = new System.Windows.Forms.TabPage();
             TemplateList = new System.Windows.Forms.ListView();
             TemplateNameHdr = new System.Windows.Forms.ColumnHeader();
@@ -117,6 +119,7 @@
             toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
             TemplateTools = new System.Windows.Forms.ToolStripDropDownButton();
             TemplateToolsExport = new System.Windows.Forms.ToolStripMenuItem();
+            TemplateUniExportBtn = new System.Windows.Forms.ToolStripButton();
             TrapsPage = new System.Windows.Forms.TabPage();
             TrapList = new System.Windows.Forms.ListView();
             TrapNameHdr = new System.Windows.Forms.ColumnHeader();
@@ -143,6 +146,7 @@
             TrapTools = new System.Windows.Forms.ToolStripDropDownButton();
             TrapToolsDemographics = new System.Windows.Forms.ToolStripMenuItem();
             TrapToolsExport = new System.Windows.Forms.ToolStripMenuItem();
+            TrapUniExportBtn = new System.Windows.Forms.ToolStripButton();
             ChallengePage = new System.Windows.Forms.TabPage();
             ChallengeList = new System.Windows.Forms.ListView();
             ChallengeNameHdr = new System.Windows.Forms.ColumnHeader();
@@ -163,6 +167,7 @@
             toolStripSeparator22 = new System.Windows.Forms.ToolStripSeparator();
             ChallengeTools = new System.Windows.Forms.ToolStripDropDownButton();
             ChallengeToolsExport = new System.Windows.Forms.ToolStripMenuItem();
+            SkillChallengeUniExportBtn = new System.Windows.Forms.ToolStripButton();
             MagicItemsPage = new System.Windows.Forms.TabPage();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             MagicItemList = new System.Windows.Forms.ListView();
@@ -263,9 +268,11 @@
             toolStripSeparator34 = new System.Windows.Forms.ToolStripSeparator();
             ArtifactTools = new System.Windows.Forms.ToolStripDropDownButton();
             ArtifactToolsExport = new System.Windows.Forms.ToolStripMenuItem();
+            ArtifactUniExportBtn = new System.Windows.Forms.ToolStripButton();
             HelpPanel = new Masterplan.Controls.LibraryHelpPanel();
             ChallengeContext = new System.Windows.Forms.ContextMenuStrip(components);
             ChallengeContextRemove = new System.Windows.Forms.ToolStripMenuItem();
+            MagicItemUniExportBtn = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)Splitter).BeginInit();
             Splitter.Panel1.SuspendLayout();
             Splitter.Panel2.SuspendLayout();
@@ -581,7 +588,7 @@
             // CreatureToolbar
             // 
             CreatureToolbar.ImageScalingSize = new System.Drawing.Size(20, 20);
-            CreatureToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { CreatureAddBtn, OppRemoveBtn, OppEditBtn, toolStripSeparator1, CreatureCutBtn, CreatureCopyBtn, CreaturePasteBtn, toolStripSeparator4, CreatureStatBlockBtn, toolStripSeparator10, CreatureTools });
+            CreatureToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { CreatureAddBtn, OppRemoveBtn, OppEditBtn, toolStripSeparator1, CreatureCutBtn, CreatureCopyBtn, CreaturePasteBtn, toolStripSeparator4, CreatureStatBlockBtn, toolStripSeparator10, CreatureTools, toolStripSeparator37, CreatureUniExportBtn });
             CreatureToolbar.Location = new System.Drawing.Point(4, 4);
             CreatureToolbar.Name = "CreatureToolbar";
             CreatureToolbar.Size = new System.Drawing.Size(716, 25);
@@ -730,6 +737,21 @@
             CreatureToolsExport.Text = "Export...";
             CreatureToolsExport.Click += CreatureToolsExport_Click;
             // 
+            // toolStripSeparator37
+            // 
+            toolStripSeparator37.Name = "toolStripSeparator37";
+            toolStripSeparator37.Size = new System.Drawing.Size(6, 25);
+            // 
+            // CreatureUniExportBtn
+            // 
+            CreatureUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            CreatureUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("CreatureUniExportBtn.Image");
+            CreatureUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            CreatureUniExportBtn.Name = "CreatureUniExportBtn";
+            CreatureUniExportBtn.Size = new System.Drawing.Size(44, 22);
+            CreatureUniExportBtn.Text = "Export";
+            CreatureUniExportBtn.Click += CreatureUniExportBtn_Click;
+            // 
             // TemplatesPage
             // 
             TemplatesPage.Controls.Add(TemplateList);
@@ -816,7 +838,7 @@
             // TemplateToolbar
             // 
             TemplateToolbar.ImageScalingSize = new System.Drawing.Size(20, 20);
-            TemplateToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TemplateAddBtn, TemplateRemoveBtn, TemplateEditBtn, toolStripSeparator2, TemplateCutBtn, TemplateCopyBtn, TemplatePasteBtn, toolStripSeparator18, TemplateStatBlock, toolStripSeparator21, TemplateTools });
+            TemplateToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TemplateAddBtn, TemplateRemoveBtn, TemplateEditBtn, toolStripSeparator2, TemplateCutBtn, TemplateCopyBtn, TemplatePasteBtn, toolStripSeparator18, TemplateStatBlock, toolStripSeparator21, TemplateTools, TemplateUniExportBtn });
             TemplateToolbar.Location = new System.Drawing.Point(4, 4);
             TemplateToolbar.Name = "TemplateToolbar";
             TemplateToolbar.Size = new System.Drawing.Size(716, 25);
@@ -951,6 +973,16 @@
             TemplateToolsExport.Text = "Export...";
             TemplateToolsExport.Click += TemplateToolsExport_Click;
             // 
+            // TemplateUniExportBtn
+            // 
+            TemplateUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            TemplateUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("TemplateUniExportBtn.Image");
+            TemplateUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            TemplateUniExportBtn.Name = "TemplateUniExportBtn";
+            TemplateUniExportBtn.Size = new System.Drawing.Size(44, 22);
+            TemplateUniExportBtn.Text = "Export";
+            TemplateUniExportBtn.Click += TemplateUniExportBtn_Click;
+            // 
             // TrapsPage
             // 
             TrapsPage.Controls.Add(TrapList);
@@ -1035,7 +1067,7 @@
             // TrapToolbar
             // 
             TrapToolbar.ImageScalingSize = new System.Drawing.Size(20, 20);
-            TrapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TrapAdd, TrapRemoveBtn, TrapEditBtn, toolStripSeparator6, TrapCutBtn, TrapCopyBtn, TrapPasteBtn, toolStripSeparator8, TrapStatBlockBtn, toolStripSeparator13, TrapTools });
+            TrapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TrapAdd, TrapRemoveBtn, TrapEditBtn, toolStripSeparator6, TrapCutBtn, TrapCopyBtn, TrapPasteBtn, toolStripSeparator8, TrapStatBlockBtn, toolStripSeparator13, TrapTools, TrapUniExportBtn });
             TrapToolbar.Location = new System.Drawing.Point(4, 4);
             TrapToolbar.Name = "TrapToolbar";
             TrapToolbar.Size = new System.Drawing.Size(716, 25);
@@ -1170,6 +1202,16 @@
             TrapToolsExport.Text = "Export...";
             TrapToolsExport.Click += TrapToolsExport_Click;
             // 
+            // TrapUniExportBtn
+            // 
+            TrapUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            TrapUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("TrapUniExportBtn.Image");
+            TrapUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            TrapUniExportBtn.Name = "TrapUniExportBtn";
+            TrapUniExportBtn.Size = new System.Drawing.Size(44, 22);
+            TrapUniExportBtn.Text = "Export";
+            TrapUniExportBtn.Click += TrapUniExportBtn_Click;
+            // 
             // ChallengePage
             // 
             ChallengePage.Controls.Add(ChallengeList);
@@ -1218,7 +1260,7 @@
             // ChallengeToolbar
             // 
             ChallengeToolbar.ImageScalingSize = new System.Drawing.Size(20, 20);
-            ChallengeToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ChallengeAdd, ChallengeRemoveBtn, ChallengeEditBtn, toolStripSeparator7, ChallengeCutBtn, ChallengeCopyBtn, ChallengePasteBtn, toolStripSeparator9, ChallengeStatBlockBtn, toolStripSeparator22, ChallengeTools });
+            ChallengeToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ChallengeAdd, ChallengeRemoveBtn, ChallengeEditBtn, toolStripSeparator7, ChallengeCutBtn, ChallengeCopyBtn, ChallengePasteBtn, toolStripSeparator9, ChallengeStatBlockBtn, toolStripSeparator22, ChallengeTools, SkillChallengeUniExportBtn });
             ChallengeToolbar.Location = new System.Drawing.Point(4, 4);
             ChallengeToolbar.Name = "ChallengeToolbar";
             ChallengeToolbar.Size = new System.Drawing.Size(716, 25);
@@ -1345,6 +1387,16 @@
             ChallengeToolsExport.Size = new System.Drawing.Size(116, 22);
             ChallengeToolsExport.Text = "Export...";
             ChallengeToolsExport.Click += ChallengeToolsExport_Click;
+            // 
+            // SkillChallengeUniExportBtn
+            // 
+            SkillChallengeUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            SkillChallengeUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("SkillChallengeUniExportBtn.Image");
+            SkillChallengeUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            SkillChallengeUniExportBtn.Name = "SkillChallengeUniExportBtn";
+            SkillChallengeUniExportBtn.Size = new System.Drawing.Size(44, 22);
+            SkillChallengeUniExportBtn.Text = "Export";
+            SkillChallengeUniExportBtn.Click += SkillChallengeUniExportBtn_Click;
             // 
             // MagicItemsPage
             // 
@@ -1496,10 +1548,10 @@
             listViewGroup10.Name = "listViewGroup3";
             MagicItemVersionList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup8, listViewGroup9, listViewGroup10 });
             MagicItemVersionList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            MagicItemVersionList.Location = new System.Drawing.Point(0, 25);
+            MagicItemVersionList.Location = new System.Drawing.Point(0, 27);
             MagicItemVersionList.Margin = new System.Windows.Forms.Padding(4);
             MagicItemVersionList.Name = "MagicItemVersionList";
-            MagicItemVersionList.Size = new System.Drawing.Size(352, 84);
+            MagicItemVersionList.Size = new System.Drawing.Size(352, 82);
             MagicItemVersionList.TabIndex = 1;
             MagicItemVersionList.UseCompatibleStateImageBehavior = false;
             MagicItemVersionList.View = System.Windows.Forms.View.Details;
@@ -1514,10 +1566,10 @@
             // MagicItemVersionToolbar
             // 
             MagicItemVersionToolbar.ImageScalingSize = new System.Drawing.Size(20, 20);
-            MagicItemVersionToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { MagicItemRemoveBtn, toolStripSeparator5, MagicItemEditBtn, MagicItemCutBtn, MagicItemCopyBtn, MagicItemPasteBtn, toolStripSeparator12, MagicItemStatBlockBtn });
+            MagicItemVersionToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { MagicItemRemoveBtn, toolStripSeparator5, MagicItemEditBtn, MagicItemCutBtn, MagicItemCopyBtn, MagicItemPasteBtn, toolStripSeparator12, MagicItemStatBlockBtn, MagicItemUniExportBtn });
             MagicItemVersionToolbar.Location = new System.Drawing.Point(0, 0);
             MagicItemVersionToolbar.Name = "MagicItemVersionToolbar";
-            MagicItemVersionToolbar.Size = new System.Drawing.Size(352, 25);
+            MagicItemVersionToolbar.Size = new System.Drawing.Size(352, 27);
             MagicItemVersionToolbar.TabIndex = 0;
             MagicItemVersionToolbar.Text = "toolStrip1";
             // 
@@ -1527,14 +1579,14 @@
             MagicItemRemoveBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemRemoveBtn.Image");
             MagicItemRemoveBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemRemoveBtn.Name = "MagicItemRemoveBtn";
-            MagicItemRemoveBtn.Size = new System.Drawing.Size(54, 22);
+            MagicItemRemoveBtn.Size = new System.Drawing.Size(54, 24);
             MagicItemRemoveBtn.Text = "Remove";
             MagicItemRemoveBtn.Click += MagicItemRemoveBtn_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
             // 
             // MagicItemEditBtn
             // 
@@ -1542,7 +1594,7 @@
             MagicItemEditBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemEditBtn.Image");
             MagicItemEditBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemEditBtn.Name = "MagicItemEditBtn";
-            MagicItemEditBtn.Size = new System.Drawing.Size(31, 22);
+            MagicItemEditBtn.Size = new System.Drawing.Size(31, 24);
             MagicItemEditBtn.Text = "Edit";
             MagicItemEditBtn.Click += MagicItemEditBtn_Click;
             // 
@@ -1552,7 +1604,7 @@
             MagicItemCutBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemCutBtn.Image");
             MagicItemCutBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemCutBtn.Name = "MagicItemCutBtn";
-            MagicItemCutBtn.Size = new System.Drawing.Size(30, 22);
+            MagicItemCutBtn.Size = new System.Drawing.Size(30, 24);
             MagicItemCutBtn.Text = "Cut";
             MagicItemCutBtn.Click += MagicItemCutBtn_Click;
             // 
@@ -1562,7 +1614,7 @@
             MagicItemCopyBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemCopyBtn.Image");
             MagicItemCopyBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemCopyBtn.Name = "MagicItemCopyBtn";
-            MagicItemCopyBtn.Size = new System.Drawing.Size(39, 22);
+            MagicItemCopyBtn.Size = new System.Drawing.Size(39, 24);
             MagicItemCopyBtn.Text = "Copy";
             MagicItemCopyBtn.Click += MagicItemCopyBtn_Click;
             // 
@@ -1572,14 +1624,14 @@
             MagicItemPasteBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemPasteBtn.Image");
             MagicItemPasteBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemPasteBtn.Name = "MagicItemPasteBtn";
-            MagicItemPasteBtn.Size = new System.Drawing.Size(39, 22);
+            MagicItemPasteBtn.Size = new System.Drawing.Size(39, 24);
             MagicItemPasteBtn.Text = "Paste";
             MagicItemPasteBtn.Click += MagicItemPasteBtn_Click;
             // 
             // toolStripSeparator12
             // 
             toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator12.Size = new System.Drawing.Size(6, 27);
             // 
             // MagicItemStatBlockBtn
             // 
@@ -1587,7 +1639,7 @@
             MagicItemStatBlockBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemStatBlockBtn.Image");
             MagicItemStatBlockBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemStatBlockBtn.Name = "MagicItemStatBlockBtn";
-            MagicItemStatBlockBtn.Size = new System.Drawing.Size(63, 22);
+            MagicItemStatBlockBtn.Size = new System.Drawing.Size(63, 24);
             MagicItemStatBlockBtn.Text = "Stat Block";
             MagicItemStatBlockBtn.Click += MagicItemStatBlockBtn_Click;
             // 
@@ -2083,7 +2135,7 @@
             // ArtifactToolbar
             // 
             ArtifactToolbar.ImageScalingSize = new System.Drawing.Size(20, 20);
-            ArtifactToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ArtifactAdd, ArtifactRemove, ArtifactEdit, toolStripSeparator32, ArtifactCut, ArtifactCopy, ArtifactPaste, toolStripSeparator33, ArtifactStatBlockBtn, toolStripSeparator34, ArtifactTools });
+            ArtifactToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ArtifactAdd, ArtifactRemove, ArtifactEdit, toolStripSeparator32, ArtifactCut, ArtifactCopy, ArtifactPaste, toolStripSeparator33, ArtifactStatBlockBtn, toolStripSeparator34, ArtifactTools, ArtifactUniExportBtn });
             ArtifactToolbar.Location = new System.Drawing.Point(4, 4);
             ArtifactToolbar.Name = "ArtifactToolbar";
             ArtifactToolbar.Size = new System.Drawing.Size(716, 25);
@@ -2211,6 +2263,16 @@
             ArtifactToolsExport.Text = "Export...";
             ArtifactToolsExport.Click += ArtifactToolsExport_Click;
             // 
+            // ArtifactUniExportBtn
+            // 
+            ArtifactUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            ArtifactUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("ArtifactUniExportBtn.Image");
+            ArtifactUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            ArtifactUniExportBtn.Name = "ArtifactUniExportBtn";
+            ArtifactUniExportBtn.Size = new System.Drawing.Size(44, 22);
+            ArtifactUniExportBtn.Text = "Export";
+            ArtifactUniExportBtn.Click += ArtifactUniExportBtn_Click;
+            // 
             // HelpPanel
             // 
             HelpPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -2235,6 +2297,16 @@
             ChallengeContextRemove.Size = new System.Drawing.Size(117, 22);
             ChallengeContextRemove.Text = "Remove";
             ChallengeContextRemove.Click += ChallengeContextRemove_Click;
+            // 
+            // MagicItemUniExportBtn
+            // 
+            MagicItemUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            MagicItemUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemUniExportBtn.Image");
+            MagicItemUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            MagicItemUniExportBtn.Name = "MagicItemUniExportBtn";
+            MagicItemUniExportBtn.Size = new System.Drawing.Size(24, 24);
+            MagicItemUniExportBtn.Text = "Export";
+            MagicItemUniExportBtn.Click += this.MagicItemUniExportBtn_Click;
             // 
             // LibraryListForm
             // 
@@ -2536,5 +2608,12 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator35;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator36;
         private System.Windows.Forms.ToolStripButton LibraryBtnConvert;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator37;
+        private System.Windows.Forms.ToolStripButton CreatureUniExportBtn;
+        private System.Windows.Forms.ToolStripButton TemplateUniExportBtn;
+        private System.Windows.Forms.ToolStripButton TrapUniExportBtn;
+        private System.Windows.Forms.ToolStripButton SkillChallengeUniExportBtn;
+        private System.Windows.Forms.ToolStripButton ArtifactUniExportBtn;
+        private System.Windows.Forms.ToolStripButton MagicItemUniExportBtn;
     }
 }

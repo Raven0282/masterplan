@@ -212,8 +212,8 @@ public static Library LoadLibrary(string filename)
                 {
                     Program.SplashScreen.CurrentSubAction = "Converting " + Tools.FileName.Name(filename);
                     
-                    // Save the loaded object in the new MessagePack format.
-                    Serialisation<Library>.Save(new_filename, lib, SerialisationMode.MessagePack);
+                    // Save the loaded object in the new XML format using DTO to properly serialize to XML.
+                    Serialisation<Library>.Save(new_filename, lib, SerialisationMode.XMLDTO);
                 }
             }
             catch (Exception ex)

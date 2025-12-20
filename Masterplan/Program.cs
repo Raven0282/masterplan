@@ -237,10 +237,10 @@ namespace Masterplan
                 // 2. Convert old .library files to the new .xLibrary format.
                 //    This conversion is necessary to phase out BinaryFormatter.
                 // NOT READY FOR RELEASE - COMMENT OUT
-                //foreach (string filename in libraries)
-                //{
-                //    Session.ConvertLibrary(new_lib_dir, filename);
-                //}
+                foreach (string filename in libraries)
+                {
+                    Session.ConvertLibrary(new_lib_dir, filename);
+                }
 
                 Session.Libraries.Sort();
             }
