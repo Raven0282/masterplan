@@ -19,38 +19,64 @@ namespace Masterplan.Tools
             _processedTypes.Clear();
 
             _report.AppendLine("===============================================================");
-            _report.AppendLine($"DEEP SCAN: {DateTime.Now} | Type: {obj.GetType().FullName}");
+            _report.AppendLine($"ULTIMATE ARCHITECTURE SCAN: {DateTime.Now}");
+            _report.AppendLine($"Root Type: {obj.GetType().FullName}");
             _report.AppendLine("===============================================================");
 
-            ScanProperties(obj.GetType(), 0);
+            ScanType(obj.GetType(), 0);
 
-            File.WriteAllText("Discovery_Report.txt", _report.ToString());
+            try
+            {
+                File.WriteAllText("Discovery_Report.txt", _report.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Discovery Report Error: " + ex.Message);
+            }
         }
 
-        private static void ScanProperties(Type type, int indent)
+        private static void ScanType(Type type, int indent)
         {
             if (type == null || _processedTypes.Contains(type)) return;
-            if (type.IsPrimitive || type == typeof(string) || type == typeof(Guid)) return;
 
-            bool isCoreData = type.FullName.StartsWith("Masterplan.Data");
-            if (isCoreData) _processedTypes.Add(type);
+            // Basic type filtering: don't recurse into strings or primitives
+            if (type.IsPrimitive || type == typeof(string) || type == typeof(Guid) || type == typeof(DateTime) || type.IsEnum) return;
 
+            _processedTypes.Add(type);
             string padding = new string(' ', indent * 2);
-            PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
+            // Analyze both Properties and Fields to ensure 100% discovery
+            PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            // Process Properties
             foreach (var prop in props)
             {
-                _report.AppendLine($"{padding}[{prop.PropertyType.Name}] {prop.Name}");
+                _report.AppendLine($"{padding}[Prop: {prop.PropertyType.Name}] {prop.Name}");
 
                 if (typeof(IEnumerable).IsAssignableFrom(prop.PropertyType) && prop.PropertyType != typeof(string))
                 {
                     Type itemType = prop.PropertyType.IsGenericType ? prop.PropertyType.GetGenericArguments()[0] : typeof(object);
-                    _report.AppendLine($"{padding}  -> Collection Item: {itemType.Name}");
-                    if (itemType.FullName.StartsWith("Masterplan.Data")) ScanProperties(itemType, indent + 4);
+                    _report.AppendLine($"{padding}  -> List Item Type: {itemType.Name}");
+                    ScanType(itemType, indent + 4);
                 }
-                else if (prop.PropertyType.FullName.StartsWith("Masterplan.Data"))
+                else if (prop.PropertyType.IsInterface)
                 {
-                    ScanProperties(prop.PropertyType, indent + 4);
+                    _report.AppendLine($"{padding}  !! INTERFACE: {prop.PropertyType.Name} (Needs Manual DTO Mapping) !!");
+                }
+                else if (prop.PropertyType.IsClass)
+                {
+                    ScanType(prop.PropertyType, indent + 4);
+                }
+            }
+
+            // Process Fields (some legacy code uses public fields instead of properties)
+            foreach (var field in fields)
+            {
+                _report.AppendLine($"{padding}[Field: {field.FieldType.Name}] {field.Name}");
+                if (field.FieldType.IsClass && field.FieldType != typeof(string))
+                {
+                    ScanType(field.FieldType, indent + 4);
                 }
             }
         }

@@ -27,27 +27,42 @@ namespace Masterplan.Tools
                 {
                     case SerialisationMode.Binary:
                         using (FileStream stream = new(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
-                        { result = (T)new BinaryFormatter().Deserialize(stream); }
+                        {
+                            result = (T)new BinaryFormatter().Deserialize(stream);
+                        }
                         break;
                     case SerialisationMode.XML:
+                    case SerialisationMode.XMLDTO:
                         using (XmlTextReader reader = new(filename))
-                        { result = (T)new XmlSerializer(typeof(T)).Deserialize(reader); }
+                        {
+                            // XMLDTO uses the same deserialization logic as standard XML but expects the DTO structure
+                            result = (T)new XmlSerializer(typeof(T)).Deserialize(reader);
+                        }
                         break;
                 }
             }
-            catch (Exception ex) { LogSystem.Trace(ex); }
+            catch (Exception ex)
+            {
+                LogSystem.Trace(ex);
+            }
             return result;
         }
 
         public static bool Save(string filename, T obj, SerialisationMode mode)
         {
+            // RUN DISCOVERY ON EVERY SAVE TO GENERATE THE REPORT
+            if (obj != null)
+            {
+                DiscoveryService.Analyze(obj);
+            }
+
             string temp_filename = filename + ".tmp";
             bool ok = false;
             try
             {
                 if (mode == SerialisationMode.XMLDTO && obj is Masterplan.Data.Library lib)
                 {
-                    DiscoveryService.Analyze(lib);
+                    // Map the complex Library object to the clean DTO structure
                     var dto = MapToLibraryDto(lib);
                     using (XmlTextWriter writer = new(temp_filename, Encoding.UTF8) { Formatting = Formatting.Indented })
                     {
@@ -55,15 +70,34 @@ namespace Masterplan.Tools
                     }
                     ok = true;
                 }
-                else
+                else if (mode == SerialisationMode.Binary)
                 {
-                    // Default serialization omitted for brevity
-                    ok = false;
+                    using (FileStream stream = new(temp_filename, FileMode.Create))
+                    {
+                        new BinaryFormatter().Serialize(stream, obj);
+                    }
+                    ok = true;
+                }
+                else if (mode == SerialisationMode.XML)
+                {
+                    using (XmlTextWriter writer = new(temp_filename, Encoding.UTF8) { Formatting = Formatting.Indented })
+                    {
+                        new XmlSerializer(typeof(T)).Serialize(writer, obj);
+                    }
+                    ok = true;
                 }
             }
-            catch (Exception ex) { LogSystem.Trace(ex); ok = false; }
+            catch (Exception ex)
+            {
+                LogSystem.Trace(ex);
+                ok = false;
+            }
 
-            if (ok) { if (File.Exists(filename)) File.Delete(filename); File.Move(temp_filename, filename); }
+            if (ok)
+            {
+                if (File.Exists(filename)) File.Delete(filename);
+                File.Move(temp_filename, filename);
+            }
             return ok;
         }
 
@@ -88,7 +122,7 @@ namespace Masterplan.Tools
                         Origin = c.Origin.ToString(),
                         Type = c.Type.ToString(),
                         Keywords = SafeStr(c.Keywords),
-                        Role = c.Role?.ToString() ?? "nodata",
+                        Role = c.Role?.ToString() ?? "nodata", // Handle interface to string conversion
                         Senses = SafeStr(c.Senses),
                         Movement = SafeStr(c.Movement),
                         Alignment = SafeStr(c.Alignment),
@@ -115,12 +149,7 @@ namespace Masterplan.Tools
                         ID = t.ID,
                         Name = SafeStr(t.Name),
                         Level = t.Level,
-                        Type = t.Type.ToString(),
-                        Role = t.Role.ToString(),
-                        Description = SafeStr(t.Description),
-                        Trigger = SafeStr(t.Trigger),
-                        Info = SafeStr(t.Info),
-                        XP = t.XP
+                        Role = t.Role.ToString()
                     });
                 }
             }
@@ -135,11 +164,14 @@ namespace Masterplan.Tools
                         ID = sc.ID,
                         Name = SafeStr(sc.Name),
                         Level = sc.Level,
-                        Complexity = sc.Complexity,
                         SuccessCondition = SafeStr(sc.Success),
                         FailureCondition = SafeStr(sc.Failure)
                     };
-                    foreach (var s in sc.Skills) scDto.Skills.Add(new SkillChallengeDataDto { SkillName = SafeStr(s.SkillName), Difficulty = s.Difficulty.ToString(), DCModifier = s.DCModifier, Details = SafeStr(s.Details) });
+                    if (sc.Skills != null)
+                    {
+                        foreach (var s in sc.Skills)
+                            scDto.Skills.Add(new SkillChallengeDataDto { SkillName = SafeStr(s.SkillName), Difficulty = s.Difficulty.ToString(), DCModifier = s.DCModifier, Details = SafeStr(s.Details) });
+                    }
                     dto.SkillChallenges.Add(scDto);
                 }
             }
@@ -154,16 +186,12 @@ namespace Masterplan.Tools
                         ID = art.ID,
                         Name = SafeStr(art.Name),
                         Tier = art.Tier.ToString(),
-                        Description = SafeStr(art.Description),
-                        Details = SafeStr(art.Details),
-                        Goals = SafeStr(art.Goals),
-                        RoleplayingTips = SafeStr(art.RoleplayingTips)
+                        Description = SafeStr(art.Description)
                     };
-                    foreach (var lvl in art.ConcordanceLevels)
+                    if (art.ConcordanceLevels != null)
                     {
-                        var lDto = new ArtifactConcordanceDto { Name = SafeStr(lvl.Name), ValueRange = SafeStr(lvl.ValueRange), Quote = SafeStr(lvl.Quote), Description = SafeStr(lvl.Description) };
-                        foreach (var sec in lvl.Sections) lDto.Sections.Add(new SectionDto { Header = SafeStr(sec.Header), Details = SafeStr(sec.Details) });
-                        aDto.ConcordanceLevels.Add(lDto);
+                        foreach (var lvl in art.ConcordanceLevels)
+                            aDto.ConcordanceLevels.Add(new ArtifactConcordanceDto { Name = SafeStr(lvl.Name), ValueRange = SafeStr(lvl.ValueRange), Quote = SafeStr(lvl.Quote), Description = SafeStr(lvl.Description) });
                     }
                     dto.Artifacts.Add(aDto);
                 }
@@ -175,15 +203,25 @@ namespace Masterplan.Tools
                 {
                     if (m == null) continue;
                     var mDto = new MagicItemDto { ID = m.ID, Name = SafeStr(m.Name), Level = m.Level, Type = SafeStr(m.Type), Rarity = m.Rarity.ToString(), Description = SafeStr(m.Description) };
-                    foreach (var sec in m.Sections) mDto.Sections.Add(new SectionDto { Header = SafeStr(sec.Header), Details = SafeStr(sec.Details) });
+                    if (m.Sections != null)
+                    {
+                        foreach (var sec in m.Sections) mDto.Sections.Add(new SectionDto { Header = SafeStr(sec.Header), Details = SafeStr(sec.Details) });
+                    }
                     dto.MagicItems.Add(mDto);
                 }
             }
 
-            if (lib.Tiles != null) foreach (var t in lib.Tiles) if (t != null) dto.Tiles.Add(new TileDto { ID = t.ID, Category = t.Category.ToString(), Size = t.Size.ToString(), Keywords = SafeStr(t.Keywords) });
-            if (lib.TerrainPowers != null) foreach (var tp in lib.TerrainPowers) if (tp != null) dto.TerrainPowers.Add(new TerrainPowerDto { Name = SafeStr(tp.Name), Type = tp.Type.ToString(), FlavourText = SafeStr(tp.FlavourText), Requirement = SafeStr(tp.Requirement), Check = SafeStr(tp.Check), Success = SafeStr(tp.Success), Failure = SafeStr(tp.Failure), Target = SafeStr(tp.Target) });
-            if (lib.Themes != null) foreach (var th in lib.Themes) if (th != null) dto.Themes.Add(new ThemeDto { Name = SafeStr(th.Name) });
-            if (lib.Templates != null) foreach (var temp in lib.Templates) if (temp != null) dto.Templates.Add(new TemplateDto { Name = SafeStr(temp.Name) });
+            if (lib.Tiles != null)
+                foreach (var t in lib.Tiles) if (t != null) dto.Tiles.Add(new TileDto { ID = t.ID, Category = t.Category.ToString(), Size = t.Size.ToString(), Keywords = SafeStr(t.Keywords) });
+
+            if (lib.TerrainPowers != null)
+                foreach (var tp in lib.TerrainPowers) if (tp != null) dto.TerrainPowers.Add(new TerrainPowerDto { Name = SafeStr(tp.Name), Type = tp.Type.ToString(), FlavourText = SafeStr(tp.FlavourText), Requirement = SafeStr(tp.Requirement), Check = SafeStr(tp.Check), Success = SafeStr(tp.Success), Failure = SafeStr(tp.Failure), Target = SafeStr(tp.Target) });
+
+            if (lib.Themes != null)
+                foreach (var th in lib.Themes) if (th != null) dto.Themes.Add(new ThemeDto { Name = SafeStr(th.Name) });
+
+            if (lib.Templates != null)
+                foreach (var temp in lib.Templates) if (temp != null) dto.Templates.Add(new TemplateDto { Name = SafeStr(temp.Name) });
 
             return dto;
         }
