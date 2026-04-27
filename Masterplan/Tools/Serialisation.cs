@@ -2,6 +2,7 @@
 
 using Masterplan.Tools;
 using Masterplan.Dto;
+using Masterplan.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using MessagePack;
 
 namespace Masterplan.Tools
 {
@@ -25,7 +27,6 @@ namespace Masterplan.Tools
             {
                 switch (mode)
                 {
-              
                     case SerialisationMode.Binary:
                         using (FileStream stream = new(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
                         {
@@ -34,8 +35,6 @@ namespace Masterplan.Tools
 
                         if (result != null)
                         {
-                            // Change: We now tell DiscoveryService NOT to clear the 'visited' cache.
-                            // This causes it to only log NEW, UNIQUE property paths encountered across all files.
                             DiscoveryService.RunDiscovery(result, filename, "MasterSchema", clearCache: false);
                         }
                         break;
@@ -49,8 +48,19 @@ namespace Masterplan.Tools
                         break;
 
                     case SerialisationMode.MessagePack:
-                        byte[] bytes = File.ReadAllBytes(filename);
-                        result = MessagePack.MessagePackSerializer.Deserialize<T>(bytes);
+                        if (typeof(T) == typeof(Library))
+                        {
+                            result = (T)(object)LibraryConversionService.Instance.LoadXLibrary(filename);
+                        }
+                        else if (typeof(T) == typeof(Project))
+                        {
+                            result = (T)(object)LibraryConversionService.Instance.LoadXProject(filename);
+                        }
+                        else
+                        {
+                            byte[] bytes = File.ReadAllBytes(filename);
+                            result = MessagePackSerializer.Deserialize<T>(bytes);
+                        }
                         break;
                 }
             }
@@ -63,7 +73,6 @@ namespace Masterplan.Tools
 
         public static bool Save(string filename, T obj, SerialisationMode mode)
         {
-            // Note: Saving also triggers discovery to capture the current state of the memory model
             if (obj != null && mode == SerialisationMode.Binary)
             {
                 string ext = Path.GetExtension(filename).ToLower();
@@ -85,9 +94,22 @@ namespace Masterplan.Tools
                         ok = true;
                         break;
                     case SerialisationMode.MessagePack:
-                        var mpBytes = MessagePack.MessagePackSerializer.Serialize(obj);
-                        File.WriteAllBytes(temp_filename, mpBytes);
-                        ok = true;
+                        if (obj is Library lib)
+                        {
+                            LibraryConversionService.Instance.SaveXLibrary(lib, temp_filename);
+                            ok = true;
+                        }
+                        else if (obj is Project p)
+                        {
+                            LibraryConversionService.Instance.SaveXProject(p, temp_filename);
+                            ok = true;
+                        }
+                        else
+                        {
+                            var mpBytes = MessagePackSerializer.Serialize(obj);
+                            File.WriteAllBytes(temp_filename, mpBytes);
+                            ok = true;
+                        }
                         break;
                     case SerialisationMode.XML:
                         using (XmlTextWriter writer = new(temp_filename, Encoding.UTF8) { Formatting = Formatting.Indented })

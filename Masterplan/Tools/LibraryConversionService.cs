@@ -12,18 +12,66 @@ namespace Masterplan.Tools
 {
     /// <summary>
     /// Service responsible for mapping between legacy domain objects and MessagePack-ready DTOs.
-    /// Supports the "Parallel Track" workflow for OMP to MPXP migration. 4/27/2026
+    /// Supports the "Parallel Track" workflow for OMP to MPXP migration.
     /// </summary>
     public class LibraryConversionService
     {
         private static LibraryConversionService _instance;
         public static LibraryConversionService Instance => _instance ??= new LibraryConversionService();
 
+        #region X-Format Cycle (MessagePack)
+        public void SaveXLibrary(Library lib, string targetPath)
+        {
+            try
+            {
+                var dto = MapToLibraryDto(lib);
+                var data = MessagePackSerializer.Serialize(dto);
+                File.WriteAllBytes(targetPath, data);
+            }
+            catch (Exception ex) { LogSystem.Trace(ex); }
+        }
+
+        public void SaveXProject(Project p, string targetPath)
+        {
+            try
+            {
+                var dto = MapToProjectDto(p);
+                var data = MessagePackSerializer.Serialize(dto);
+                File.WriteAllBytes(targetPath, data);
+            }
+            catch (Exception ex) { LogSystem.Trace(ex); }
+        }
+
+        public Library LoadXLibrary(string filePath)
+        {
+            if (!File.Exists(filePath)) return null;
+            try
+            {
+                byte[] data = File.ReadAllBytes(filePath);
+                var dto = MessagePackSerializer.Deserialize<LibraryDto>(data);
+                return MapToLibrary(dto);
+            }
+            catch (Exception ex) { LogSystem.Trace(ex); return null; }
+        }
+
+        public Project LoadXProject(string filePath)
+        {
+            if (!File.Exists(filePath)) return null;
+            try
+            {
+                byte[] data = File.ReadAllBytes(filePath);
+                var dto = MessagePackSerializer.Deserialize<ProjectDto>(data);
+                return MapToProject(dto);
+            }
+            catch (Exception ex) { LogSystem.Trace(ex); return null; }
+        }
+        #endregion
+
         #region Library Mapping
         public Library MapToLibrary(LibraryDto dto)
         {
             if (dto == null) return null;
-            var lib = new Library { ID = dto.ID, Name = dto.Name, ShowInAutoBuild = dto.ShowInAutoBuild };
+            var lib = new Library { ID = dto.ID, Name = dto.Name };
             
             if (dto.Creatures != null) foreach (var c in dto.Creatures) lib.Creatures.Add(MapToCreature(c));
             if (dto.Traps != null) foreach (var t in dto.Traps) lib.Traps.Add(MapToTrap(t));
@@ -67,7 +115,7 @@ namespace Masterplan.Tools
 
             if (dto.Heroes != null) foreach (var h in dto.Heroes) p.Heroes.Add(MapToHero(h));
             if (dto.Plot != null) p.Plot = MapToPlot(dto.Plot);
-            if (dto.Notes != null) foreach (var n in dto.Notes) p.Notes.Add(new Note { ID = n.ID, Name = n.Name, Content = n.Content, Category = n.Category });
+            if (dto.Notes != null) foreach (var n in dto.Notes) p.Notes.Add(new Note { ID = n.ID, Content = n.Content, Category = n.Category });
             
             return p;
         }

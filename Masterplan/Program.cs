@@ -1,4 +1,3 @@
-﻿
 #nullable disable
 
 using Masterplan.Data;
@@ -31,11 +30,8 @@ namespace Masterplan
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
-
             try
             {
-                // The CS7036 error was fixed by modifying the file creation logic inside LogSystem.cs.
                 #region Bootstrapping
                 Init_logging();
 
@@ -93,7 +89,7 @@ namespace Masterplan
                     // 1. Custom formatters (highest priority)
                     new IMessagePackFormatter[] {
                         ColorFormatter.Instance,
-                        BitmapFormatter.Instance // ADDED: Custom formatter for System.Drawing.Bitmap
+                        BitmapFormatter.Instance 
                     },
                     // 2. Standard resolvers (order matters)
                     new IFormatterResolver[] {
@@ -108,42 +104,32 @@ namespace Masterplan
             }
             catch (Exception ex)
             {
-                // Log initialization errors without crashing the main thread
-                // Console.WriteLine($"Error initializing MessagePack resolver: {ex.Message}");
                 LogSystem.Trace(ex);
             }
         }
 
-        // This method's body is external (in LogSystem.cs)
         static void Init_logging()
         {
-            // Logging
             string mp_dir = FileName.Directory(Application.ExecutablePath);
-
-            // Make sure the log directory exists
             string logdir = mp_dir + "Log" + Path.DirectorySeparatorChar;
 
-            // FIX 2: Explicitly check for existence before calling CreateDirectory.
-            // This works around the conflict with FileSystemAclExtensions.Create(DirectoryInfo, DirectorySecurity).
             if (!Directory.Exists(logdir))
             {
                 try
                 {
-                    // Use the simple overload that doesn't conflict
                     DirectoryInfo di = Directory.CreateDirectory(logdir);
                     if (di == null)
                         throw new UnauthorizedAccessException();
                 }
                 catch
                 {
-                    // Ignore directory creation errors if logging will still work to console/default.
                 }
             }
 
-            // Begin logging
             string logfile = logdir + DateTime.Now.Ticks + ".log";
             LogSystem.LogFile = logfile;
         }
+
         static void Load_preferences()
         {
             try
@@ -191,30 +177,18 @@ namespace Masterplan
 
                 Assembly ass = Assembly.GetEntryAssembly();
                 string root_dir = FileName.Directory(ass.Location);
-
                 string lib_dir = root_dir + "Libraries" + Path.DirectorySeparatorChar;
 
-                // FIX 3: Use explicit existence check before creating directories to avoid ACL error.
                 if (!Directory.Exists(lib_dir))
                     Directory.CreateDirectory(lib_dir);
 
-                // --- NEW CONVERSION SETUP ---
-                // Create directory for converted library files (MessagePack fix)
-                string new_lib_dir = lib_dir + "Converted" + Path.DirectorySeparatorChar;
-
-                // FIX 4: Use explicit existence check before creating directories to avoid ACL error.
-                if (!Directory.Exists(new_lib_dir))
-                    Directory.CreateDirectory(new_lib_dir);
-                // ----------------------------
-
-                // Move libraries from root directory
+                // Move libraries from root directory to Libraries folder
                 string[] files = Directory.GetFiles(root_dir, "*.library");
                 foreach (string filename in files)
                 {
                     try
                     {
                         string lib_name = lib_dir + FileName.Name(filename) + ".library";
-
                         if (!File.Exists(lib_name))
                             File.Move(filename, lib_name);
                     }
@@ -224,32 +198,13 @@ namespace Masterplan
                     }
                 }
 
-                // Load and convert libraries
+                // Load all libraries via Session logic (handles MessagePack vs Binary prioritization)
                 string[] libraries = Directory.GetFiles(lib_dir, "*.library");
                 SplashScreen.Actions = libraries.Length;
 
-                // 1. Load all libraries. Session.LoadLibrary will check for the new .xLibrary 
-                //    format first for maximum speed on subsequent loads.
                 foreach (string filename in libraries)
                 {
-                    // The ProgressScreen updates remain as per your original file
-                    if (SplashScreen != null)
-                    {
-                        SplashScreen.CurrentSubAction = FileName.Name(filename);
-                        SplashScreen.Progress++;
-                    }
-
-                    // This call triggers DiscoveryService.RunDiscovery(..., clearCache: false) 
-                    // inside our updated Serialisation.cs
                     Session.LoadLibrary(filename);
-                }
-
-                // 2. Convert old .library files to the new .xLibrary format.
-                //    This conversion is necessary to phase out BinaryFormatter.
-                // NOT READY FOR RELEASE - COMMENT OUT
-                foreach (string filename in libraries)
-                {
-                    Session.ConvertLibrary(new_lib_dir, filename);
                 }
 
                 Session.Libraries.Sort();
@@ -259,10 +214,6 @@ namespace Masterplan
                 LogSystem.Trace(ex);
             }
         }
-
-
-
-
 
         static void Handle_arg(string arg)
         {
@@ -279,19 +230,11 @@ namespace Masterplan
                     SplashScreen.CurrentAction = "Loading project...";
                     SplashScreen.CurrentSubAction = FileName.Name(fi.Name);
 
-                    // Load file
-                    Project p = Serialisation<Project>.Load(arg, SerialisationMode.Binary);
+                    // Unified prioritization logic (MessagePack vs Binary)
+                    Project p = Session.LoadProject(arg);
                     if (p != null)
                     {
                         Session.CreateBackup(arg);
-                    }
-                    else
-                    {
-                        p = Session.LoadBackup(arg);
-                    }
-
-                    if (p != null)
-                    {
                         if (Session.CheckPassword(p))
                         {
                             Session.Project = p;
@@ -311,24 +254,19 @@ namespace Masterplan
         static void Check_for_logs()
         {
             string logfile = LogSystem.LogFile;
-
-            if ((logfile == null) || (logfile == ""))
-                return;
-
-            if (!File.Exists(logfile))
+            if (string.IsNullOrEmpty(logfile) || !File.Exists(logfile))
                 return;
 
             string logdir = FileName.Directory(logfile);
             Process.Start(logdir);
         }
 
-                #endregion
+        #endregion
 
         #region Stats
 
         private static void Run_creature_stats()
         {
-            // Run stats
             List<Creature> creatures = Session.Creatures;
             bool[] is_minion_options = { false, true };
             bool[] is_leader_options = { false, true };
@@ -338,10 +276,8 @@ namespace Masterplan
             try
             {
                 sw.Write("Level,Flag,Role,Minion,Leader,Tier,TierX,Creatures,Powers");
-                // Conditions
                 foreach (string condition in Conditions.GetConditions())
                     sw.Write("," + condition);
-                // Damage types
                 foreach (DamageType damage in Enum.GetValues(typeof(DamageType)))
                     sw.Write("," + damage);
                 sw.WriteLine();
@@ -357,77 +293,40 @@ namespace Masterplan
                                 foreach (RoleFlag flag in Enum.GetValues(typeof(RoleFlag)))
                                 {
                                     List<Creature> list = Get_creatures(creatures, level, is_minion, is_leader, role, flag);
-
                                     List<CreaturePower> powers = new List<CreaturePower>();
                                     foreach (Creature c in list)
                                         powers.AddRange(c.CreaturePowers);
                                     if (powers.Count == 0)
                                         continue;
 
-                                    string tier = "";
-                                    if (level < 11)
-                                        tier = "heroic";
-                                    else if (level < 21)
-                                        tier = "paragon";
-                                    else
-                                        tier = "epic";
-
-                                    string tierx = "";
-                                    if (level < 4)
-                                        tierx = "early heroic";
-                                    else if (level < 8)
-                                        tierx = "mid heroic";
-                                    else if (level < 11)
-                                        tierx = "late heroic";
-                                    else if (level < 14)
-                                        tierx = "early paragon";
-                                    else if (level < 18)
-                                        tierx = "mid paragon";
-                                    else if (level < 21)
-                                        tierx = "late paragon";
-                                    else if (level < 24)
-                                        tierx = "early epic";
-                                    else if (level < 28)
-                                        tierx = "mid epic";
-                                    else if (level < 31)
-                                        tierx = "late epic";
-                                    else
-                                        tierx = "epic plus";
+                                    string tier = (level < 11) ? "heroic" : (level < 21) ? "paragon" : "epic";
+                                    string tierx = GetTierX(level);
 
                                     sw.Write(level + "," + flag + "," + role + "," + is_minion + "," + is_leader + "," + tier + "," + tierx + "," + list.Count + "," + powers.Count);
 
                                     foreach (string condition in Conditions.GetConditions())
                                     {
                                         int count = 0;
-
                                         string str = condition.ToLower();
                                         foreach (CreaturePower power in powers)
                                             if (power.Details.ToLower().Contains(str))
                                                 count += 1;
 
-                                        double pc = 0;
-                                        if (powers.Count != 0)
-                                            pc = (double)count / powers.Count;
-
+                                        double pc = (powers.Count != 0) ? (double)count / powers.Count : 0;
                                         sw.Write("," + pc);
                                     }
 
                                     foreach (DamageType damage in Enum.GetValues(typeof(DamageType)))
                                     {
                                         int count = 0;
-
                                         string str = damage.ToString().ToLower();
                                         foreach (CreaturePower power in powers)
                                             if (power.Details.ToLower().Contains(str))
                                                 count += 1;
 
-                                        double pc = 0;
-                                        if (powers.Count != 0)
-                                            pc = (double)count / powers.Count;
-
+                                        double pc = (powers.Count != 0) ? (double)count / powers.Count : 0;
                                         sw.Write("," + pc);
                                     }
-
                                     sw.WriteLine();
                                 }
                             }
@@ -435,101 +334,76 @@ namespace Masterplan
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                LogSystem.Trace(ex);
-            }
-            finally
-            {
-                sw.Close();
-            }
+            catch (Exception ex) { LogSystem.Trace(ex); }
+            finally { sw.Close(); }
+        }
+
+        private static string GetTierX(int level)
+        {
+            if (level < 4) return "early heroic";
+            if (level < 8) return "mid heroic";
+            if (level < 11) return "late heroic";
+            if (level < 14) return "early paragon";
+            if (level < 18) return "mid paragon";
+            if (level < 21) return "late paragon";
+            if (level < 24) return "early epic";
+            if (level < 28) return "mid epic";
+            if (level < 31) return "late epic";
+            return "epic plus";
         }
 
         private static List<Creature> Get_creatures(List<Creature> creatures, int level, bool is_minion, bool is_leader, RoleType role, RoleFlag flag)
         {
             List<Creature> list = new List<Creature>();
-
             foreach (Creature c in creatures)
             {
-                if (c.Level != level)
-                    continue;
+                if (c.Level != level) continue;
 
                 ComplexRole cr = c.Role as ComplexRole;
                 Minion m = c.Role as Minion;
 
-                if ((m != null) && (!m.HasRole))
-                    continue;
+                if ((m != null) && (!m.HasRole)) continue;
 
-                bool minion = m != null;
-                if (minion != is_minion)
-                    continue;
-
-                bool leader = ((cr != null) && (cr.Leader));
-                if (leader != is_leader)
-                    continue;
+                if ((m != null) != is_minion) continue;
+                bool leader = (cr != null && cr.Leader);
+                if (leader != is_leader) continue;
 
                 RoleType rt = RoleType.Blaster;
                 RoleFlag rf = RoleFlag.Standard;
-                if (cr != null)
-                {
-                    rt = cr.Type;
-                    rf = cr.Flag;
-                }
-                if (m != null)
-                {
-                    rt = m.Type;
-                    rf = RoleFlag.Standard;
-                }
+                if (cr != null) { rt = cr.Type; rf = cr.Flag; }
+                if (m != null) { rt = m.Type; rf = RoleFlag.Standard; }
 
-                if (rt != role)
-                    continue;
-
-                if (rf != flag)
-                    continue;
+                if (rt != role || rf != flag) continue;
 
                 list.Add(c);
             }
-
             return list;
         }
 
         #endregion
 
         #region Security
-
-        internal static bool IsBeta
-        {
-            get
-            {
-                return fIsBeta;
-            }
-        }
-
+        internal static bool IsBeta => fIsBeta;
         #endregion
 
         internal static void SetResolution(Image img)
         {
-            Bitmap bmp = img as Bitmap;
-            if (bmp != null)
+            if (img is Bitmap bmp)
             {
                 try
                 {
                     float x_dpi = Math.Min(bmp.HorizontalResolution, 96);
                     float y_dpi = Math.Min(bmp.VerticalResolution, 96);
-
                     bmp.SetResolution(x_dpi, y_dpi);
                 }
-                catch
-                {
-                    // Didn't set anything
-                }
+                catch { }
             }
         }
 
         public static ProgressScreen SplashScreen = null;
 
-        public static string ProjectFilter = "Masterplan Project|*.masterplan";
-        public static string LibraryFilter = "Masterplan Library|*.library;*.xlibrary";
+        public static string ProjectFilter = "Masterplan Project|*.masterplan;*.mpxpm";
+        public static string LibraryFilter = "Masterplan Library|*.library;*.mpxpl";
         public static string EncounterFilter = "Masterplan Encounter|*.encounter";
         public static string BackgroundFilter = "Masterplan Campaign Background|*.background";
         public static string EncyclopediaFilter = "Masterplan Campaign Encyclopedia|*.encyclopedia";
@@ -550,8 +424,8 @@ namespace Masterplan
 
         public static string HTMLFilter = "HTML File|*.htm";
         public static string ImageFilter = "Image File|*.bmp;*.jpg;*.jpeg;*.gif;*.png;*.tga";
-        public static string PNGFilter = "Image File|*.png";        // Added for the PNG Export
-        public static string HeroAndPCFilter = "Hero File|*.hero";  // Added for the Hero Export
+        public static string PNGFilter = "Image File|*.png";
+        public static string HeroAndPCFilter = "Hero File|*.hero";
 
     }
 }

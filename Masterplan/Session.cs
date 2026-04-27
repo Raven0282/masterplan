@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 
 using Masterplan.Data;
 using Masterplan.Extensibility;
@@ -111,44 +111,7 @@ namespace Masterplan
             return null;
         }
 
-        //public static Library LoadLibrary(string filename)
-        //{
-        //    try
-        //    {
-        //        if (Program.SplashScreen != null)
-        //        {
-        //            Program.SplashScreen.CurrentSubAction = Tools.FileName.Name(filename);
-        //            Program.SplashScreen.Progress += 1;
-        //        }
-
-        //        Library lib = Serialisation<Library>.Load(filename, SerialisationMode.Binary);
-        //        if (lib != null)
-        //        {
-        //            lib.Name = Tools.FileName.Name(filename);
-        //            lib.Update();
-
-        //            Session.Libraries.Add(lib);
-        //        }
-        //        else
-        //        {
-        //            LogSystem.Trace("Could not load " + Tools.FileName.Name(filename));
-        //        }
-
-        //        return lib;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogSystem.Trace(ex);
-        //    }
-
-        //    return null;
-        //}
-
-        //public static void ConvertLibrary(string new_lib_dir, string filename);
-        //{
-        
-        //}
-public static Library LoadLibrary(string filename)
+        public static Library LoadLibrary(string filename)
         {
             try
             {
@@ -158,26 +121,35 @@ public static Library LoadLibrary(string filename)
                     Program.SplashScreen.Progress += 1;
                 }
 
-                // 1. Try to load the NEW MessagePack file first (if it exists)
-                string new_filename = Tools.FileName.GetNewLibraryFilename(filename); // New helper to get .xLibrary name
+                // 1. Prioritized Load: Check for modern format first (.mpxpl)
+                string mpxFilename = filename.Replace(".library", ".mpxpl");
                 Library lib = null;
-                
-                if (File.Exists(new_filename))
+
+                if (File.Exists(mpxFilename))
                 {
-                    lib = Serialisation<Library>.Load(new_filename, SerialisationMode.MessagePack);
+                    lib = Serialisation<Library>.Load(mpxFilename, SerialisationMode.MessagePack);
                 }
 
-                // 2. If the MessagePack load failed, fall back to the OLD BinaryFormatter file
+                // 2. Parallel Track: Fallback to legacy BinaryFormatter
                 if (lib == null)
                 {
                     lib = Serialisation<Library>.Load(filename, SerialisationMode.Binary);
+                    
+                    // 3. Immediate Conversion Staging (Issue #3)
+                    if (lib != null)
+                    {
+                        string convertedDir = Path.Combine(Path.GetDirectoryName(filename), "Converted");
+                        if (!Directory.Exists(convertedDir)) Directory.CreateDirectory(convertedDir);
+                        
+                        string targetPath = Path.Combine(convertedDir, Path.GetFileName(mpxFilename));
+                        LibraryConversionService.Instance.SaveXLibrary(lib, targetPath);
+                    }
                 }
-                
+
                 if (lib != null)
                 {
                     lib.Name = Tools.FileName.Name(filename);
                     lib.Update();
-
                     Session.Libraries.Add(lib);
                 }
                 else
@@ -195,33 +167,43 @@ public static Library LoadLibrary(string filename)
             return null;
         }
 
-        // ... (other methods)
-
-        public static void ConvertLibrary(string new_lib_dir, string filename)
+        public static Project LoadProject(string filename)
         {
             try
             {
-                // Load the library using the existing LoadLibrary logic (will load Binary or MessagePack)
-                Library lib = Serialisation<Library>.Load(filename, SerialisationMode.Binary); // Use Binary mode to ensure load attempts the old .library file if new is missing.
-                
-                // Get the intended new filename (e.g., C:\Libraries\Converted\LibraryName.xLibrary)
-                string new_filename = new_lib_dir + Tools.FileName.Name(filename) + ".xLibrary";
-                
-                // Only save/convert if the new file doesn't already exist.
-                if (lib != null && !File.Exists(new_filename))
+                // 1. Prioritized Load: Check for modern format first (.mpxpm)
+                string mpxFilename = filename.Replace(".masterplan", ".mpxpm");
+                Project p = null;
+
+                if (File.Exists(mpxFilename))
                 {
-                    Program.SplashScreen.CurrentSubAction = "Converting " + Tools.FileName.Name(filename);
-                    
-                    // Save the loaded object in the new XML format using DTO to properly serialize to XML.
-                    Serialisation<Library>.Save(new_filename, lib, SerialisationMode.XMLDTO);
+                    p = Serialisation<Project>.Load(mpxFilename, SerialisationMode.MessagePack);
                 }
+
+                // 2. Parallel Track: Fallback to legacy BinaryFormatter
+                if (p == null)
+                {
+                    p = Serialisation<Project>.Load(filename, SerialisationMode.Binary);
+                    
+                    // 3. Immediate Conversion Staging (Issue #3)
+                    if (p != null)
+                    {
+                        string convertedDir = Path.Combine(Path.GetDirectoryName(filename), "Converted");
+                        if (!Directory.Exists(convertedDir)) Directory.CreateDirectory(convertedDir);
+                        
+                        string targetPath = Path.Combine(convertedDir, Path.GetFileName(mpxFilename));
+                        LibraryConversionService.Instance.SaveXProject(p, targetPath);
+                    }
+                }
+
+                return p;
             }
             catch (Exception ex)
             {
                 LogSystem.Trace(ex);
+                return null;
             }
         }
-
 
         public static void DeleteLibrary(Library lib)
         {
@@ -233,7 +215,7 @@ public static Library LoadLibrary(string filename)
             Session.Libraries.Remove(lib);
         }
 
-
+        #endregion
 
         #region Find library by item
 
@@ -1138,7 +1120,7 @@ public static Library LoadLibrary(string filename)
 
         #endregion
 
-        #endregion
+        //#endregion
 
         #region Project Backup
 
@@ -1176,7 +1158,7 @@ public static Library LoadLibrary(string filename)
                 string backup_name = dir + Tools.FileName.Name(filename);
                 if (File.Exists(backup_name))
                 {
-                    p = Serialisation<Project>.Load(backup_name, SerialisationMode.Binary);
+                    p = LoadProject(backup_name);
                     if (p != null)
                     {
                         string str = "There was a problem opening this project; it has been recovered from its most recent backup version.";
