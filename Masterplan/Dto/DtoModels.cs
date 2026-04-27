@@ -6,7 +6,7 @@ namespace Masterplan.Dto
 {
     #region Root Containers
     [MessagePackObject]
-    public class LibraryDto
+    public partial class LibraryDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -23,7 +23,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class ProjectDto
+    public partial class ProjectDto
     {
         [Key(0)] public string Name { get; set; }
         [Key(1)] public string Author { get; set; }
@@ -51,7 +51,7 @@ namespace Masterplan.Dto
 
     #region Creature & Common Components
     [MessagePackObject]
-    public class CreatureDto
+    public partial class CreatureDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -95,13 +95,13 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class AbilityScoreDto
+    public partial class AbilityScoreDto
     {
         [Key(0)] public int Score { get; set; }
     }
 
     [MessagePackObject]
-    public class RoleDto
+    public partial class RoleDto
     {
         [Key(0)] public string Type { get; set; }
         [Key(1)] public string Flag { get; set; }
@@ -111,7 +111,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class CreaturePowerDto
+    public partial class CreaturePowerDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -127,7 +127,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class PowerActionDto
+    public partial class PowerActionDto
     {
         [Key(0)] public string Action { get; set; }
         [Key(1)] public string Trigger { get; set; }
@@ -137,14 +137,14 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class PowerAttackDto
+    public partial class PowerAttackDto
     {
         [Key(0)] public int Bonus { get; set; }
         [Key(1)] public string Defence { get; set; }
     }
 
     [MessagePackObject]
-    public class AuraDto
+    public partial class AuraDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -153,14 +153,14 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class RegenerationDto
+    public partial class RegenerationDto
     {
         [Key(0)] public int Value { get; set; }
         [Key(1)] public string Details { get; set; }
     }
 
     [MessagePackObject]
-    public class DamageModifierDto
+    public partial class DamageModifierDto
     {
         [Key(0)] public string Type { get; set; }
         [Key(1)] public int Value { get; set; }
@@ -169,7 +169,7 @@ namespace Masterplan.Dto
 
     #region Traps & Hazards
     [MessagePackObject]
-    public class TrapDto
+    public partial class TrapDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -189,7 +189,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class TrapAttackDto
+    public partial class TrapAttackDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -208,7 +208,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class TrapSkillDto
+    public partial class TrapSkillDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string SkillName { get; set; }
@@ -217,9 +217,40 @@ namespace Masterplan.Dto
     }
     #endregion
 
+    #region Plot & Encounter
+    [MessagePackObject]
+    public partial class PlotDto
+    {
+        [Key(0)] public List<PlotPointDto> Points { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class PlotPointDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string State { get; set; }
+        [Key(3)] public string Colour { get; set; }
+        [Key(4)] public string Details { get; set; }
+        [Key(5)] public string ReadAloud { get; set; }
+        [Key(6)] public List<Guid> Links { get; set; } = new();
+        [Key(7)] public PlotDto Subplot { get; set; }
+        [Key(8)] public ElementDto Element { get; set; }
+        [Key(9)] public List<ParcelDto> Parcels { get; set; } = new();
+        [Key(10)] public List<Guid> EncyclopediaEntryIDs { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class ElementDto
+    {
+        [Key(0)] public string Type { get; set; }
+        [Key(1)] public byte[] Data { get; set; }
+    }
+    #endregion
+
     #region Skill Challenges
     [MessagePackObject]
-    public class SkillChallengeDto
+    public partial class SkillChallengeDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -236,7 +267,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class SkillChallengeDataDto
+    public partial class SkillChallengeDataDto
     {
         [Key(0)] public string SkillName { get; set; }
         [Key(1)] public string Difficulty { get; set; }
@@ -249,7 +280,7 @@ namespace Masterplan.Dto
 
     #region Items, Tiles & Themes
     [MessagePackObject]
-    public class MagicItemDto
+    public partial class MagicItemDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -262,7 +293,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class ArtifactDto
+    public partial class ArtifactDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -276,7 +307,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class ArtifactConcordanceDto
+    public partial class ArtifactConcordanceDto
     {
         [Key(0)] public string Name { get; set; }
         [Key(1)] public string ValueRange { get; set; }
@@ -286,7 +317,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class TileDto
+    public partial class TileDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Category { get; set; }
@@ -299,7 +330,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class TerrainPowerDto
+    public partial class TerrainPowerDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -318,22 +349,21 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class ThemeDto
+    public partial class ThemeDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
     }
 
     [MessagePackObject]
-    public class TemplateDto
+    public partial class TemplateDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
-        // Add more template specific fields from MasterSchema.txt if needed
     }
 
     [MessagePackObject]
-    public class SectionDto
+    public partial class SectionDto
     {
         [Key(0)] public string Header { get; set; }
         [Key(1)] public string Details { get; set; }
@@ -342,7 +372,7 @@ namespace Masterplan.Dto
 
     #region Project Sub-Models
     [MessagePackObject]
-    public class PartyDto
+    public partial class PartyDto
     {
         [Key(0)] public int Size { get; set; }
         [Key(1)] public int XP { get; set; }
@@ -350,7 +380,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class HeroDto
+    public partial class HeroDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -377,13 +407,13 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class EncyclopediaDto
+    public partial class EncyclopediaDto
     {
         [Key(0)] public List<EncyclopediaEntryDto> Entries { get; set; } = new();
     }
 
     [MessagePackObject]
-    public class EncyclopediaEntryDto
+    public partial class EncyclopediaEntryDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -394,7 +424,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class EncyclopediaImageDto
+    public partial class EncyclopediaImageDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -402,7 +432,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class MapDto
+    public partial class MapDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -412,7 +442,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class MapTileDto
+    public partial class MapTileDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public Guid TileID { get; set; }
@@ -422,7 +452,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class MapAreaDto
+    public partial class MapAreaDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -434,7 +464,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class RegionalMapDto
+    public partial class RegionalMapDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -443,7 +473,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class MapLocationDto
+    public partial class MapLocationDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -453,7 +483,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class DeckDto
+    public partial class DeckDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -462,7 +492,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class EncounterCardDto
+    public partial class EncounterCardDto
     {
         [Key(0)] public Guid CreatureID { get; set; }
         [Key(1)] public List<Guid> TemplateIDs { get; set; } = new();
@@ -473,25 +503,23 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class NPCDto
+    public partial class NPCDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public Guid TemplateID { get; set; }
-        // NPC is often a Creature + Template, mapping will handle hydration
     }
 
     [MessagePackObject]
-    public class CalendarDto
+    public partial class CalendarDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
         [Key(2)] public string Details { get; set; }
         [Key(3)] public int CampaignYear { get; set; }
-        // Months, Days, etc. from Project.txt
     }
 
     [MessagePackObject]
-    public class AttachmentDto
+    public partial class AttachmentDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -499,7 +527,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class BackgroundDto
+    public partial class BackgroundDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Title { get; set; }
@@ -507,7 +535,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class ParcelDto
+    public partial class ParcelDto
     {
         [Key(0)] public string Name { get; set; }
         [Key(1)] public string Details { get; set; }
@@ -518,15 +546,14 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class PlayerOptionDto
+    public partial class PlayerOptionDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
-        // Add more from Project.txt as needed
     }
 
     [MessagePackObject]
-    public class NoteDto
+    public partial class NoteDto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
@@ -535,7 +562,7 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public class CampaignSettingsDto
+    public partial class CampaignSettingsDto
     {
         [Key(0)] public double HP { get; set; }
         [Key(1)] public double XP { get; set; }

@@ -36,7 +36,6 @@
     <Compile Remove="Tools\HtmlProjectExport.cs" />
     <Compile Remove="Tools\HtmlToPngExporter.cs" />
     <Compile Remove="Tools\LibraryConversionService - Copy.cs" />
-    <Compile Remove="Tools\LibraryConversionService.cs" />
     <Compile Remove="Tools\LogSystem.cs" />
     <Compile Remove="Tools\X_PngExporter.cs" />
     <Compile Remove="UI\ExportOptions.cs" />
