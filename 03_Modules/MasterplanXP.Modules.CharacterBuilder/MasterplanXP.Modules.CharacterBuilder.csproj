@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.0.0" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Dock.Avalonia" Version="12.0.0.1" />
+    <PackageReference Include="Dock.Avalonia.Themes.Browser" Version="12.0.0.1" />
+    <PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.0.0.1" />
+    <PackageReference Include="ReactiveUI.Avalonia" Version="11.4.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\01_Core\MasterplanXP.Core\MasterplanXP.Core.csproj" />
+    <ProjectReference Include="..\..\02_Infrastructure\MasterplanXP.Infrastructure\MasterplanXP.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

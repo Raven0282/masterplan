@@ -1,4 +1,5 @@
-﻿#nullable disable
+﻿
+#nullable disable
 
 using Masterplan.Data;
 using Masterplan.Tools;
@@ -30,12 +31,12 @@ namespace Masterplan
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-          
+
 
             try
             {
                 // The CS7036 error was fixed by modifying the file creation logic inside LogSystem.cs.
-        #region Bootstrapping
+                #region Bootstrapping
                 Init_logging();
 
                 SplashScreen = new ProgressScreen("Masterplan", 0);
@@ -231,6 +232,15 @@ namespace Masterplan
                 //    format first for maximum speed on subsequent loads.
                 foreach (string filename in libraries)
                 {
+                    // The ProgressScreen updates remain as per your original file
+                    if (SplashScreen != null)
+                    {
+                        SplashScreen.CurrentSubAction = FileName.Name(filename);
+                        SplashScreen.Progress++;
+                    }
+
+                    // This call triggers DiscoveryService.RunDiscovery(..., clearCache: false) 
+                    // inside our updated Serialisation.cs
                     Session.LoadLibrary(filename);
                 }
 
@@ -312,7 +322,7 @@ namespace Masterplan
             Process.Start(logdir);
         }
 
-#endregion
+                #endregion
 
         #region Stats
 

@@ -1,0 +1,533 @@
+// Processing Source: Adventurer's Vault 2.library
+Library.ID (Type: Guid)
+Library.Name (Type: String)
+Library.Creatures (Type: List`1)
+[COLLECTION] Library.Creatures (Type: List`1)
+Library.Templates (Type: List`1)
+[COLLECTION] Library.Templates (Type: List`1)
+Library.Themes (Type: List`1)
+[COLLECTION] Library.Themes (Type: List`1)
+Library.Traps (Type: List`1)
+[COLLECTION] Library.Traps (Type: List`1)
+Library.SkillChallenges (Type: List`1)
+[COLLECTION] Library.SkillChallenges (Type: List`1)
+Library.MagicItems (Type: List`1)
+[COLLECTION] Library.MagicItems (Type: List`1)
+Library.MagicItems[].ID (Type: Guid)
+Library.MagicItems[].Name (Type: String)
+Library.MagicItems[].Type (Type: String)
+Library.MagicItems[].Rarity (Type: MagicItemRarity)
+Library.MagicItems[].Level (Type: Int32)
+Library.MagicItems[].Description (Type: String)
+Library.MagicItems[].Sections (Type: List`1)
+[COLLECTION] Library.MagicItems[].Sections (Type: List`1)
+Library.MagicItems[].Sections[].Header (Type: String)
+Library.MagicItems[].Sections[].Details (Type: String)
+Library.MagicItems[].Info (Type: String)
+Library.Artifacts (Type: List`1)
+[COLLECTION] Library.Artifacts (Type: List`1)
+Library.Tiles (Type: List`1)
+[COLLECTION] Library.Tiles (Type: List`1)
+Library.TerrainPowers (Type: List`1)
+[COLLECTION] Library.TerrainPowers (Type: List`1)
+Library.ShowInAutoBuild (Type: Boolean)
+// Processing Source: Adventurer's Vault.library
+Library.Creatures[].ID (Type: Guid)
+Library.Creatures[].Name (Type: String)
+Library.Creatures[].Details (Type: String)
+Library.Creatures[].Size (Type: CreatureSize)
+Library.Creatures[].Origin (Type: CreatureOrigin)
+Library.Creatures[].Type (Type: CreatureType)
+Library.Creatures[].Keywords (Type: String)
+Library.Creatures[].Level (Type: Int32)
+Library.Creatures[].Role (Type: IRole)
+Library.Creatures[].Role.Type (Type: RoleType)
+Library.Creatures[].Role.Flag (Type: RoleFlag)
+Library.Creatures[].Role.Leader (Type: Boolean)
+Library.Creatures[].Senses (Type: String)
+Library.Creatures[].Movement (Type: String)
+Library.Creatures[].Alignment (Type: String)
+Library.Creatures[].Languages (Type: String)
+Library.Creatures[].Skills (Type: String)
+Library.Creatures[].Equipment (Type: String)
+Library.Creatures[].Category (Type: String)
+Library.Creatures[].Strength (Type: Ability)
+Library.Creatures[].Strength.Score (Type: Int32)
+Library.Creatures[].Strength.Modifier (Type: Int32)
+Library.Creatures[].Strength.Cost (Type: Int32)
+Library.Creatures[].Constitution (Type: Ability)
+Library.Creatures[].Constitution.Score (Type: Int32)
+Library.Creatures[].Constitution.Modifier (Type: Int32)
+Library.Creatures[].Constitution.Cost (Type: Int32)
+Library.Creatures[].Dexterity (Type: Ability)
+Library.Creatures[].Dexterity.Score (Type: Int32)
+Library.Creatures[].Dexterity.Modifier (Type: Int32)
+Library.Creatures[].Dexterity.Cost (Type: Int32)
+Library.Creatures[].Intelligence (Type: Ability)
+Library.Creatures[].Intelligence.Score (Type: Int32)
+Library.Creatures[].Intelligence.Modifier (Type: Int32)
+Library.Creatures[].Intelligence.Cost (Type: Int32)
+Library.Creatures[].Wisdom (Type: Ability)
+Library.Creatures[].Wisdom.Score (Type: Int32)
+Library.Creatures[].Wisdom.Modifier (Type: Int32)
+Library.Creatures[].Wisdom.Cost (Type: Int32)
+Library.Creatures[].Charisma (Type: Ability)
+Library.Creatures[].Charisma.Score (Type: Int32)
+Library.Creatures[].Charisma.Modifier (Type: Int32)
+Library.Creatures[].Charisma.Cost (Type: Int32)
+Library.Creatures[].HP (Type: Int32)
+Library.Creatures[].Initiative (Type: Int32)
+Library.Creatures[].AC (Type: Int32)
+Library.Creatures[].Fortitude (Type: Int32)
+Library.Creatures[].Reflex (Type: Int32)
+Library.Creatures[].Will (Type: Int32)
+Library.Creatures[].Regeneration (Type: Regeneration)
+Library.Creatures[].Auras (Type: List`1)
+[COLLECTION] Library.Creatures[].Auras (Type: List`1)
+Library.Creatures[].CreaturePowers (Type: List`1)
+[COLLECTION] Library.Creatures[].CreaturePowers (Type: List`1)
+Library.Creatures[].CreaturePowers[].ID (Type: Guid)
+Library.Creatures[].CreaturePowers[].Name (Type: String)
+Library.Creatures[].CreaturePowers[].Action (Type: PowerAction)
+Library.Creatures[].CreaturePowers[].Action.Action (Type: ActionType)
+Library.Creatures[].CreaturePowers[].Action.Trigger (Type: String)
+Library.Creatures[].CreaturePowers[].Action.SustainAction (Type: ActionType)
+Library.Creatures[].CreaturePowers[].Action.Use (Type: PowerUseType)
+Library.Creatures[].CreaturePowers[].Action.Recharge (Type: String)
+Library.Creatures[].CreaturePowers[].Keywords (Type: String)
+Library.Creatures[].CreaturePowers[].Condition (Type: String)
+Library.Creatures[].CreaturePowers[].Range (Type: String)
+Library.Creatures[].CreaturePowers[].Attack (Type: PowerAttack)
+Library.Creatures[].CreaturePowers[].Attack.Bonus (Type: Int32)
+Library.Creatures[].CreaturePowers[].Attack.Defence (Type: DefenceType)
+Library.Creatures[].CreaturePowers[].Description (Type: String)
+Library.Creatures[].CreaturePowers[].Details (Type: String)
+Library.Creatures[].CreaturePowers[].Damage (Type: String)
+Library.Creatures[].CreaturePowers[].Category (Type: CreaturePowerCategory)
+Library.Creatures[].DamageModifiers (Type: List`1)
+[COLLECTION] Library.Creatures[].DamageModifiers (Type: List`1)
+Library.Creatures[].Resist (Type: String)
+Library.Creatures[].Vulnerable (Type: String)
+Library.Creatures[].Immune (Type: String)
+Library.Creatures[].Tactics (Type: String)
+Library.Creatures[].Image (Type: Image)
+Library.Creatures[].Info (Type: String)
+Library.Creatures[].Phenotype (Type: String)
+// Processing Source: Arcane Power.library
+// Processing Source: City of Stormreach.library
+Library.Creatures[].Auras[].ID (Type: Guid)
+Library.Creatures[].Auras[].Name (Type: String)
+Library.Creatures[].Auras[].Keywords (Type: String)
+Library.Creatures[].Auras[].Details (Type: String)
+// Processing Source: CUSTOM Entries.library
+Library.Creatures[].Regeneration.Value (Type: Int32)
+Library.Creatures[].Regeneration.Details (Type: String)
+Library.Creatures[].DamageModifiers[].Type (Type: DamageType)
+Library.Creatures[].DamageModifiers[].Value (Type: Int32)
+Library.Creatures[].Image.Tag (Type: Object)
+Library.Creatures[].Image.PhysicalDimension (Type: SizeF)
+Library.Creatures[].Image.PhysicalDimension.IsEmpty (Type: Boolean)
+Library.Creatures[].Image.PhysicalDimension.Width (Type: Single)
+Library.Creatures[].Image.PhysicalDimension.Height (Type: Single)
+Library.Creatures[].Image.Size (Type: Size)
+Library.Creatures[].Image.Size.IsEmpty (Type: Boolean)
+Library.Creatures[].Image.Size.Width (Type: Int32)
+Library.Creatures[].Image.Size.Height (Type: Int32)
+Library.Creatures[].Image.Width (Type: Int32)
+Library.Creatures[].Image.Height (Type: Int32)
+Library.Creatures[].Image.HorizontalResolution (Type: Single)
+Library.Creatures[].Image.VerticalResolution (Type: Single)
+Library.Creatures[].Image.Flags (Type: Int32)
+Library.Creatures[].Image.RawFormat (Type: ImageFormat)
+Library.Creatures[].Image.RawFormat.Guid (Type: Guid)
+Library.Creatures[].Image.PixelFormat (Type: PixelFormat)
+Library.Creatures[].Image.PropertyIdList (Type: Int32[])
+[COLLECTION] Library.Creatures[].Image.PropertyIdList (Type: Int32[])
+Library.Creatures[].Image.PropertyItems (Type: PropertyItem[])
+[COLLECTION] Library.Creatures[].Image.PropertyItems (Type: PropertyItem[])
+Library.Creatures[].Image.PropertyItems[].Id (Type: Int32)
+Library.Creatures[].Image.PropertyItems[].Len (Type: Int32)
+Library.Creatures[].Image.PropertyItems[].Type (Type: Int16)
+Library.Creatures[].Image.PropertyItems[].Value (Type: Byte[])
+[COLLECTION] Library.Creatures[].Image.PropertyItems[].Value (Type: Byte[])
+Library.Creatures[].Image.Palette (Type: ColorPalette)
+Library.Creatures[].Image.Palette.Flags (Type: Int32)
+Library.Creatures[].Image.Palette.Entries (Type: Color[])
+[COLLECTION] Library.Creatures[].Image.Palette.Entries (Type: Color[])
+Library.Creatures[].Image.FrameDimensionsList (Type: Guid[])
+[COLLECTION] Library.Creatures[].Image.FrameDimensionsList (Type: Guid[])
+Library.Templates[].Name (Type: String)
+Library.Templates[].ID (Type: Guid)
+Library.Templates[].Type (Type: CreatureTemplateType)
+Library.Templates[].Role (Type: RoleType)
+Library.Templates[].Leader (Type: Boolean)
+Library.Templates[].Senses (Type: String)
+Library.Templates[].Movement (Type: String)
+Library.Templates[].HP (Type: Int32)
+Library.Templates[].Initiative (Type: Int32)
+Library.Templates[].AC (Type: Int32)
+Library.Templates[].Fortitude (Type: Int32)
+Library.Templates[].Reflex (Type: Int32)
+Library.Templates[].Will (Type: Int32)
+Library.Templates[].Regeneration (Type: Regeneration)
+Library.Templates[].Regeneration.Value (Type: Int32)
+Library.Templates[].Regeneration.Details (Type: String)
+Library.Templates[].Auras (Type: List`1)
+[COLLECTION] Library.Templates[].Auras (Type: List`1)
+Library.Templates[].Auras[].ID (Type: Guid)
+Library.Templates[].Auras[].Name (Type: String)
+Library.Templates[].Auras[].Keywords (Type: String)
+Library.Templates[].Auras[].Details (Type: String)
+Library.Templates[].CreaturePowers (Type: List`1)
+[COLLECTION] Library.Templates[].CreaturePowers (Type: List`1)
+Library.Templates[].CreaturePowers[].ID (Type: Guid)
+Library.Templates[].CreaturePowers[].Name (Type: String)
+Library.Templates[].CreaturePowers[].Action (Type: PowerAction)
+Library.Templates[].CreaturePowers[].Keywords (Type: String)
+Library.Templates[].CreaturePowers[].Condition (Type: String)
+Library.Templates[].CreaturePowers[].Range (Type: String)
+Library.Templates[].CreaturePowers[].Attack (Type: PowerAttack)
+Library.Templates[].CreaturePowers[].Attack.Bonus (Type: Int32)
+Library.Templates[].CreaturePowers[].Attack.Defence (Type: DefenceType)
+Library.Templates[].CreaturePowers[].Description (Type: String)
+Library.Templates[].CreaturePowers[].Details (Type: String)
+Library.Templates[].CreaturePowers[].Damage (Type: String)
+Library.Templates[].CreaturePowers[].Category (Type: CreaturePowerCategory)
+Library.Templates[].DamageModifierTemplates (Type: List`1)
+[COLLECTION] Library.Templates[].DamageModifierTemplates (Type: List`1)
+Library.Templates[].DamageModifierTemplates[].Type (Type: DamageType)
+Library.Templates[].DamageModifierTemplates[].HeroicValue (Type: Int32)
+Library.Templates[].DamageModifierTemplates[].ParagonValue (Type: Int32)
+Library.Templates[].DamageModifierTemplates[].EpicValue (Type: Int32)
+Library.Templates[].Resist (Type: String)
+Library.Templates[].Vulnerable (Type: String)
+Library.Templates[].Immune (Type: String)
+Library.Templates[].Tactics (Type: String)
+Library.Templates[].Info (Type: String)
+Library.Traps[].ID (Type: Guid)
+Library.Traps[].Type (Type: TrapType)
+Library.Traps[].Name (Type: String)
+Library.Traps[].Level (Type: Int32)
+Library.Traps[].Role (Type: IRole)
+Library.Traps[].Role.Type (Type: RoleType)
+Library.Traps[].Role.Flag (Type: RoleFlag)
+Library.Traps[].Role.Leader (Type: Boolean)
+Library.Traps[].ReadAloud (Type: String)
+Library.Traps[].Description (Type: String)
+Library.Traps[].Details (Type: String)
+Library.Traps[].Skills (Type: List`1)
+[COLLECTION] Library.Traps[].Skills (Type: List`1)
+Library.Traps[].Skills[].ID (Type: Guid)
+Library.Traps[].Skills[].SkillName (Type: String)
+Library.Traps[].Skills[].DC (Type: Int32)
+Library.Traps[].Skills[].Details (Type: String)
+Library.Traps[].Initiative (Type: Int32)
+Library.Traps[].Trigger (Type: String)
+Library.Traps[].Attack (Type: TrapAttack)
+Library.Traps[].Attacks (Type: List`1)
+[COLLECTION] Library.Traps[].Attacks (Type: List`1)
+Library.Traps[].Attacks[].ID (Type: Guid)
+Library.Traps[].Attacks[].Name (Type: String)
+Library.Traps[].Attacks[].Trigger (Type: String)
+Library.Traps[].Attacks[].Action (Type: ActionType)
+Library.Traps[].Attacks[].Range (Type: String)
+Library.Traps[].Attacks[].Keywords (Type: String)
+Library.Traps[].Attacks[].Target (Type: String)
+Library.Traps[].Attacks[].HasInitiative (Type: Boolean)
+Library.Traps[].Attacks[].Initiative (Type: Int32)
+Library.Traps[].Attacks[].Attack (Type: PowerAttack)
+Library.Traps[].Attacks[].Attack.Bonus (Type: Int32)
+Library.Traps[].Attacks[].Attack.Defence (Type: DefenceType)
+Library.Traps[].Attacks[].OnHit (Type: String)
+Library.Traps[].Attacks[].OnMiss (Type: String)
+Library.Traps[].Attacks[].Effect (Type: String)
+Library.Traps[].Attacks[].Notes (Type: String)
+Library.Traps[].Countermeasures (Type: List`1)
+[COLLECTION] Library.Traps[].Countermeasures (Type: List`1)
+Library.Traps[].XP (Type: Int32)
+Library.Traps[].Info (Type: String)
+Library.SkillChallenges[].ID (Type: Guid)
+Library.SkillChallenges[].Name (Type: String)
+Library.SkillChallenges[].Level (Type: Int32)
+Library.SkillChallenges[].Complexity (Type: Int32)
+Library.SkillChallenges[].Skills (Type: List`1)
+[COLLECTION] Library.SkillChallenges[].Skills (Type: List`1)
+Library.SkillChallenges[].Skills[].SkillName (Type: String)
+Library.SkillChallenges[].Skills[].Difficulty (Type: Difficulty)
+Library.SkillChallenges[].Skills[].DCModifier (Type: Int32)
+Library.SkillChallenges[].Skills[].Type (Type: SkillType)
+Library.SkillChallenges[].Skills[].Details (Type: String)
+Library.SkillChallenges[].Skills[].Success (Type: String)
+Library.SkillChallenges[].Skills[].Failure (Type: String)
+Library.SkillChallenges[].Skills[].Results (Type: SkillChallengeResult)
+Library.SkillChallenges[].Skills[].Results.Successes (Type: Int32)
+Library.SkillChallenges[].Skills[].Results.Fails (Type: Int32)
+Library.SkillChallenges[].Success (Type: String)
+Library.SkillChallenges[].Failure (Type: String)
+Library.SkillChallenges[].Notes (Type: String)
+Library.SkillChallenges[].MapID (Type: Guid)
+Library.SkillChallenges[].MapAreaID (Type: Guid)
+Library.SkillChallenges[].Successes (Type: Int32)
+Library.SkillChallenges[].Results (Type: SkillChallengeResult)
+Library.SkillChallenges[].Results.Successes (Type: Int32)
+Library.SkillChallenges[].Results.Fails (Type: Int32)
+Library.SkillChallenges[].Info (Type: String)
+Library.Artifacts[].ID (Type: Guid)
+Library.Artifacts[].Name (Type: String)
+Library.Artifacts[].Tier (Type: Tier)
+Library.Artifacts[].Description (Type: String)
+Library.Artifacts[].Details (Type: String)
+Library.Artifacts[].Goals (Type: String)
+Library.Artifacts[].RoleplayingTips (Type: String)
+Library.Artifacts[].Sections (Type: List`1)
+[COLLECTION] Library.Artifacts[].Sections (Type: List`1)
+Library.Artifacts[].ConcordanceRules (Type: List`1)
+[COLLECTION] Library.Artifacts[].ConcordanceRules (Type: List`1)
+Library.Artifacts[].ConcordanceRules[].First (Type: String)
+Library.Artifacts[].ConcordanceRules[].Second (Type: String)
+Library.Artifacts[].ConcordanceLevels (Type: List`1)
+[COLLECTION] Library.Artifacts[].ConcordanceLevels (Type: List`1)
+Library.Artifacts[].ConcordanceLevels[].Name (Type: String)
+Library.Artifacts[].ConcordanceLevels[].ValueRange (Type: String)
+Library.Artifacts[].ConcordanceLevels[].Quote (Type: String)
+Library.Artifacts[].ConcordanceLevels[].Description (Type: String)
+Library.Artifacts[].ConcordanceLevels[].Sections (Type: List`1)
+[COLLECTION] Library.Artifacts[].ConcordanceLevels[].Sections (Type: List`1)
+Library.Tiles[].ID (Type: Guid)
+Library.Tiles[].Category (Type: TileCategory)
+Library.Tiles[].Size (Type: Size)
+Library.Tiles[].Size.IsEmpty (Type: Boolean)
+Library.Tiles[].Size.Width (Type: Int32)
+Library.Tiles[].Size.Height (Type: Int32)
+Library.Tiles[].Image (Type: Image)
+Library.Tiles[].Image.Tag (Type: Object)
+Library.Tiles[].Image.PhysicalDimension (Type: SizeF)
+Library.Tiles[].Image.PhysicalDimension.IsEmpty (Type: Boolean)
+Library.Tiles[].Image.PhysicalDimension.Width (Type: Single)
+Library.Tiles[].Image.PhysicalDimension.Height (Type: Single)
+Library.Tiles[].Image.Size (Type: Size)
+Library.Tiles[].Image.Size.IsEmpty (Type: Boolean)
+Library.Tiles[].Image.Size.Width (Type: Int32)
+Library.Tiles[].Image.Size.Height (Type: Int32)
+Library.Tiles[].Image.Width (Type: Int32)
+Library.Tiles[].Image.Height (Type: Int32)
+Library.Tiles[].Image.HorizontalResolution (Type: Single)
+Library.Tiles[].Image.VerticalResolution (Type: Single)
+Library.Tiles[].Image.Flags (Type: Int32)
+Library.Tiles[].Image.RawFormat (Type: ImageFormat)
+Library.Tiles[].Image.PixelFormat (Type: PixelFormat)
+Library.Tiles[].Image.PropertyIdList (Type: Int32[])
+[COLLECTION] Library.Tiles[].Image.PropertyIdList (Type: Int32[])
+Library.Tiles[].Image.PropertyItems (Type: PropertyItem[])
+[COLLECTION] Library.Tiles[].Image.PropertyItems (Type: PropertyItem[])
+Library.Tiles[].Image.PropertyItems[].Id (Type: Int32)
+Library.Tiles[].Image.PropertyItems[].Len (Type: Int32)
+Library.Tiles[].Image.PropertyItems[].Type (Type: Int16)
+Library.Tiles[].Image.PropertyItems[].Value (Type: Byte[])
+[COLLECTION] Library.Tiles[].Image.PropertyItems[].Value (Type: Byte[])
+Library.Tiles[].Image.Palette (Type: ColorPalette)
+Library.Tiles[].Image.Palette.Flags (Type: Int32)
+Library.Tiles[].Image.Palette.Entries (Type: Color[])
+[COLLECTION] Library.Tiles[].Image.Palette.Entries (Type: Color[])
+Library.Tiles[].Image.FrameDimensionsList (Type: Guid[])
+[COLLECTION] Library.Tiles[].Image.FrameDimensionsList (Type: Guid[])
+Library.Tiles[].BlankColour (Type: Color)
+Library.Tiles[].BlankColour.R (Type: Byte)
+Library.Tiles[].BlankColour.G (Type: Byte)
+Library.Tiles[].BlankColour.B (Type: Byte)
+Library.Tiles[].BlankColour.A (Type: Byte)
+Library.Tiles[].BlankColour.IsKnownColor (Type: Boolean)
+Library.Tiles[].BlankColour.IsEmpty (Type: Boolean)
+Library.Tiles[].BlankColour.IsNamedColor (Type: Boolean)
+Library.Tiles[].BlankColour.IsSystemColor (Type: Boolean)
+Library.Tiles[].BlankColour.Name (Type: String)
+Library.Tiles[].Keywords (Type: String)
+Library.Tiles[].Area (Type: Int32)
+Library.Tiles[].BlankImage (Type: Image)
+Library.Tiles[].BlankImage.Tag (Type: Object)
+Library.Tiles[].BlankImage.PhysicalDimension (Type: SizeF)
+Library.Tiles[].BlankImage.PhysicalDimension.IsEmpty (Type: Boolean)
+Library.Tiles[].BlankImage.PhysicalDimension.Width (Type: Single)
+Library.Tiles[].BlankImage.PhysicalDimension.Height (Type: Single)
+Library.Tiles[].BlankImage.Size (Type: Size)
+Library.Tiles[].BlankImage.Size.IsEmpty (Type: Boolean)
+Library.Tiles[].BlankImage.Size.Width (Type: Int32)
+Library.Tiles[].BlankImage.Size.Height (Type: Int32)
+Library.Tiles[].BlankImage.Width (Type: Int32)
+Library.Tiles[].BlankImage.Height (Type: Int32)
+Library.Tiles[].BlankImage.HorizontalResolution (Type: Single)
+Library.Tiles[].BlankImage.VerticalResolution (Type: Single)
+Library.Tiles[].BlankImage.Flags (Type: Int32)
+Library.Tiles[].BlankImage.RawFormat (Type: ImageFormat)
+Library.Tiles[].BlankImage.RawFormat.Guid (Type: Guid)
+Library.Tiles[].BlankImage.PixelFormat (Type: PixelFormat)
+Library.Tiles[].BlankImage.PropertyIdList (Type: Int32[])
+[COLLECTION] Library.Tiles[].BlankImage.PropertyIdList (Type: Int32[])
+Library.Tiles[].BlankImage.PropertyItems (Type: PropertyItem[])
+[COLLECTION] Library.Tiles[].BlankImage.PropertyItems (Type: PropertyItem[])
+Library.Tiles[].BlankImage.Palette (Type: ColorPalette)
+Library.Tiles[].BlankImage.Palette.Flags (Type: Int32)
+Library.Tiles[].BlankImage.Palette.Entries (Type: Color[])
+[COLLECTION] Library.Tiles[].BlankImage.Palette.Entries (Type: Color[])
+Library.Tiles[].BlankImage.FrameDimensionsList (Type: Guid[])
+[COLLECTION] Library.Tiles[].BlankImage.FrameDimensionsList (Type: Guid[])
+Library.TerrainPowers[].ID (Type: Guid)
+Library.TerrainPowers[].Name (Type: String)
+Library.TerrainPowers[].Type (Type: TerrainPowerType)
+Library.TerrainPowers[].FlavourText (Type: String)
+Library.TerrainPowers[].Action (Type: ActionType)
+Library.TerrainPowers[].Requirement (Type: String)
+Library.TerrainPowers[].Check (Type: String)
+Library.TerrainPowers[].Success (Type: String)
+Library.TerrainPowers[].Failure (Type: String)
+Library.TerrainPowers[].Target (Type: String)
+Library.TerrainPowers[].Attack (Type: String)
+Library.TerrainPowers[].Hit (Type: String)
+Library.TerrainPowers[].Miss (Type: String)
+Library.TerrainPowers[].Effect (Type: String)
+// Processing Source: DDM Maps.library
+Library.Tiles[].Image.RawFormat.Guid (Type: Guid)
+// Processing Source: Divine Power.library
+// Processing Source: Draconomicon Chromatic Dragons.library
+// Processing Source: Draconomicon Metallic Dragons.library
+// Processing Source: Dragon Magazine Annual 2009.library
+// Processing Source: Dragon Magazine.library
+// Processing Source: Dragons of Eberron.library
+// Processing Source: DT1 Dungeon Tiles.library
+// Processing Source: DT2 Arcane Corridors.library
+// Processing Source: DT3 Hidden Crypts.library
+// Processing Source: DT4 Ruins of the Wild.library
+// Processing Source: DT5 Lost Caverns of the Underdark.library
+// Processing Source: DT6 Dire Tombs.library
+// Processing Source: DT7 Fane of the Forgotten Gods.library
+// Processing Source: DU1 Halls of the Giant Kings.library
+// Processing Source: DU2 Streets of Shadow (City).library
+// Processing Source: DU2 Streets of Shadow (Sewer).library
+// Processing Source: DU2 Streets of Shadow.library
+// Processing Source: DU3 Caves of Carnage.library
+// Processing Source: DU4 Arcane Towers.library
+// Processing Source: DU5 Sinister Woods.library
+// Processing Source: DU6 Harrowing Halls.library
+// Processing Source: Dungeon Delve.library
+// Processing Source: Dungeon Magazine Annual.library
+// Processing Source: Dungeon Magazine.library
+// Processing Source: Dungeon Master's Guide 2.library
+Library.Templates[].CreaturePowers[].Action.Action (Type: ActionType)
+Library.Templates[].CreaturePowers[].Action.Trigger (Type: String)
+Library.Templates[].CreaturePowers[].Action.SustainAction (Type: ActionType)
+Library.Templates[].CreaturePowers[].Action.Use (Type: PowerUseType)
+Library.Templates[].CreaturePowers[].Action.Recharge (Type: String)
+// Processing Source: Dungeon Master's Guide.library
+// Processing Source: Dungeon Tile Master Set Caverns of Icewind Dale.library
+// Processing Source: Dungeon Tile Master Set City.library
+// Processing Source: Dungeon Tile Master Set.library
+// Processing Source: E1 Death's Reach.library
+// Processing Source: E2 Kingdom of the Ghouls.library
+// Processing Source: E3 Prince of Undeath.library
+Library.Creatures[].Role.HasRole (Type: Boolean)
+// Processing Source: Eberron Campaign Setting.library
+// Processing Source: Eberron Player's Guide.library
+// Processing Source: Elder Evils.library
+// Processing Source: Exemplars of Evil.library
+// Processing Source: Forgotten Realms Campaign Guide.library
+// Processing Source: Fortress of the Yuan-ti.library
+// Processing Source: FR1 Scepter Tower of Spellgard.library
+// Processing Source: H1 Keep on the Shadowfell.library
+// Processing Source: H2 Thunderspire Labyrinth.library
+// Processing Source: H3 Pyramid of Shadows.library
+// Processing Source: Hammerfast.library
+// Processing Source: HS1 The Slaying Stone.library
+// Processing Source: Manual of the Planes.library
+// Processing Source: Monster Manual 2.library
+// Processing Source: Monster Manual Dangerous Delves.library
+// Processing Source: Monster Manual Legendary Evils.library
+// Processing Source: Monster Manual Savage Encounters.library
+// Processing Source: Monster Manual.library
+// Processing Source: Monster Vault.library
+// Processing Source: Open Grave Secrets of the Undead.library
+// Processing Source: Orcs of Stonefang Pass.library
+// Processing Source: P1 King of the Trollhaunt Warrens.library
+// Processing Source: P2 Demon Queen Enclave.library
+// Processing Source: P3 Assault on Nightwyrm Fortress.library
+// Processing Source: Player's Handbook 2.library
+// Processing Source: Player's Handbook 3.library
+// Processing Source: Player's Handbook Races Dragonborn.library
+// Processing Source: Player's Handbook.library
+// Processing Source: Revenge of the Giants.library
+// Processing Source: RPGA.library
+// Processing Source: Seekers of the Ashen Crown.library
+// Processing Source: The Plane Above Secrets of the Astral Plane.library
+// Processing Source: The Plane Below Secrets of the Elemental Chaos.library
+// Processing Source: Underdark.library
+// Processing Source: Adventurer's Vault 2.library
+// Processing Source: Adventurer's Vault.library
+// Processing Source: Arcane Power.library
+// Processing Source: City of Stormreach.library
+// Processing Source: CUSTOM Entries.library
+// Processing Source: DDM Maps.library
+// Processing Source: Divine Power.library
+// Processing Source: Draconomicon Chromatic Dragons.library
+// Processing Source: Draconomicon Metallic Dragons.library
+// Processing Source: Dragon Magazine Annual 2009.library
+// Processing Source: Dragon Magazine.library
+// Processing Source: Dragons of Eberron.library
+// Processing Source: DT1 Dungeon Tiles.library
+// Processing Source: DT2 Arcane Corridors.library
+// Processing Source: DT3 Hidden Crypts.library
+// Processing Source: DT4 Ruins of the Wild.library
+// Processing Source: DT5 Lost Caverns of the Underdark.library
+// Processing Source: DT6 Dire Tombs.library
+// Processing Source: DT7 Fane of the Forgotten Gods.library
+// Processing Source: DU1 Halls of the Giant Kings.library
+// Processing Source: DU2 Streets of Shadow (City).library
+// Processing Source: DU2 Streets of Shadow (Sewer).library
+// Processing Source: DU2 Streets of Shadow.library
+// Processing Source: DU3 Caves of Carnage.library
+// Processing Source: DU4 Arcane Towers.library
+// Processing Source: DU5 Sinister Woods.library
+// Processing Source: DU6 Harrowing Halls.library
+// Processing Source: Dungeon Delve.library
+// Processing Source: Dungeon Magazine Annual.library
+// Processing Source: Dungeon Magazine.library
+// Processing Source: Dungeon Master's Guide 2.library
+// Processing Source: Dungeon Master's Guide.library
+// Processing Source: Dungeon Tile Master Set Caverns of Icewind Dale.library
+// Processing Source: Dungeon Tile Master Set City.library
+// Processing Source: Dungeon Tile Master Set.library
+// Processing Source: E1 Death's Reach.library
+// Processing Source: E2 Kingdom of the Ghouls.library
+// Processing Source: E3 Prince of Undeath.library
+// Processing Source: Eberron Campaign Setting.library
+// Processing Source: Eberron Player's Guide.library
+// Processing Source: Elder Evils.library
+// Processing Source: Exemplars of Evil.library
+// Processing Source: Forgotten Realms Campaign Guide.library
+// Processing Source: Fortress of the Yuan-ti.library
+// Processing Source: FR1 Scepter Tower of Spellgard.library
+// Processing Source: H1 Keep on the Shadowfell.library
+// Processing Source: H2 Thunderspire Labyrinth.library
+// Processing Source: H3 Pyramid of Shadows.library
+// Processing Source: Hammerfast.library
+// Processing Source: HS1 The Slaying Stone.library
+// Processing Source: Manual of the Planes.library
+// Processing Source: Monster Manual 2.library
+// Processing Source: Monster Manual Dangerous Delves.library
+// Processing Source: Monster Manual Legendary Evils.library
+// Processing Source: Monster Manual Savage Encounters.library
+// Processing Source: Monster Manual.library
+// Processing Source: Monster Vault.library
+// Processing Source: Open Grave Secrets of the Undead.library
+// Processing Source: Orcs of Stonefang Pass.library
+// Processing Source: P1 King of the Trollhaunt Warrens.library
+// Processing Source: P2 Demon Queen Enclave.library
+// Processing Source: P3 Assault on Nightwyrm Fortress.library
+// Processing Source: Player's Handbook 2.library
+// Processing Source: Player's Handbook 3.library
+// Processing Source: Player's Handbook Races Dragonborn.library
+// Processing Source: Player's Handbook.library
+// Processing Source: Revenge of the Giants.library
+// Processing Source: RPGA.library
+// Processing Source: Seekers of the Ashen Crown.library
+// Processing Source: The Plane Above Secrets of the Astral Plane.library
+// Processing Source: The Plane Below Secrets of the Elemental Chaos.library
+// Processing Source: Underdark.library

@@ -12,7 +12,7 @@
 	<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
     <NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
     <AssemblyVersion>13.0.2.1</AssemblyVersion>
-    <Copyright>Copyright © 2021 - 2025 - Habitual Indolence / Gamers' Syndicate - All rights reserved. This product is protected by copyright and distributed under licences restricting copying, distribution and decompilation.</Copyright>
+    <Copyright>Copyright © 2021 - 2026 - Habitual Indolence / Gamers' Syndicate - All rights reserved. This product is protected by copyright and distributed under licences restricting copying, distribution and decompilation.</Copyright>
     <FileVersion>13.0.2.1</FileVersion>
     <Title>Masterplan</Title>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
@@ -25,6 +25,7 @@
     <DocumentationFile>bin\Release\Masterplan.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Tools\DiscoveryService - Copy.cs" />
     <Compile Remove="Tools\HtmlCore.cs" />
     <Compile Remove="Tools\HtmlCreatures.cs" />
     <Compile Remove="Tools\HtmlEncyclopedia.cs" />
@@ -34,6 +35,8 @@
     <Compile Remove="Tools\HtmlPlots_World.cs" />
     <Compile Remove="Tools\HtmlProjectExport.cs" />
     <Compile Remove="Tools\HtmlToPngExporter.cs" />
+    <Compile Remove="Tools\LibraryConversionService - Copy.cs" />
+    <Compile Remove="Tools\LibraryConversionService.cs" />
     <Compile Remove="Tools\LogSystem.cs" />
     <Compile Remove="Tools\X_PngExporter.cs" />
     <Compile Remove="UI\ExportOptions.cs" />
@@ -46,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\masterplan_scroll.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MasterplanScroll.ico" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Controls\BreakdownPanel.cs">
@@ -131,6 +137,11 @@
     </Compile>
     <Compile Update="Controls\WelcomePanel.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Update="Wizards\MapSizePage.cs">
       <SubType>UserControl</SubType>
@@ -263,22 +274,28 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.5.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
-    <PackageReference Include="HtmlToOpenXml.dll" Version="3.2.8" />
+    <PackageReference Include="HtmlToOpenXml.dll" Version="3.3.1" />
     <PackageReference Include="MessagePack" Version="3.1.4" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.4" />
     <PackageReference Include="MessagePackAnalyzer" Version="3.1.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="PuppeteerSharp" Version="20.2.4" />
-    <PackageReference Include="SkiaSharp" Version="3.119.1" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="3.119.1" />
-    <PackageReference Include="Svg.Skia" Version="3.2.1" />
+    <PackageReference Include="PuppeteerSharp" Version="24.40.0" />
+    <PackageReference Include="SkiaSharp" Version="3.119.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="3.119.2" />
+    <PackageReference Include="Svg.Skia" Version="3.7.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tools\MessagePack\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="REM 1. Copy Manual.pdf only if it exists&#xA;if exist &quot;$(ProjectDir)..\Manual.pdf&quot; xcopy /y &quot;$(ProjectDir)..\Manual.pdf&quot; &quot;$(TargetDir)&quot;&#xA;&#xA;REM 2. Create Libraries folder if it does NOT exist (using &quot;if not exist&quot;)&#xA;if not exist &quot;$(TargetDir)Libraries&quot; md &quot;$(TargetDir)Libraries&quot;&#xA;&#xA;REM 3. Copy .library files only if the source directory exists&#xA;if exist &quot;$(ProjectDir)..\Libraries\&quot; xcopy /y &quot;$(ProjectDir)..\Libraries\*.library&quot; &quot;$(TargetDir)Libraries\&quot;" />

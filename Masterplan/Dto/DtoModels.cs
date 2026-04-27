@@ -1,154 +1,548 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
+using MessagePack;
 
 namespace Masterplan.Dto
 {
-    [XmlRoot("Library")]
-    [XmlType("Library")]
+    #region Root Containers
+    [MessagePackObject]
     public class LibraryDto
     {
-        public Guid ID { get; set; }
-        public string Name { get; set; }
-        public bool ShowInAutoBuild { get; set; }
-
-        public List<CreatureDto> Creatures { get; set; } = new List<CreatureDto>();
-        public List<TrapDto> Traps { get; set; } = new List<TrapDto>();
-        public List<SkillChallengeDto> SkillChallenges { get; set; } = new List<SkillChallengeDto>();
-        public List<MagicItemDto> MagicItems { get; set; } = new List<MagicItemDto>();
-        public List<ArtifactDto> Artifacts { get; set; } = new List<ArtifactDto>();
-        public List<TileDto> Tiles { get; set; } = new List<TileDto>();
-        public List<TerrainPowerDto> TerrainPowers { get; set; } = new List<TerrainPowerDto>();
-        public List<ThemeDto> Themes { get; set; } = new List<ThemeDto>();
-        public List<TemplateDto> Templates { get; set; } = new List<TemplateDto>(); // Added for CS1061
-        public List<EncyclopediaEntryDto> Encyclopedia { get; set; } = new List<EncyclopediaEntryDto>();
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public bool ShowInAutoBuild { get; set; }
+        [Key(3)] public List<CreatureDto> Creatures { get; set; } = new();
+        [Key(4)] public List<TemplateDto> Templates { get; set; } = new();
+        [Key(5)] public List<ThemeDto> Themes { get; set; } = new();
+        [Key(6)] public List<TrapDto> Traps { get; set; } = new();
+        [Key(7)] public List<SkillChallengeDto> SkillChallenges { get; set; } = new();
+        [Key(8)] public List<MagicItemDto> MagicItems { get; set; } = new();
+        [Key(9)] public List<ArtifactDto> Artifacts { get; set; } = new();
+        [Key(10)] public List<TileDto> Tiles { get; set; } = new();
+        [Key(11)] public List<TerrainPowerDto> TerrainPowers { get; set; } = new();
     }
 
-    #region Skill Challenges
-    [XmlType("SkillChallenge")]
-    public class SkillChallengeDto
+    [MessagePackObject]
+    public class ProjectDto
     {
-        public Guid ID { get; set; } // Added for CS0117
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public int Complexity { get; set; }
-        public string SuccessCondition { get; set; } // Added for CS0117
-        public string FailureCondition { get; set; } // Added for CS0117
-
-        [XmlArray("Skills")]
-        [XmlArrayItem("Skill")]
-        public List<SkillChallengeDataDto> Skills { get; set; } = new List<SkillChallengeDataDto>(); // Added for CS1061
-    }
-
-    [XmlType("SkillChallengeData")]
-    public class SkillChallengeDataDto // Added for CS0246
-    {
-        public string SkillName { get; set; }
-        public string Difficulty { get; set; }
-        public int DCModifier { get; set; }
-        public string Details { get; set; }
+        [Key(0)] public string Name { get; set; }
+        [Key(1)] public string Author { get; set; }
+        [Key(2)] public PartyDto Party { get; set; }
+        [Key(3)] public List<HeroDto> Heroes { get; set; } = new();
+        [Key(4)] public List<HeroDto> InactiveHeroes { get; set; } = new();
+        [Key(5)] public PlotDto Plot { get; set; }
+        [Key(6)] public EncyclopediaDto Encyclopedia { get; set; }
+        [Key(7)] public List<NoteDto> Notes { get; set; } = new();
+        [Key(8)] public List<MapDto> Maps { get; set; } = new();
+        [Key(9)] public List<RegionalMapDto> RegionalMaps { get; set; } = new();
+        [Key(10)] public List<DeckDto> Decks { get; set; } = new();
+        [Key(11)] public List<NPCDto> NPCs { get; set; } = new();
+        [Key(12)] public List<CreatureDto> CustomCreatures { get; set; } = new();
+        [Key(13)] public List<CalendarDto> Calendars { get; set; } = new();
+        [Key(14)] public List<AttachmentDto> Attachments { get; set; } = new();
+        [Key(15)] public List<BackgroundDto> Backgrounds { get; set; } = new();
+        [Key(16)] public List<ParcelDto> TreasureParcels { get; set; } = new();
+        [Key(17)] public List<PlayerOptionDto> PlayerOptions { get; set; } = new();
+        [Key(18)] public CampaignSettingsDto CampaignSettings { get; set; }
+        [Key(19)] public string Password { get; set; }
+        [Key(20)] public string PasswordHint { get; set; }
     }
     #endregion
 
-    #region Artifacts
-    [XmlType("Artifact")]
-    public class ArtifactDto
-    {
-        public Guid ID { get; set; }
-        public string Name { get; set; }
-        public string Tier { get; set; }
-        public string Description { get; set; }
-        public string Details { get; set; }
-        public string Goals { get; set; }
-        public string RoleplayingTips { get; set; }
-
-        [XmlArray("ConcordanceLevels")]
-        [XmlArrayItem("Level")]
-        public List<ArtifactConcordanceDto> ConcordanceLevels { get; set; } = new List<ArtifactConcordanceDto>(); // Added for CS1061
-    }
-
-    [XmlType("ArtifactConcordance")]
-    public class ArtifactConcordanceDto // Added for CS0246
-    {
-        public string Name { get; set; }
-        public string ValueRange { get; set; }
-        public string Quote { get; set; }
-        public string Description { get; set; }
-        public List<SectionDto> Sections { get; set; } = new List<SectionDto>();
-    }
-    #endregion
-
-    #region Creatures & Basic Elements
-    [XmlType("Creature")]
+    #region Creature & Common Components
+    [MessagePackObject]
     public class CreatureDto
     {
-        public Guid ID { get; set; }
-        public string Name { get; set; }
-        public string Details { get; set; }
-        public int Level { get; set; }
-        public int HP { get; set; }
-        public string Size { get; set; }
-        public string Origin { get; set; }
-        public string Type { get; set; }
-        public string Keywords { get; set; }
-        public string Role { get; set; }
-        public string Senses { get; set; }
-        public string Movement { get; set; }
-        public string Alignment { get; set; }
-        public string Languages { get; set; }
-        public string Skills { get; set; }
-        public string Equipment { get; set; }
-        public string Category { get; set; }
-        public int Initiative { get; set; }
-        public int AC { get; set; }
-        public int Fortitude { get; set; }
-        public int Reflex { get; set; }
-        public int Will { get; set; }
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Details { get; set; }
+        [Key(3)] public string Size { get; set; }
+        [Key(4)] public string Origin { get; set; }
+        [Key(5)] public string Type { get; set; }
+        [Key(6)] public string Keywords { get; set; }
+        [Key(7)] public int Level { get; set; }
+        [Key(8)] public RoleDto Role { get; set; }
+        [Key(9)] public string Senses { get; set; }
+        [Key(10)] public string Movement { get; set; }
+        [Key(11)] public string Alignment { get; set; }
+        [Key(12)] public string Languages { get; set; }
+        [Key(13)] public string Skills { get; set; }
+        [Key(14)] public string Equipment { get; set; }
+        [Key(15)] public string Category { get; set; }
+        [Key(16)] public AbilityScoreDto Strength { get; set; }
+        [Key(17)] public AbilityScoreDto Constitution { get; set; }
+        [Key(18)] public AbilityScoreDto Dexterity { get; set; }
+        [Key(19)] public AbilityScoreDto Intelligence { get; set; }
+        [Key(20)] public AbilityScoreDto Wisdom { get; set; }
+        [Key(21)] public AbilityScoreDto Charisma { get; set; }
+        [Key(22)] public int HP { get; set; }
+        [Key(23)] public int Initiative { get; set; }
+        [Key(24)] public int AC { get; set; }
+        [Key(25)] public int Fortitude { get; set; }
+        [Key(26)] public int Reflex { get; set; }
+        [Key(27)] public int Will { get; set; }
+        [Key(28)] public RegenerationDto Regeneration { get; set; }
+        [Key(29)] public List<AuraDto> Auras { get; set; } = new();
+        [Key(30)] public List<CreaturePowerDto> Powers { get; set; } = new();
+        [Key(31)] public List<DamageModifierDto> DamageModifiers { get; set; } = new();
+        [Key(32)] public string Resist { get; set; }
+        [Key(33)] public string Vulnerable { get; set; }
+        [Key(34)] public string Immune { get; set; }
+        [Key(35)] public string Tactics { get; set; }
+        [Key(36)] public byte[] ImageData { get; set; }
+        [Key(37)] public string Info { get; set; }
+        [Key(38)] public string Phenotype { get; set; }
     }
 
-    [XmlType("Trap")]
+    [MessagePackObject]
+    public class AbilityScoreDto
+    {
+        [Key(0)] public int Score { get; set; }
+    }
+
+    [MessagePackObject]
+    public class RoleDto
+    {
+        [Key(0)] public string Type { get; set; }
+        [Key(1)] public string Flag { get; set; }
+        [Key(2)] public bool Leader { get; set; }
+        [Key(3)] public bool IsMinion { get; set; }
+        [Key(4)] public bool MinionHasRole { get; set; }
+    }
+
+    [MessagePackObject]
+    public class CreaturePowerDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public PowerActionDto Action { get; set; }
+        [Key(3)] public string Keywords { get; set; }
+        [Key(4)] public string Condition { get; set; }
+        [Key(5)] public string Range { get; set; }
+        [Key(6)] public PowerAttackDto Attack { get; set; }
+        [Key(7)] public string Description { get; set; }
+        [Key(8)] public string Details { get; set; }
+        [Key(9)] public string Damage { get; set; }
+        [Key(10)] public string Category { get; set; }
+    }
+
+    [MessagePackObject]
+    public class PowerActionDto
+    {
+        [Key(0)] public string Action { get; set; }
+        [Key(1)] public string Trigger { get; set; }
+        [Key(2)] public string SustainAction { get; set; }
+        [Key(3)] public string Use { get; set; }
+        [Key(4)] public string Recharge { get; set; }
+    }
+
+    [MessagePackObject]
+    public class PowerAttackDto
+    {
+        [Key(0)] public int Bonus { get; set; }
+        [Key(1)] public string Defence { get; set; }
+    }
+
+    [MessagePackObject]
+    public class AuraDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Keywords { get; set; }
+        [Key(3)] public string Details { get; set; }
+    }
+
+    [MessagePackObject]
+    public class RegenerationDto
+    {
+        [Key(0)] public int Value { get; set; }
+        [Key(1)] public string Details { get; set; }
+    }
+
+    [MessagePackObject]
+    public class DamageModifierDto
+    {
+        [Key(0)] public string Type { get; set; }
+        [Key(1)] public int Value { get; set; }
+    }
+    #endregion
+
+    #region Traps & Hazards
+    [MessagePackObject]
     public class TrapDto
     {
-        public Guid ID { get; set; }
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public string Type { get; set; }
-        public string Role { get; set; }
-        public string Description { get; set; }
-        public string Trigger { get; set; }
-        public string Info { get; set; }
-        public int XP { get; set; }
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Type { get; set; }
+        [Key(3)] public int Level { get; set; }
+        [Key(4)] public RoleDto Role { get; set; }
+        [Key(5)] public string ReadAloud { get; set; }
+        [Key(6)] public string Description { get; set; }
+        [Key(7)] public string Details { get; set; }
+        [Key(8)] public List<TrapSkillDto> Skills { get; set; } = new();
+        [Key(9)] public int Initiative { get; set; }
+        [Key(10)] public string Trigger { get; set; }
+        [Key(11)] public List<TrapAttackDto> Attacks { get; set; } = new();
+        [Key(12)] public string Countermeasures { get; set; }
+        [Key(13)] public int XP { get; set; }
+        [Key(14)] public string Info { get; set; }
     }
 
-    [XmlType("MagicItem")]
+    [MessagePackObject]
+    public class TrapAttackDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Trigger { get; set; }
+        [Key(3)] public string Action { get; set; }
+        [Key(4)] public string Range { get; set; }
+        [Key(5)] public string Keywords { get; set; }
+        [Key(6)] public string Target { get; set; }
+        [Key(7)] public bool HasInitiative { get; set; }
+        [Key(8)] public int Initiative { get; set; }
+        [Key(9)] public PowerAttackDto Attack { get; set; }
+        [Key(10)] public string OnHit { get; set; }
+        [Key(11)] public string OnMiss { get; set; }
+        [Key(12)] public string Effect { get; set; }
+        [Key(13)] public string Notes { get; set; }
+    }
+
+    [MessagePackObject]
+    public class TrapSkillDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string SkillName { get; set; }
+        [Key(2)] public int DC { get; set; }
+        [Key(3)] public string Details { get; set; }
+    }
+    #endregion
+
+    #region Skill Challenges
+    [MessagePackObject]
+    public class SkillChallengeDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public int Level { get; set; }
+        [Key(3)] public int Complexity { get; set; }
+        [Key(4)] public List<SkillChallengeDataDto> Skills { get; set; } = new();
+        [Key(5)] public string Success { get; set; }
+        [Key(6)] public string Failure { get; set; }
+        [Key(7)] public string Notes { get; set; }
+        [Key(8)] public Guid MapID { get; set; }
+        [Key(9)] public Guid MapAreaID { get; set; }
+        [Key(10)] public int Successes { get; set; }
+        [Key(11)] public string Info { get; set; }
+    }
+
+    [MessagePackObject]
+    public class SkillChallengeDataDto
+    {
+        [Key(0)] public string SkillName { get; set; }
+        [Key(1)] public string Difficulty { get; set; }
+        [Key(2)] public int DCModifier { get; set; }
+        [Key(3)] public string Details { get; set; }
+        [Key(4)] public string Success { get; set; }
+        [Key(5)] public string Failure { get; set; }
+    }
+    #endregion
+
+    #region Items, Tiles & Themes
+    [MessagePackObject]
     public class MagicItemDto
     {
-        public Guid ID { get; set; }
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public string Type { get; set; }
-        public string Rarity { get; set; }
-        public string Description { get; set; }
-        public List<SectionDto> Sections { get; set; } = new List<SectionDto>();
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Type { get; set; }
+        [Key(3)] public string Rarity { get; set; }
+        [Key(4)] public int Level { get; set; }
+        [Key(5)] public string Description { get; set; }
+        [Key(6)] public List<SectionDto> Sections { get; set; } = new();
+        [Key(7)] public string Info { get; set; }
     }
 
-    [XmlType("TerrainPower")]
+    [MessagePackObject]
+    public class ArtifactDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Tier { get; set; }
+        [Key(3)] public string Description { get; set; }
+        [Key(4)] public string Details { get; set; }
+        [Key(5)] public string Goals { get; set; }
+        [Key(6)] public string RoleplayingTips { get; set; }
+        [Key(7)] public List<SectionDto> Sections { get; set; } = new();
+        [Key(8)] public List<ArtifactConcordanceDto> ConcordanceLevels { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public class ArtifactConcordanceDto
+    {
+        [Key(0)] public string Name { get; set; }
+        [Key(1)] public string ValueRange { get; set; }
+        [Key(2)] public string Quote { get; set; }
+        [Key(3)] public string Description { get; set; }
+        [Key(4)] public List<SectionDto> Sections { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public class TileDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Category { get; set; }
+        [Key(2)] public int Width { get; set; }
+        [Key(3)] public int Height { get; set; }
+        [Key(4)] public byte[] ImageData { get; set; }
+        [Key(5)] public string Keywords { get; set; }
+        [Key(6)] public int Area { get; set; }
+        [Key(7)] public byte[] BlankImageData { get; set; }
+    }
+
+    [MessagePackObject]
     public class TerrainPowerDto
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string FlavourText { get; set; }
-        public string Requirement { get; set; }
-        public string Check { get; set; }
-        public string Success { get; set; }
-        public string Failure { get; set; }
-        public string Target { get; set; }
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Type { get; set; }
+        [Key(3)] public string FlavourText { get; set; }
+        [Key(4)] public string Action { get; set; }
+        [Key(5)] public string Requirement { get; set; }
+        [Key(6)] public string Check { get; set; }
+        [Key(7)] public string Success { get; set; }
+        [Key(8)] public string Failure { get; set; }
+        [Key(9)] public string Target { get; set; }
+        [Key(10)] public string Attack { get; set; }
+        [Key(11)] public string Hit { get; set; }
+        [Key(12)] public string Miss { get; set; }
+        [Key(13)] public string Effect { get; set; }
     }
 
-    [XmlType("Tile")] public class TileDto { public Guid ID { get; set; } public string Category { get; set; } public string Size { get; set; } public string Keywords { get; set; } }
-    [XmlType("Theme")] public class ThemeDto { public string Name { get; set; } }
-    [XmlType("Template")] public class TemplateDto { public string Name { get; set; } }
-    [XmlType("Section")] public class SectionDto { public string Header { get; set; } public string Details { get; set; } }
-    [XmlType("EncyclopediaEntry")] public class EncyclopediaEntryDto { public Guid ID { get; set; } public string Name { get; set; } public string Category { get; set; } public string Details { get; set; } }
+    [MessagePackObject]
+    public class ThemeDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+    }
+
+    [MessagePackObject]
+    public class TemplateDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        // Add more template specific fields from MasterSchema.txt if needed
+    }
+
+    [MessagePackObject]
+    public class SectionDto
+    {
+        [Key(0)] public string Header { get; set; }
+        [Key(1)] public string Details { get; set; }
+    }
+    #endregion
+
+    #region Project Sub-Models
+    [MessagePackObject]
+    public class PartyDto
+    {
+        [Key(0)] public int Size { get; set; }
+        [Key(1)] public int XP { get; set; }
+        [Key(2)] public int Level { get; set; }
+    }
+
+    [MessagePackObject]
+    public class HeroDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Player { get; set; }
+        [Key(3)] public string Size { get; set; }
+        [Key(4)] public string Race { get; set; }
+        [Key(5)] public int Level { get; set; }
+        [Key(6)] public string Class { get; set; }
+        [Key(7)] public string ParagonPath { get; set; }
+        [Key(8)] public string EpicDestiny { get; set; }
+        [Key(9)] public string PowerSource { get; set; }
+        [Key(10)] public string Role { get; set; }
+        [Key(11)] public int HP { get; set; }
+        [Key(12)] public int AC { get; set; }
+        [Key(13)] public int Fortitude { get; set; }
+        [Key(14)] public int Reflex { get; set; }
+        [Key(15)] public int Will { get; set; }
+        [Key(16)] public int InitBonus { get; set; }
+        [Key(17)] public int PassivePerception { get; set; }
+        [Key(18)] public int PassiveInsight { get; set; }
+        [Key(19)] public string Languages { get; set; }
+        [Key(20)] public byte[] PortraitData { get; set; }
+        [Key(21)] public string Info { get; set; }
+    }
+
+    [MessagePackObject]
+    public class EncyclopediaDto
+    {
+        [Key(0)] public List<EncyclopediaEntryDto> Entries { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public class EncyclopediaEntryDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Category { get; set; }
+        [Key(3)] public string Details { get; set; }
+        [Key(4)] public string DMInfo { get; set; }
+        [Key(5)] public List<EncyclopediaImageDto> Images { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public class EncyclopediaImageDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public byte[] ImageData { get; set; }
+    }
+
+    [MessagePackObject]
+    public class MapDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Category { get; set; }
+        [Key(3)] public List<MapTileDto> Tiles { get; set; } = new();
+        [Key(4)] public List<MapAreaDto> Areas { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public class MapTileDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public Guid TileID { get; set; }
+        [Key(2)] public int X { get; set; }
+        [Key(3)] public int Y { get; set; }
+        [Key(4)] public int Rotations { get; set; }
+    }
+
+    [MessagePackObject]
+    public class MapAreaDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Details { get; set; }
+        [Key(3)] public int X { get; set; }
+        [Key(4)] public int Y { get; set; }
+        [Key(5)] public int Width { get; set; }
+        [Key(6)] public int Height { get; set; }
+    }
+
+    [MessagePackObject]
+    public class RegionalMapDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public byte[] ImageData { get; set; }
+        [Key(3)] public List<MapLocationDto> Locations { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public class MapLocationDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Category { get; set; }
+        [Key(3)] public float X { get; set; }
+        [Key(4)] public float Y { get; set; }
+    }
+
+    [MessagePackObject]
+    public class DeckDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public int Level { get; set; }
+        [Key(3)] public List<EncounterCardDto> Cards { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public class EncounterCardDto
+    {
+        [Key(0)] public Guid CreatureID { get; set; }
+        [Key(1)] public List<Guid> TemplateIDs { get; set; } = new();
+        [Key(2)] public int LevelAdjustment { get; set; }
+        [Key(3)] public Guid ThemeID { get; set; }
+        [Key(4)] public string Title { get; set; }
+        [Key(5)] public int XP { get; set; }
+    }
+
+    [MessagePackObject]
+    public class NPCDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public Guid TemplateID { get; set; }
+        // NPC is often a Creature + Template, mapping will handle hydration
+    }
+
+    [MessagePackObject]
+    public class CalendarDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Details { get; set; }
+        [Key(3)] public int CampaignYear { get; set; }
+        // Months, Days, etc. from Project.txt
+    }
+
+    [MessagePackObject]
+    public class AttachmentDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public byte[] Contents { get; set; }
+    }
+
+    [MessagePackObject]
+    public class BackgroundDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Title { get; set; }
+        [Key(2)] public string Details { get; set; }
+    }
+
+    [MessagePackObject]
+    public class ParcelDto
+    {
+        [Key(0)] public string Name { get; set; }
+        [Key(1)] public string Details { get; set; }
+        [Key(2)] public int Value { get; set; }
+        [Key(3)] public Guid MagicItemID { get; set; }
+        [Key(4)] public Guid ArtifactID { get; set; }
+        [Key(5)] public Guid HeroID { get; set; }
+    }
+
+    [MessagePackObject]
+    public class PlayerOptionDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        // Add more from Project.txt as needed
+    }
+
+    [MessagePackObject]
+    public class NoteDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Content { get; set; }
+        [Key(3)] public string Category { get; set; }
+    }
+
+    [MessagePackObject]
+    public class CampaignSettingsDto
+    {
+        [Key(0)] public double HP { get; set; }
+        [Key(1)] public double XP { get; set; }
+        [Key(2)] public int AttackBonus { get; set; }
+        [Key(3)] public double Damage { get; set; }
+        [Key(4)] public int ACBonus { get; set; }
+        [Key(5)] public int NADBonus { get; set; }
+    }
     #endregion
 }

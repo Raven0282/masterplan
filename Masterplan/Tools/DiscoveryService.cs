@@ -3,80 +3,124 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Masterplan.Tools
 {
+    /// <summary>
+    /// A diagnostic utility that maps a unified property schema across multiple files.
+    /// Deduplicates property paths to create a single Master Schema for DTO migration.
+    /// </summary>
     public static class DiscoveryService
     {
-        private static StringBuilder _report = new StringBuilder();
-        private static HashSet<Type> _processedTypes = new HashSet<Type>();
+        // Persistent cache to ensure we only log a property path once per session
+        private static readonly HashSet<string> _discoveredPaths = new HashSet<string>();
+        private static readonly HashSet<object> _visitedObjects = new HashSet<object>();
+        private static readonly List<string> _reportLines = new List<string>();
 
-        public static void Analyze(object obj)
+        /// <summary>
+        /// Analyzes an object graph and appends unique property paths to the Master Schema.
+        /// </summary>
+        /// <param name="root">The object to analyze.</param>
+        /// <param name="filePath">The source file path for context.</param>
+        /// <param name="prefix">Report filename prefix (e.g., "MasterSchema").</param>
+        /// <param name="clearCache">If true, clears previously discovered paths before running.</param>
+        public static void RunDiscovery(object root, string filePath, string prefix = "MasterSchema", bool clearCache = false)
         {
-            if (obj == null) return;
-            _report.Clear();
-            _processedTypes.Clear();
+            if (root == null) return;
 
-            _report.AppendLine("===============================================================");
-            _report.AppendLine($"ULTIMATE ARCHITECTURE SCAN: {DateTime.Now}");
-            _report.AppendLine($"Root Type: {obj.GetType().FullName}");
-            _report.AppendLine("===============================================================");
-
-            ScanType(obj.GetType(), 0);
-
-            try
+            if (clearCache)
             {
-                File.WriteAllText("Discovery_Report.txt", _report.ToString());
+                _discoveredPaths.Clear();
+                _reportLines.Clear();
             }
-            catch (Exception ex)
+
+            // Always clear visited objects per-file to ensure we scan the new file's graph fully
+            _visitedObjects.Clear();
+
+            string directory = Path.GetDirectoryName(filePath);
+            string discoveryFolder = Path.Combine(directory, "Discovery");
+
+            if (!Directory.Exists(discoveryFolder))
             {
-                Console.WriteLine("Discovery Report Error: " + ex.Message);
+                Directory.CreateDirectory(discoveryFolder);
             }
+
+            // We log the source file for traceability, but the property paths themselves are deduplicated
+            _reportLines.Add($"// Processing Source: {Path.GetFileName(filePath)}");
+
+            MapProperties(root, root.GetType().Name);
+
+            // Save the current state of the Master Schema after each file is processed
+            string reportPath = Path.Combine(discoveryFolder, $"{prefix}.txt");
+            File.WriteAllLines(reportPath, _reportLines);
         }
 
-        private static void ScanType(Type type, int indent)
+        private static void MapProperties(object obj, string path)
         {
-            if (type == null || _processedTypes.Contains(type)) return;
+            if (obj == null) return;
 
-            // Basic type filtering: don't recurse into strings or primitives
-            if (type.IsPrimitive || type == typeof(string) || type == typeof(Guid) || type == typeof(DateTime) || type.IsEnum) return;
+            Type type = obj.GetType();
 
-            _processedTypes.Add(type);
-            string padding = new string(' ', indent * 2);
-
-            // Analyze both Properties and Fields to ensure 100% discovery
-            PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-
-            // Process Properties
-            foreach (var prop in props)
+            // Skip common primitives to focus on complex data structures
+            if (type.IsPrimitive || type == typeof(string) || type == typeof(Guid) || type == typeof(DateTime))
             {
-                _report.AppendLine($"{padding}[Prop: {prop.PropertyType.Name}] {prop.Name}");
-
-                if (typeof(IEnumerable).IsAssignableFrom(prop.PropertyType) && prop.PropertyType != typeof(string))
-                {
-                    Type itemType = prop.PropertyType.IsGenericType ? prop.PropertyType.GetGenericArguments()[0] : typeof(object);
-                    _report.AppendLine($"{padding}  -> List Item Type: {itemType.Name}");
-                    ScanType(itemType, indent + 4);
-                }
-                else if (prop.PropertyType.IsInterface)
-                {
-                    _report.AppendLine($"{padding}  !! INTERFACE: {prop.PropertyType.Name} (Needs Manual DTO Mapping) !!");
-                }
-                else if (prop.PropertyType.IsClass)
-                {
-                    ScanType(prop.PropertyType, indent + 4);
-                }
+                return;
             }
 
-            // Process Fields (some legacy code uses public fields instead of properties)
-            foreach (var field in fields)
+            if (_visitedObjects.Contains(obj)) return;
+            _visitedObjects.Add(obj);
+
+            // Handle Collections: Deduplicate the collection path itself
+            if (obj is IEnumerable enumerable && !(obj is string))
             {
-                _report.AppendLine($"{padding}[Field: {field.FieldType.Name}] {field.Name}");
-                if (field.FieldType.IsClass && field.FieldType != typeof(string))
+                if (!_discoveredPaths.Contains(path + "[]"))
                 {
-                    ScanType(field.FieldType, indent + 4);
+                    _reportLines.Add($"[COLLECTION] {path} (Type: {type.Name})");
+                    _discoveredPaths.Add(path + "[]");
+                }
+
+                int count = 0;
+                foreach (var item in enumerable)
+                {
+                    if (item == null) continue;
+                    // Scan the first item to determine the internal schema of the collection
+                    if (count < 1)
+                    {
+                        MapProperties(item, $"{path}[]");
+                    }
+                    count++;
+                }
+                return;
+            }
+
+            // Reflect on Properties
+            PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var prop in props)
+            {
+                try
+                {
+                    if (prop.GetIndexParameters().Length > 0) continue;
+
+                    string currentPath = $"{path}.{prop.Name}";
+                    string info = $"{currentPath} (Type: {prop.PropertyType.Name})";
+
+                    // Only add to report if this specific path has never been seen before
+                    if (!_discoveredPaths.Contains(currentPath))
+                    {
+                        _reportLines.Add(info);
+                        _discoveredPaths.Add(currentPath);
+                    }
+
+                    object val = prop.GetValue(obj);
+                    if (val != null)
+                    {
+                        MapProperties(val, currentPath);
+                    }
+                }
+                catch
+                {
+                    // Ignore inaccessible properties
                 }
             }
         }
