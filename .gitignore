@@ -10,3 +10,12 @@
 /Setup/Release
 /Masterplan/.vs/Masterplan.csproj.dtbcache.json
 /v12.2.1.zip
+/.idea/.idea.Masterplan/.idea
+/01_Core/MasterplanXP.Core/obj
+/01_Core/MasterplanXP.Core/bin/Debug/net8.0
+/02_Infrastructure/MasterplanXP.Infrastructure/bin/Debug/net8.0
+/02_Infrastructure/MasterplanXP.Infrastructure/obj
+/03_Modules/MasterplanXP.Modules.CharacterBuilder/obj
+/03_Modules/MasterplanXP.Modules.MonsterBuilder/obj
+/AvaloniaApplication1
+/Projects/Discovery
