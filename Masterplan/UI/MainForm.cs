@@ -2801,7 +2801,7 @@ namespace Masterplan.UI
         {
             GC.Collect();
 
-            Project p = Serialisation<Project>.Load(filename, SerialisationMode.Binary);
+            Project p = Session.LoadProject(filename);
             if (p != null)
             {
                 Session.CreateBackup(filename);
@@ -2856,12 +2856,7 @@ namespace Masterplan.UI
                     return;
                 }
 
-                GC.Collect();
-
-                Session.Project.PopulateProjectLibrary();
-
-                bool ok = Serialisation<Project>.Save(Session.FileName, Session.Project, SerialisationMode.Binary);
-                if (ok)
+                if (save_project(Session.FileName))
                 {
                     Session.Modified = false;
                 }
@@ -2871,8 +2866,6 @@ namespace Masterplan.UI
                     string str = "The file could not be saved; check the filename and drive permissions and try again.";
                     MessageBox.Show(str, "Masterplan", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                Session.Project.SimplifyProjectLibrary();
             }
             catch (Exception ex)
             {
@@ -2890,12 +2883,7 @@ namespace Masterplan.UI
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    GC.Collect();
-
-                    Session.Project.PopulateProjectLibrary();
-
-                    bool ok = Serialisation<Project>.Save(dlg.FileName, Session.Project, SerialisationMode.Binary);
-                    if (ok)
+                    if (save_project(dlg.FileName))
                     {
                         Session.FileName = dlg.FileName;
                         Session.Modified = false;
@@ -2906,8 +2894,6 @@ namespace Masterplan.UI
                         string str = "The file could not be saved; check the filename and drive permissions and try again.";
                         MessageBox.Show(str, "Masterplan", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
-                    Session.Project.SimplifyProjectLibrary();
                 }
             }
             catch (Exception ex)
@@ -2915,6 +2901,26 @@ namespace Masterplan.UI
                 LogSystem.Trace(ex);
             }
         }
+
+        bool save_project(string filename)
+        {
+            GC.Collect();
+
+            Session.Project.PopulateProjectLibrary();
+
+            // 1. Save legacy Binary format
+            string legacyFilename = Path.ChangeExtension(filename, ".masterplan");
+            bool ok = Serialisation<Project>.Save(legacyFilename, Session.Project, SerialisationMode.Binary);
+
+            // 2. Save modern MessagePack format
+            string mpxFilename = Path.ChangeExtension(filename, ".mpxpm");
+            LibraryConversionService.Instance.SaveXProject(Session.Project, mpxFilename);
+
+            Session.Project.SimplifyProjectLibrary();
+
+            return ok;
+        }
+
 
         private void AdvancedDelve_Click(object sender, EventArgs e)
         {
@@ -4387,7 +4393,13 @@ namespace Masterplan.UI
                     dlg.Filter = Program.ProjectFilter;
 
                     if (dlg.ShowDialog() == DialogResult.OK)
-                        Serialisation<Project>.Save(dlg.FileName, p, SerialisationMode.Binary);
+                    {
+                        string legacyFilename = Path.ChangeExtension(dlg.FileName, ".masterplan");
+                        Serialisation<Project>.Save(legacyFilename, p, SerialisationMode.Binary);
+
+                        string mpxFilename = Path.ChangeExtension(dlg.FileName, ".mpxpm");
+                        LibraryConversionService.Instance.SaveXProject(p, mpxFilename);
+                    }
                 }
             }
             catch (Exception ex)
@@ -7274,13 +7286,7 @@ namespace Masterplan.UI
                             {
                                 if (Session.FileName != "")
                                 {
-                                    GC.Collect();
-
-                                    Session.Project.PopulateProjectLibrary();
-                                    bool ok = Serialisation<Project>.Save(Session.FileName, Session.Project, SerialisationMode.Binary);
-                                    Session.Project.SimplifyProjectLibrary();
-
-                                    if (!ok)
+                                    if (!save_project(Session.FileName))
                                         return false;
 
                                     Session.Modified = false;
@@ -7292,13 +7298,7 @@ namespace Masterplan.UI
                                     dlg.FileName = Session.Project.Name;
                                     if (dlg.ShowDialog() == DialogResult.OK)
                                     {
-                                        GC.Collect();
-
-                                        Session.Project.PopulateProjectLibrary();
-                                        bool ok = Serialisation<Project>.Save(dlg.FileName, Session.Project, SerialisationMode.Binary);
-                                        Session.Project.SimplifyProjectLibrary();
-
-                                        if (!ok)
+                                        if (!save_project(dlg.FileName))
                                             return false;
 
                                         Session.FileName = dlg.FileName;

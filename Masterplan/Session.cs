@@ -122,13 +122,8 @@ namespace Masterplan
                 }
 
                 // 1. Prioritized Load: Check for modern format first (.mpxpl)
-                string mpxFilename = filename.EndsWith(".mpxpl", StringComparison.OrdinalIgnoreCase) 
-                    ? filename 
-                    : filename.Replace(".library", ".mpxpl");
-                
-                string legacyFilename = filename.EndsWith(".library", StringComparison.OrdinalIgnoreCase)
-                    ? filename
-                    : filename.Replace(".mpxpl", ".library");
+                string mpxFilename = Path.ChangeExtension(filename, ".mpxpl");
+                string legacyFilename = Path.ChangeExtension(filename, ".library");
 
                 Library lib = null;
 
@@ -179,7 +174,7 @@ namespace Masterplan
             try
             {
                 // 1. Prioritized Load: Check for modern format first (.mpxpm)
-                string mpxFilename = filename.Replace(".masterplan", ".mpxpm");
+                string mpxFilename = Path.ChangeExtension(filename, ".mpxpm");
                 Project p = null;
 
                 if (File.Exists(mpxFilename))
@@ -195,10 +190,7 @@ namespace Masterplan
                     // 3. Immediate Conversion Staging (Issue #3)
                     if (p != null)
                     {
-                        string convertedDir = Path.Combine(Path.GetDirectoryName(filename), "Converted");
-                        if (!Directory.Exists(convertedDir)) Directory.CreateDirectory(convertedDir);
-                        
-                        string targetPath = Path.Combine(convertedDir, Path.GetFileName(mpxFilename));
+                        string targetPath = Path.ChangeExtension(filename, ".mpxpm");
                         LibraryConversionService.Instance.SaveXProject(p, targetPath);
                     }
                 }

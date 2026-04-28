@@ -28,7 +28,7 @@
 *   **Nullability:** `#nullable enable` is mandatory for all new MPXP code.
 *   **Naming:** PascalCase for properties/methods, camelCase with `f` prefix for private fields (legacy OMP) or `_` (new MPXP).
 *   **Async/Await:** All I/O operations (file load/save) must be asynchronous.
-*   **Code Integrity:** Before writing to files, a property-by-property review against the original domain object and schema discovery files (`MasterSchema.txt`, `Project.txt`) is mandatory to ensure no data fields are omitted.
+*   **Code Integrity:** Before writing to files, a property-by-property review against the original domain object and schema discovery files (`MasterSchema.txt`, `Project.txt`) is mandatory to ensure no data fields are omitted. Additionally, verify that properties are writable (have a 'set' accessor) before attempting to assign to them during DTO-to-Domain mapping. Calculated or read-only properties (e.g., 'Note.Name', 'EncounterCard.XP') must be excluded from object initializers.
 
 ## 5. Testing & Validation
 *   **Unit Testing:** xUnit for logic validation. Every DTO mapper must have a "Round-trip" test (Legacy -> DTO -> MessagePack -> DTO -> Legacy).

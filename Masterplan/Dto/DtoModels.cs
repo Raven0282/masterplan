@@ -46,6 +46,7 @@ namespace Masterplan.Dto
         [Key(18)] public CampaignSettingsDto CampaignSettings { get; set; }
         [Key(19)] public string Password { get; set; }
         [Key(20)] public string PasswordHint { get; set; }
+        [Key(21)] public LibraryDto Library { get; set; }
     }
     #endregion
 
@@ -245,6 +246,102 @@ namespace Masterplan.Dto
     {
         [Key(0)] public string Type { get; set; }
         [Key(1)] public byte[] Data { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class EncounterDto
+    {
+        [Key(0)] public List<EncounterSlotDto> Slots { get; set; } = new();
+        [Key(1)] public List<TrapDto> Traps { get; set; } = new();
+        [Key(2)] public List<SkillChallengeDto> SkillChallenges { get; set; } = new();
+        [Key(3)] public List<CustomTokenDto> CustomTokens { get; set; } = new();
+        [Key(4)] public Guid MapID { get; set; }
+        [Key(5)] public Guid MapAreaID { get; set; }
+        [Key(6)] public List<EncounterNoteDto> Notes { get; set; } = new();
+        [Key(7)] public List<EncounterWaveDto> Waves { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class EncounterSlotDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public EncounterCardDto Card { get; set; }
+        [Key(2)] public string Type { get; set; }
+        [Key(3)] public List<CombatDataDto> CombatData { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class CombatDataDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string DisplayName { get; set; }
+        [Key(2)] public int X { get; set; }
+        [Key(3)] public int Y { get; set; }
+        [Key(4)] public bool Visible { get; set; }
+        [Key(5)] public int Initiative { get; set; }
+        [Key(6)] public bool Delaying { get; set; }
+        [Key(7)] public int Damage { get; set; }
+        [Key(8)] public int TempHP { get; set; }
+        [Key(9)] public int Altitude { get; set; }
+        [Key(10)] public List<Guid> UsedPowers { get; set; } = new();
+        [Key(11)] public List<OngoingConditionDto> Conditions { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class OngoingConditionDto
+    {
+        [Key(0)] public string Type { get; set; }
+        [Key(1)] public string Data { get; set; }
+        [Key(2)] public string DamageType { get; set; }
+        [Key(3)] public int Value { get; set; }
+        [Key(4)] public int DefenceMod { get; set; }
+        [Key(5)] public List<string> Defences { get; set; } = new();
+        [Key(6)] public RegenerationDto Regeneration { get; set; }
+        [Key(7)] public DamageModifierDto DamageModifier { get; set; }
+        [Key(8)] public AuraDto Aura { get; set; }
+        [Key(9)] public string Duration { get; set; }
+        [Key(10)] public Guid DurationCreatureID { get; set; }
+        [Key(11)] public int DurationRound { get; set; }
+        [Key(12)] public int SavingThrowModifier { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class EncounterNoteDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Title { get; set; }
+        [Key(2)] public string Contents { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class EncounterWaveDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public bool Active { get; set; }
+        [Key(3)] public List<EncounterSlotDto> Slots { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class CustomTokenDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class QuestDto
+    {
+        [Key(0)] public int Level { get; set; }
+        [Key(1)] public string Type { get; set; }
+        [Key(2)] public int XP { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class MapElementDto
+    {
+        [Key(0)] public Guid MapID { get; set; }
+        [Key(1)] public Guid MapAreaID { get; set; }
     }
     #endregion
 
