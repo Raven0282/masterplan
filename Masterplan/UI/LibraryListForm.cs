@@ -567,9 +567,10 @@ namespace Masterplan.UI
             if (SelectedLibrary != null)
             {
                 int index = Session.Libraries.IndexOf(SelectedLibrary);
-                string old_filename = Session.GetLibraryFilename(SelectedLibrary);
+                string legacy_old_filename = Session.GetLibraryFilename(SelectedLibrary);
+                string mpx_old_filename = legacy_old_filename.Replace(".library", ".mpxpl");
 
-                if (!File.Exists(old_filename))
+                if (!File.Exists(legacy_old_filename) && !File.Exists(mpx_old_filename))
                 {
                     string str = "This library cannot be renamed.";
                     MessageBox.Show(str, "Masterplan", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -584,12 +585,24 @@ namespace Masterplan.UI
                     Session.Libraries.Sort();
 
                     // Has the name changed?
-                    string new_filename = Session.GetLibraryFilename(dlg.Library);
-                    if (old_filename != new_filename)
+                    string legacy_new_filename = Session.GetLibraryFilename(dlg.Library);
+                    string mpx_new_filename = legacy_new_filename.Replace(".library", ".mpxpl");
+
+                    if (legacy_old_filename != legacy_new_filename)
                     {
-                        // Move the file
-                        FileInfo fi = new FileInfo(old_filename);
-                        fi.MoveTo(new_filename);
+                        // Move legacy file
+                        if (File.Exists(legacy_old_filename))
+                        {
+                            FileInfo fi = new FileInfo(legacy_old_filename);
+                            fi.MoveTo(legacy_new_filename);
+                        }
+
+                        // Move modern file
+                        if (File.Exists(mpx_old_filename))
+                        {
+                            FileInfo fi = new FileInfo(mpx_old_filename);
+                            fi.MoveTo(mpx_new_filename);
+                        }
                     }
 
                     fModified[dlg.Library] = true;
@@ -599,7 +612,6 @@ namespace Masterplan.UI
                 }
             }
         }
-
         private void LibraryMergeBtn_Click(object sender, EventArgs e)
         {
             MergeLibrariesForm dlg = new MergeLibrariesForm();
@@ -3562,11 +3574,14 @@ namespace Masterplan.UI
         {
             GC.Collect();
 
-            string filename = Session.GetLibraryFilename(lib);
-            Serialisation<Library>.Save(filename, lib, SerialisationMode.Binary);
+            // 1. Save legacy Binary format
+            string legacyFilename = Session.GetLibraryFilename(lib);
+            Serialisation<Library>.Save(legacyFilename, lib, SerialisationMode.Binary);
 
+            // 2. Synchronize modern MessagePack format (Issue #3)
+            string mpxFilename = legacyFilename.Replace(".library", ".mpxpl");
+            LibraryConversionService.Instance.SaveXLibrary(lib, mpxFilename);
         }
-
         void Show_help(bool show)
         {
             HelpPanel.Visible = show;

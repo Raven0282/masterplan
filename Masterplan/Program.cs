@@ -183,27 +183,39 @@ namespace Masterplan
                     Directory.CreateDirectory(lib_dir);
 
                 // Move libraries from root directory to Libraries folder
-                string[] files = Directory.GetFiles(root_dir, "*.library");
-                foreach (string filename in files)
+                string[] extensions = { "*.library", "*.mpxpl" };
+                foreach (string ext in extensions)
                 {
-                    try
+                    string[] files = Directory.GetFiles(root_dir, ext);
+                    foreach (string filename in files)
                     {
-                        string lib_name = lib_dir + FileName.Name(filename) + ".library";
-                        if (!File.Exists(lib_name))
-                            File.Move(filename, lib_name);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogSystem.Trace(ex);
+                        try
+                        {
+                            string lib_name = lib_dir + Path.GetFileName(filename);
+                            if (!File.Exists(lib_name))
+                                File.Move(filename, lib_name);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogSystem.Trace(ex);
+                        }
                     }
                 }
 
                 // Load all libraries via Session logic (handles MessagePack vs Binary prioritization)
-                string[] libraries = Directory.GetFiles(lib_dir, "*.library");
-                SplashScreen.Actions = libraries.Length;
+                // Use a HashSet of unique base names to avoid double-loading
+                HashSet<string> libraryBaseNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (string file in Directory.GetFiles(lib_dir, "*.library"))
+                    libraryBaseNames.Add(Path.GetFileNameWithoutExtension(file));
+                foreach (string file in Directory.GetFiles(lib_dir, "*.mpxpl"))
+                    libraryBaseNames.Add(Path.GetFileNameWithoutExtension(file));
 
-                foreach (string filename in libraries)
+                SplashScreen.Actions = libraryBaseNames.Count;
+
+                foreach (string baseName in libraryBaseNames)
                 {
+                    // Pass the .library path; Session.LoadLibrary will prioritize .mpxpl if it exists
+                    string filename = Path.Combine(lib_dir, baseName + ".library");
                     Session.LoadLibrary(filename);
                 }
 

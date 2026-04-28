@@ -48,8 +48,9 @@ namespace Masterplan.UI
                 DirectoryInfo di = new DirectoryInfo(dir);
 
                 string filename = di + NameBox.Text + ".library";
+                string mpx_filename = di + NameBox.Text + ".mpxpl";
 
-                OKBtn.Enabled = !File.Exists(filename);
+                OKBtn.Enabled = !File.Exists(filename) && !File.Exists(mpx_filename);
             }
         }
     }

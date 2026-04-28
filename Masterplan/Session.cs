@@ -122,7 +122,14 @@ namespace Masterplan
                 }
 
                 // 1. Prioritized Load: Check for modern format first (.mpxpl)
-                string mpxFilename = filename.Replace(".library", ".mpxpl");
+                string mpxFilename = filename.EndsWith(".mpxpl", StringComparison.OrdinalIgnoreCase) 
+                    ? filename 
+                    : filename.Replace(".library", ".mpxpl");
+                
+                string legacyFilename = filename.EndsWith(".library", StringComparison.OrdinalIgnoreCase)
+                    ? filename
+                    : filename.Replace(".mpxpl", ".library");
+
                 Library lib = null;
 
                 if (File.Exists(mpxFilename))
@@ -131,14 +138,14 @@ namespace Masterplan
                 }
 
                 // 2. Parallel Track: Fallback to legacy BinaryFormatter
-                if (lib == null)
+                if (lib == null && File.Exists(legacyFilename))
                 {
-                    lib = Serialisation<Library>.Load(filename, SerialisationMode.Binary);
+                    lib = Serialisation<Library>.Load(legacyFilename, SerialisationMode.Binary);
                     
                     // 3. Immediate Conversion Staging (Issue #3)
                     if (lib != null)
                     {
-                        string convertedDir = Path.Combine(Path.GetDirectoryName(filename), "Converted");
+                        string convertedDir = Path.Combine(Path.GetDirectoryName(legacyFilename), "Converted");
                         if (!Directory.Exists(convertedDir)) Directory.CreateDirectory(convertedDir);
                         
                         string targetPath = Path.Combine(convertedDir, Path.GetFileName(mpxFilename));
@@ -209,8 +216,21 @@ namespace Masterplan
         {
             // Delete library file
             string filename = Session.GetLibraryFilename(lib);
-            FileInfo fi = new FileInfo(filename);
-            fi.Delete();
+            
+            // Delete legacy file
+            if (File.Exists(filename))
+            {
+                FileInfo fi = new FileInfo(filename);
+                fi.Delete();
+            }
+
+            // Delete modern file
+            string mpxFilename = filename.Replace(".library", ".mpxpl");
+            if (File.Exists(mpxFilename))
+            {
+                FileInfo fi = new FileInfo(mpxFilename);
+                fi.Delete();
+            }
 
             Session.Libraries.Remove(lib);
         }
