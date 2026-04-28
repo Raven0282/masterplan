@@ -7,13 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="12.0.0" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
+    <PackageReference Include="Avalonia" Version="12.0.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="Dock.Avalonia" Version="12.0.0.1" />
-    <PackageReference Include="Dock.Avalonia.Themes.Browser" Version="12.0.0.1" />
-    <PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.0.0.1" />
-    <PackageReference Include="ReactiveUI.Avalonia" Version="11.4.12" />
+    <PackageReference Include="Dock.Avalonia" Version="12.0.0.2" />
+    <PackageReference Include="Dock.Avalonia.Themes.Browser" Version="12.0.0.2" />
+    <PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.0.0.2" />
+    <PackageReference Include="ReactiveUI.Avalonia" Version="12.0.1" />
+    <PackageReference Include="Svg.Skia" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
