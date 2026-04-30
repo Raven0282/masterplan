@@ -1,12 +1,12 @@
+using Masterplan.Data;
+using Masterplan.Dto;
+using MessagePack;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
-using MessagePack;
-using Masterplan.Data;
-using Masterplan.Dto;
 
 namespace Masterplan.Tools
 {
@@ -106,7 +106,7 @@ namespace Masterplan.Tools
             if (dto.Library != null) p.Library = MapToLibrary(dto.Library);
             if (dto.SavedCombats != null) foreach (var sc in dto.SavedCombats) p.SavedCombats.Add(MapToCombatState(sc, p));
             if (dto.AddInData != null) foreach (var kv in dto.AddInData) p.AddInData[kv.Key] = kv.Value;
-            
+
             return p;
         }
 
@@ -140,7 +140,7 @@ namespace Masterplan.Tools
             dto.CampaignSettings = MapToCampaignSettingsDto(p.CampaignSettings);
             foreach (var sc in p.SavedCombats) dto.SavedCombats.Add(MapToCombatStateDto(sc));
             if (p.AddInData != null) foreach (var kv in p.AddInData) dto.AddInData[kv.Key] = kv.Value;
-            
+
             return dto;
         }
         #endregion
@@ -163,7 +163,7 @@ namespace Masterplan.Tools
 
             if (dto.HeroData != null)
                 foreach (var kv in dto.HeroData) cs.HeroData[kv.Key] = MapToCombatData(kv.Value);
-            
+
             if (dto.TrapData != null)
                 foreach (var kv in dto.TrapData) cs.TrapData[kv.Key] = MapToCombatData(kv.Value);
 
@@ -320,16 +320,28 @@ namespace Masterplan.Tools
         private Hero MapToHero(HeroDto dto)
         {
             if (dto == null) return null;
-            var h = new Hero {
-                ID = dto.ID, Name = dto.Name, Player = dto.Player, 
-                Size = Enum.Parse<CreatureSize>(dto.Size), Race = dto.Race,
-                Class = dto.Class, Level = dto.Level, 
-                ParagonPath = dto.ParagonPath, EpicDestiny = dto.EpicDestiny,
-                PowerSource = dto.PowerSource, Role = Enum.Parse<HeroRoleType>(dto.Role),
-                HP = dto.HP, AC = dto.AC,
-                Fortitude = dto.Fortitude, Reflex = dto.Reflex, Will = dto.Will,
-                InitBonus = dto.InitBonus, PassivePerception = dto.PassivePerception,
-                PassiveInsight = dto.PassiveInsight, Languages = dto.Languages,
+            var h = new Hero
+            {
+                ID = dto.ID,
+                Name = dto.Name,
+                Player = dto.Player,
+                Size = Enum.Parse<CreatureSize>(dto.Size),
+                Race = dto.Race,
+                Class = dto.Class,
+                Level = dto.Level,
+                ParagonPath = dto.ParagonPath,
+                EpicDestiny = dto.EpicDestiny,
+                PowerSource = dto.PowerSource,
+                Role = Enum.Parse<HeroRoleType>(dto.Role),
+                HP = dto.HP,
+                AC = dto.AC,
+                Fortitude = dto.Fortitude,
+                Reflex = dto.Reflex,
+                Will = dto.Will,
+                InitBonus = dto.InitBonus,
+                PassivePerception = dto.PassivePerception,
+                PassiveInsight = dto.PassiveInsight,
+                Languages = dto.Languages,
                 Portrait = ByteArrayToImage(dto.PortraitData)
             };
             if (dto.Tokens != null) foreach (var t in dto.Tokens) h.Tokens.Add(MapToCustomToken(t));
@@ -339,17 +351,30 @@ namespace Masterplan.Tools
         private HeroDto MapToHeroDto(Hero h)
         {
             if (h == null) return null;
-            var dto = new HeroDto {
-                ID = h.ID, Name = h.Name, Player = h.Player, 
-                Size = h.Size.ToString(), Race = h.Race,
-                Class = h.Class, Level = h.Level, 
-                ParagonPath = h.ParagonPath, EpicDestiny = h.EpicDestiny,
-                PowerSource = h.PowerSource, Role = h.Role.ToString(),
-                HP = h.HP, AC = h.AC,
-                Fortitude = h.Fortitude, Reflex = h.Reflex, Will = h.Will,
-                InitBonus = h.InitBonus, PassivePerception = h.PassivePerception,
-                PassiveInsight = h.PassiveInsight, Languages = h.Languages,
-                PortraitData = ImageToByteArray(h.Portrait), Info = h.Info
+            var dto = new HeroDto
+            {
+                ID = h.ID,
+                Name = h.Name,
+                Player = h.Player,
+                Size = h.Size.ToString(),
+                Race = h.Race,
+                Class = h.Class,
+                Level = h.Level,
+                ParagonPath = h.ParagonPath,
+                EpicDestiny = h.EpicDestiny,
+                PowerSource = h.PowerSource,
+                Role = h.Role.ToString(),
+                HP = h.HP,
+                AC = h.AC,
+                Fortitude = h.Fortitude,
+                Reflex = h.Reflex,
+                Will = h.Will,
+                InitBonus = h.InitBonus,
+                PassivePerception = h.PassivePerception,
+                PassiveInsight = h.PassiveInsight,
+                Languages = h.Languages,
+                PortraitData = ImageToByteArray(h.Portrait),
+                Info = h.Info
             };
             foreach (var t in h.Tokens) dto.Tokens.Add(MapToCustomTokenDto(t));
             return dto;
@@ -361,7 +386,7 @@ namespace Masterplan.Tools
         {
             if (dto == null) return null;
             var lib = new Library { ID = dto.ID, Name = dto.Name };
-            
+
             if (dto.Creatures != null)
             {
                 foreach (var c in dto.Creatures)
@@ -386,7 +411,7 @@ namespace Masterplan.Tools
         {
             if (lib == null) return null;
             var dto = new LibraryDto { ID = lib.ID, Name = lib.Name, ShowInAutoBuild = lib.ShowInAutoBuild };
-            
+
             foreach (var c in lib.Creatures) dto.Creatures.Add(MapToCreatureDto(c));
             foreach (var t in lib.Traps) dto.Traps.Add(MapToTrapDto(t));
             foreach (var sc in lib.SkillChallenges) dto.SkillChallenges.Add(MapToSkillChallengeDto(sc));
@@ -407,27 +432,39 @@ namespace Masterplan.Tools
             if (dto == null) return null;
             var c = new Creature
             {
-                ID = dto.ID, Name = dto.Name, Details = dto.Details,
+                ID = dto.ID,
+                Name = dto.Name,
+                Details = dto.Details,
                 Size = Enum.Parse<CreatureSize>(dto.Size),
                 Origin = Enum.Parse<CreatureOrigin>(dto.Origin),
                 Type = Enum.Parse<CreatureType>(dto.Type),
-                Keywords = dto.Keywords, Level = dto.Level,
-                Role = MapToRole(dto.Role), Senses = dto.Senses,
-                Movement = dto.Movement, Alignment = dto.Alignment,
-                Languages = dto.Languages, Skills = dto.Skills,
-                Equipment = dto.Equipment, Category = dto.Category,
+                Keywords = dto.Keywords,
+                Level = dto.Level,
+                Role = MapToRole(dto.Role),
+                Senses = dto.Senses,
+                Movement = dto.Movement,
+                Alignment = dto.Alignment,
+                Languages = dto.Languages,
+                Skills = dto.Skills,
+                Equipment = dto.Equipment,
+                Category = dto.Category,
                 Strength = new Ability { Score = dto.Strength != null ? dto.Strength.Score : 10 },
                 Constitution = new Ability { Score = dto.Constitution != null ? dto.Constitution.Score : 10 },
                 Dexterity = new Ability { Score = dto.Dexterity != null ? dto.Dexterity.Score : 10 },
                 Intelligence = new Ability { Score = dto.Intelligence != null ? dto.Intelligence.Score : 10 },
                 Wisdom = new Ability { Score = dto.Wisdom != null ? dto.Wisdom.Score : 10 },
                 Charisma = new Ability { Score = dto.Charisma != null ? dto.Charisma.Score : 10 },
-                HP = dto.HP, Initiative = dto.Initiative,
-                AC = dto.AC, Fortitude = dto.Fortitude,
-                Reflex = dto.Reflex, Will = dto.Will,
+                HP = dto.HP,
+                Initiative = dto.Initiative,
+                AC = dto.AC,
+                Fortitude = dto.Fortitude,
+                Reflex = dto.Reflex,
+                Will = dto.Will,
                 Regeneration = MapToRegeneration(dto.Regeneration),
-                Resist = dto.Resist, Vulnerable = dto.Vulnerable,
-                Immune = dto.Immune, Tactics = dto.Tactics,
+                Resist = dto.Resist,
+                Vulnerable = dto.Vulnerable,
+                Immune = dto.Immune,
+                Tactics = dto.Tactics,
                 Image = ByteArrayToImage(dto.ImageData)
             };
             if (dto.Auras != null) foreach (var a in dto.Auras) c.Auras.Add(MapToAura(a));
@@ -441,14 +478,20 @@ namespace Masterplan.Tools
             if (dto == null) return null;
             var c = new CustomCreature
             {
-                ID = dto.ID, Name = dto.Name, Details = dto.Details,
+                ID = dto.ID,
+                Name = dto.Name,
+                Details = dto.Details,
                 Size = Enum.Parse<CreatureSize>(dto.Size),
                 Origin = Enum.Parse<CreatureOrigin>(dto.Origin),
                 Type = Enum.Parse<CreatureType>(dto.Type),
-                Keywords = dto.Keywords, Level = dto.Level,
-                Role = MapToRole(dto.Role), Senses = dto.Senses,
-                Movement = dto.Movement, Alignment = dto.Alignment,
-                Languages = dto.Languages, Skills = dto.Skills,
+                Keywords = dto.Keywords,
+                Level = dto.Level,
+                Role = MapToRole(dto.Role),
+                Senses = dto.Senses,
+                Movement = dto.Movement,
+                Alignment = dto.Alignment,
+                Languages = dto.Languages,
+                Skills = dto.Skills,
                 Equipment = dto.Equipment,
                 Strength = new Ability { Score = dto.Strength != null ? dto.Strength.Score : 10 },
                 Constitution = new Ability { Score = dto.Constitution != null ? dto.Constitution.Score : 10 },
@@ -457,8 +500,10 @@ namespace Masterplan.Tools
                 Wisdom = new Ability { Score = dto.Wisdom != null ? dto.Wisdom.Score : 10 },
                 Charisma = new Ability { Score = dto.Charisma != null ? dto.Charisma.Score : 10 },
                 Regeneration = MapToRegeneration(dto.Regeneration),
-                Resist = dto.Resist, Vulnerable = dto.Vulnerable,
-                Immune = dto.Immune, Tactics = dto.Tactics,
+                Resist = dto.Resist,
+                Vulnerable = dto.Vulnerable,
+                Immune = dto.Immune,
+                Tactics = dto.Tactics,
                 Image = ByteArrayToImage(dto.ImageData)
             };
             // Set calculated properties through modifiers where applicable
@@ -468,7 +513,7 @@ namespace Masterplan.Tools
             c.Fortitude = dto.Fortitude;
             c.Reflex = dto.Reflex;
             c.Will = dto.Will;
-            
+
             if (dto.Auras != null) foreach (var a in dto.Auras) c.Auras.Add(MapToAura(a));
             if (dto.Powers != null) foreach (var p in dto.Powers) c.CreaturePowers.Add(MapToPower(p));
             if (dto.DamageModifiers != null) foreach (var dm in dto.DamageModifiers) c.DamageModifiers.Add(MapToDamageModifier(dm));
@@ -480,13 +525,21 @@ namespace Masterplan.Tools
             if (c == null) return null;
             var dto = new CreatureDto
             {
-                ID = c.ID, Name = c.Name, Details = c.Details,
-                Size = c.Size.ToString(), Origin = c.Origin.ToString(),
-                Type = c.Type.ToString(), Keywords = c.Keywords,
-                Level = c.Level, Role = MapToRoleDto(c.Role),
-                Senses = c.Senses, Movement = c.Movement,
-                Alignment = c.Alignment, Languages = c.Languages,
-                Skills = c.Skills, Equipment = c.Equipment,
+                ID = c.ID,
+                Name = c.Name,
+                Details = c.Details,
+                Size = c.Size.ToString(),
+                Origin = c.Origin.ToString(),
+                Type = c.Type.ToString(),
+                Keywords = c.Keywords,
+                Level = c.Level,
+                Role = MapToRoleDto(c.Role),
+                Senses = c.Senses,
+                Movement = c.Movement,
+                Alignment = c.Alignment,
+                Languages = c.Languages,
+                Skills = c.Skills,
+                Equipment = c.Equipment,
                 Category = c.Category,
                 Strength = new AbilityScoreDto { Score = c.Strength.Score },
                 Constitution = new AbilityScoreDto { Score = c.Constitution.Score },
@@ -494,14 +547,20 @@ namespace Masterplan.Tools
                 Intelligence = new AbilityScoreDto { Score = c.Intelligence.Score },
                 Wisdom = new AbilityScoreDto { Score = c.Wisdom.Score },
                 Charisma = new AbilityScoreDto { Score = c.Charisma.Score },
-                HP = c.HP, Initiative = c.Initiative,
-                AC = c.AC, Fortitude = c.Fortitude,
-                Reflex = c.Reflex, Will = c.Will,
+                HP = c.HP,
+                Initiative = c.Initiative,
+                AC = c.AC,
+                Fortitude = c.Fortitude,
+                Reflex = c.Reflex,
+                Will = c.Will,
                 Regeneration = MapToRegenerationDto(c.Regeneration),
-                Resist = c.Resist, Vulnerable = c.Vulnerable,
-                Immune = c.Immune, Tactics = c.Tactics,
+                Resist = c.Resist,
+                Vulnerable = c.Vulnerable,
+                Immune = c.Immune,
+                Tactics = c.Tactics,
                 ImageData = ImageToByteArray(c.Image),
-                Info = c.Info, Phenotype = c.Phenotype
+                Info = c.Info,
+                Phenotype = c.Phenotype
             };
             foreach (var a in c.Auras) dto.Auras.Add(MapToAuraDto(a));
             foreach (var p in c.CreaturePowers) dto.Powers.Add(MapToPowerDto(p));
@@ -574,12 +633,24 @@ namespace Masterplan.Tools
             if (dto == null) return null;
             var t = new CreatureTemplate
             {
-                ID = dto.ID, Name = dto.Name, Type = Enum.Parse<CreatureTemplateType>(dto.Type),
-                Role = Enum.Parse<RoleType>(dto.Role), Leader = dto.Leader, Senses = dto.Senses,
-                Movement = dto.Movement, HP = dto.HP, Initiative = dto.Initiative,
-                AC = dto.AC, Fortitude = dto.Fortitude, Reflex = dto.Reflex, Will = dto.Will,
+                ID = dto.ID,
+                Name = dto.Name,
+                Type = Enum.Parse<CreatureTemplateType>(dto.Type),
+                Role = Enum.Parse<RoleType>(dto.Role),
+                Leader = dto.Leader,
+                Senses = dto.Senses,
+                Movement = dto.Movement,
+                HP = dto.HP,
+                Initiative = dto.Initiative,
+                AC = dto.AC,
+                Fortitude = dto.Fortitude,
+                Reflex = dto.Reflex,
+                Will = dto.Will,
                 Regeneration = MapToRegeneration(dto.Regeneration),
-                Resist = dto.Resist, Vulnerable = dto.Vulnerable, Immune = dto.Immune, Tactics = dto.Tactics
+                Resist = dto.Resist,
+                Vulnerable = dto.Vulnerable,
+                Immune = dto.Immune,
+                Tactics = dto.Tactics
             };
             if (dto.Auras != null) foreach (var a in dto.Auras) t.Auras.Add(new Aura { ID = a.ID, Name = a.Name, Keywords = a.Keywords, Details = a.Details });
             if (dto.Powers != null) foreach (var p in dto.Powers) t.CreaturePowers.Add(MapToPower(p));
@@ -592,12 +663,24 @@ namespace Masterplan.Tools
             if (t == null) return null;
             var dto = new TemplateDto
             {
-                ID = t.ID, Name = t.Name, Type = t.Type.ToString(),
-                Role = t.Role.ToString(), Leader = t.Leader, Senses = t.Senses,
-                Movement = t.Movement, HP = t.HP, Initiative = t.Initiative,
-                AC = t.AC, Fortitude = t.Fortitude, Reflex = t.Reflex, Will = t.Will,
+                ID = t.ID,
+                Name = t.Name,
+                Type = t.Type.ToString(),
+                Role = t.Role.ToString(),
+                Leader = t.Leader,
+                Senses = t.Senses,
+                Movement = t.Movement,
+                HP = t.HP,
+                Initiative = t.Initiative,
+                AC = t.AC,
+                Fortitude = t.Fortitude,
+                Reflex = t.Reflex,
+                Will = t.Will,
                 Regeneration = MapToRegenerationDto(t.Regeneration),
-                Resist = t.Resist, Vulnerable = t.Vulnerable, Immune = t.Immune, Tactics = t.Tactics
+                Resist = t.Resist,
+                Vulnerable = t.Vulnerable,
+                Immune = t.Immune,
+                Tactics = t.Tactics
             };
             foreach (var a in t.Auras) dto.Auras.Add(new AuraDto { ID = a.ID, Name = a.Name, Keywords = a.Keywords, Details = a.Details });
             foreach (var p in t.CreaturePowers) dto.Powers.Add(MapToPowerDto(p));
@@ -612,7 +695,8 @@ namespace Masterplan.Tools
             if (dto == null) return null;
             return new Tile
             {
-                ID = dto.ID, Category = Enum.Parse<TileCategory>(dto.Category),
+                ID = dto.ID,
+                Category = Enum.Parse<TileCategory>(dto.Category),
                 Size = new Size(dto.Width, dto.Height),
                 Image = ByteArrayToImage(dto.ImageData),
                 Keywords = dto.Keywords,
@@ -625,8 +709,10 @@ namespace Masterplan.Tools
             if (t == null) return null;
             return new TileDto
             {
-                ID = t.ID, Category = t.Category.ToString(),
-                Width = t.Size.Width, Height = t.Size.Height,
+                ID = t.ID,
+                Category = t.Category.ToString(),
+                Width = t.Size.Width,
+                Height = t.Size.Height,
                 ImageData = ImageToByteArray(t.Image),
                 Keywords = t.Keywords,
                 ARGB = t.BlankColour.ToArgb()
@@ -666,9 +752,14 @@ namespace Masterplan.Tools
         private PlotPointDto MapToPlotPointDto(PlotPoint pp)
         {
             if (pp == null) return null;
-            var dto = new PlotPointDto {
-                ID = pp.ID, Name = pp.Name, Details = pp.Details, ReadAloud = pp.ReadAloud,
-                State = pp.State.ToString(), Colour = pp.Colour.ToString(),
+            var dto = new PlotPointDto
+            {
+                ID = pp.ID,
+                Name = pp.Name,
+                Details = pp.Details,
+                ReadAloud = pp.ReadAloud,
+                State = pp.State.ToString(),
+                Colour = pp.Colour.ToString(),
                 Subplot = MapToPlotDto(pp.Subplot),
                 Element = MapToElementDto(pp.Element)
             };
@@ -1017,10 +1108,20 @@ namespace Masterplan.Tools
             if (dto == null) return null;
             return new TerrainPower
             {
-                ID = dto.ID, Name = dto.Name, Type = Enum.Parse<TerrainPowerType>(dto.Type), FlavourText = dto.FlavourText,
-                Action = Enum.Parse<ActionType>(dto.Action), Requirement = dto.Requirement, Check = dto.Check,
-                Success = dto.Success, Failure = dto.Failure, Target = dto.Target,
-                Attack = dto.Attack, Hit = dto.Hit, Miss = dto.Miss, Effect = dto.Effect
+                ID = dto.ID,
+                Name = dto.Name,
+                Type = Enum.Parse<TerrainPowerType>(dto.Type),
+                FlavourText = dto.FlavourText,
+                Action = Enum.Parse<ActionType>(dto.Action),
+                Requirement = dto.Requirement,
+                Check = dto.Check,
+                Success = dto.Success,
+                Failure = dto.Failure,
+                Target = dto.Target,
+                Attack = dto.Attack,
+                Hit = dto.Hit,
+                Miss = dto.Miss,
+                Effect = dto.Effect
             };
         }
 
@@ -1029,10 +1130,20 @@ namespace Masterplan.Tools
             if (tp == null) return null;
             return new TerrainPowerDto
             {
-                ID = tp.ID, Name = tp.Name, Type = tp.Type.ToString(), FlavourText = tp.FlavourText,
-                Action = tp.Action.ToString(), Requirement = tp.Requirement, Check = tp.Check,
-                Success = tp.Success, Failure = tp.Failure, Target = tp.Target,
-                Attack = tp.Attack, Hit = tp.Hit, Miss = tp.Miss, Effect = tp.Effect
+                ID = tp.ID,
+                Name = tp.Name,
+                Type = tp.Type.ToString(),
+                FlavourText = tp.FlavourText,
+                Action = tp.Action.ToString(),
+                Requirement = tp.Requirement,
+                Check = tp.Check,
+                Success = tp.Success,
+                Failure = tp.Failure,
+                Target = tp.Target,
+                Attack = tp.Attack,
+                Hit = tp.Hit,
+                Miss = tp.Miss,
+                Effect = tp.Effect
             };
         }
 

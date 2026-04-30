@@ -1,10 +1,10 @@
 #nullable enable
 
+using HtmlAgilityPack; // Assumed dependency for parsing HTML
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using HtmlAgilityPack; // Assumed dependency for parsing HTML
 
 namespace Masterplan.Tools
 {

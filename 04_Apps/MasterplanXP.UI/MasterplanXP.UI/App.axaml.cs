@@ -1,11 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using MasterplanXP.UI.ViewModels;
 using MasterplanXP.UI.Views;
-using System.Linq;
 
 namespace MasterplanXP.UI
 {

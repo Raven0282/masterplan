@@ -136,13 +136,13 @@ namespace Masterplan
                 if (lib == null && File.Exists(legacyFilename))
                 {
                     lib = Serialisation<Library>.Load(legacyFilename, SerialisationMode.Binary);
-                    
+
                     // 3. Immediate Conversion Staging (Issue #3)
                     if (lib != null)
                     {
                         string convertedDir = Path.Combine(Path.GetDirectoryName(legacyFilename), "Converted");
                         if (!Directory.Exists(convertedDir)) Directory.CreateDirectory(convertedDir);
-                        
+
                         string targetPath = Path.Combine(convertedDir, Path.GetFileName(mpxFilename));
                         LibraryConversionService.Instance.SaveXLibrary(lib, targetPath);
                     }
@@ -186,7 +186,7 @@ namespace Masterplan
                 if (p == null)
                 {
                     p = Serialisation<Project>.Load(filename, SerialisationMode.Binary);
-                    
+
                     // 3. Immediate Conversion Staging (Issue #3)
                     if (p != null)
                     {
@@ -208,7 +208,7 @@ namespace Masterplan
         {
             // Delete library file
             string filename = Session.GetLibraryFilename(lib);
-            
+
             // Delete legacy file
             if (File.Exists(filename))
             {

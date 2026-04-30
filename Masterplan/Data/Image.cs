@@ -1,8 +1,5 @@
 ﻿#nullable disable
 
-using Masterplan.Tools;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace Masterplan.Data

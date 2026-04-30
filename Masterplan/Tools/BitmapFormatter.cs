@@ -1,12 +1,11 @@
 ﻿#nullable disable
 
+using MessagePack;
+using MessagePack.Formatters;
 using System.Buffers; // Added for ReadOnlySequence<byte> functionality
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using MessagePack;
-using MessagePack.Formatters;
 
 namespace Masterplan.Tools
 {

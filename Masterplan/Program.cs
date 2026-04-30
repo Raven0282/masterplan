@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Masterplan
@@ -89,7 +88,7 @@ namespace Masterplan
                     // 1. Custom formatters (highest priority)
                     new IMessagePackFormatter[] {
                         ColorFormatter.Instance,
-                        BitmapFormatter.Instance 
+                        BitmapFormatter.Instance
                     },
                     // 2. Standard resolvers (order matters)
                     new IFormatterResolver[] {

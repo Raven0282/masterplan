@@ -1,12 +1,7 @@
 ﻿using Masterplan.Data;
 using Masterplan.Tools;
 using System;
-using System.IO;
-using System.Net.Http;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace Masterplan.UI
 {
@@ -69,7 +64,7 @@ namespace Masterplan.UI
                 // Retrieve the static HTML content from its dedicated location
                 string htmlContent = Browser.DocumentText;
 
-                MessageBox.Show("The Export to PNG might take a while.  You can continue working until the save dialog appears.");              
+                MessageBox.Show("The Export to PNG might take a while.  You can continue working until the save dialog appears.");
 
                 // Pass the HTML content to the core exporter logic.
                 // await _exporter.StartPNGExport(htmlContent);

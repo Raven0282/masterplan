@@ -1,12 +1,7 @@
-﻿using SkiaSharp;
-using Svg.Skia;
+﻿using Svg.Skia;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Masterplan.Tools
 {
@@ -51,7 +46,7 @@ namespace Masterplan.Tools
                 }
             }
             catch (Exception ex)
-            { 
+            {
                 // Use the application's logging system if available
                 System.Diagnostics.Debug.WriteLine($"Error loading SVG resource '{resourceName}': {ex.Message}");
                 LogSystem.Trace(ex);

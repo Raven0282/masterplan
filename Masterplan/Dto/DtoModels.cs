@@ -1,6 +1,6 @@
+using MessagePack;
 using System;
 using System.Collections.Generic;
-using MessagePack;
 
 namespace Masterplan.Dto
 {

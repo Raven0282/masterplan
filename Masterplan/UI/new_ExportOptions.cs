@@ -8,12 +8,8 @@ using PuppeteerSharp;
 using PuppeteerSharp.Media;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Printing; // for PaperKind
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions; // Required for RtfExporter
 using System.Threading.Tasks;
 using System.Windows.Forms;
 

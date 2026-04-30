@@ -1,17 +1,16 @@
 ﻿#nullable disable
 
 using Masterplan.Tools;
+using SkiaSharp; // <-- ADDED for low-level drawing
+using Svg.Skia; // <-- ADDED for SVG processing
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.IO; // <-- ADDED for reading embedded resource streams
 using System.Reflection;
 using System.Windows.Forms;
-using Svg.Skia; // <-- ADDED for SVG processing
-using SkiaSharp; // <-- ADDED for low-level drawing
-using System.IO; // <-- ADDED for reading embedded resource streams
 
 namespace Masterplan.Controls
 {
@@ -220,7 +219,7 @@ namespace Masterplan.Controls
                             // Use bitmap with GDI+
 
                         }
-                        
+
                     }
                 }
                 // --- END SVG DRAWING LOGIC ---

@@ -44,17 +44,17 @@ namespace Masterplan.UI
             //Pending Code
             MessageBox.Show("This Feature is pending.");
             Console.WriteLine("This Feature is pending.");
-            
 
-            
-                SaveFileDialog dlg = new SaveFileDialog();
-                dlg.Title = "Export";
-                dlg.Filter = Program.HeroAndPCFilter;
-                dlg.FileName = fHero.Name;
 
-                if (dlg.ShowDialog() == DialogResult.OK)
-                    Serialisation<Hero>.Save(dlg.FileName, fHero, SerialisationMode.XML);
-            
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Export";
+            dlg.Filter = Program.HeroAndPCFilter;
+            dlg.FileName = fHero.Name;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+                Serialisation<Hero>.Save(dlg.FileName, fHero, SerialisationMode.XML);
+
         }
     }
 }

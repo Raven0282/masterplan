@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Content.PM;
-using Avalonia;
 using Avalonia.Android;
 
 namespace MasterplanXP.UI.Android
