@@ -4175,14 +4175,19 @@ namespace Masterplan.Controls
             }
 
             // Work out square dimensions
-            float square_width = (float)mapview.ClientRectangle.Width / Width;
-            float square_height = (float)mapview.ClientRectangle.Height / Height;
+            int map_width = Math.Max(1, Width);
+            int map_height = Math.Max(1, Height);
+            float square_width = (float)mapview.ClientRectangle.Width / map_width;
+            float square_height = (float)mapview.ClientRectangle.Height / map_height;
             SquareSize = Math.Min(square_width, square_height);
             SquareSize *= (float)ScalingFactor;
 
+            if (float.IsInfinity(SquareSize) || float.IsNaN(SquareSize) || SquareSize < 0.001f)
+                SquareSize = 1.0f;
+
             // Work out the map offset
-            float x_used = Width * SquareSize;
-            float y_used = Height * SquareSize;
+            float x_used = map_width * SquareSize;
+            float y_used = map_height * SquareSize;
             float x_diff = mapview.ClientRectangle.Width - x_used;
             float y_diff = mapview.ClientRectangle.Height - y_used;
             MapOffset = new SizeF(x_diff / 2, y_diff / 2);

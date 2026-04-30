@@ -183,7 +183,7 @@ namespace Masterplan
                     Directory.CreateDirectory(lib_dir);
 
                 // Move libraries from root directory to Libraries folder
-                string[] extensions = { "*.library", "*.mpxpl" };
+                string[] extensions = { "*.library", "*.mpxlib" };
                 foreach (string ext in extensions)
                 {
                     string[] files = Directory.GetFiles(root_dir, ext);
@@ -207,14 +207,14 @@ namespace Masterplan
                 HashSet<string> libraryBaseNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 foreach (string file in Directory.GetFiles(lib_dir, "*.library"))
                     libraryBaseNames.Add(Path.GetFileNameWithoutExtension(file));
-                foreach (string file in Directory.GetFiles(lib_dir, "*.mpxpl"))
+                foreach (string file in Directory.GetFiles(lib_dir, "*.mpxlib"))
                     libraryBaseNames.Add(Path.GetFileNameWithoutExtension(file));
 
                 SplashScreen.Actions = libraryBaseNames.Count;
 
                 foreach (string baseName in libraryBaseNames)
                 {
-                    // Pass the .library path; Session.LoadLibrary will prioritize .mpxpl if it exists
+                    // Pass the .library path; Session.LoadLibrary will prioritize .mpxlib if it exists
                     string filename = Path.Combine(lib_dir, baseName + ".library");
                     Session.LoadLibrary(filename);
                 }
@@ -414,8 +414,8 @@ namespace Masterplan
 
         public static ProgressScreen SplashScreen = null;
 
-        public static string ProjectFilter = "Masterplan Project|*.masterplan;*.mpxpm";
-        public static string LibraryFilter = "Masterplan Library|*.library;*.mpxpl";
+        public static string ProjectFilter = "Masterplan Project|*.masterplan;*.mpxplan";
+        public static string LibraryFilter = "Masterplan Library|*.library;*.mpxlib";
         public static string EncounterFilter = "Masterplan Encounter|*.encounter";
         public static string BackgroundFilter = "Masterplan Campaign Background|*.background";
         public static string EncyclopediaFilter = "Masterplan Campaign Encyclopedia|*.encyclopedia";

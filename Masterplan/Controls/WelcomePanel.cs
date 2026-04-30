@@ -106,6 +106,13 @@ namespace Masterplan.Controls
                     dlg.ShowDialog();
                 }
 
+                if (e.Url.LocalPath == "hubble")
+                {
+                    ImageForm imf = new ImageForm();
+                    Masterplan.UI.ImageDisplayForm dlg = new Masterplan.UI.ImageDisplayForm();
+                    dlg.ShowDialog();
+                }
+
                 if (e.Url.LocalPath == "manual")
                     open_manual();
             }
@@ -259,6 +266,13 @@ namespace Masterplan.Controls
                 lines.Add("</TD>");
                 lines.Add("</TR>");
 
+                lines.Add("<TR>");
+                lines.Add("<TD>");
+                lines.Add("<A href=\"masterplan:hubble\">Project Hubble</A>");
+                lines.Add("</TD>");
+                lines.Add("</TR>");
+
+
                 lines.Add("</TABLE>");
                 lines.Add("</P>");
             }
@@ -310,6 +324,11 @@ namespace Masterplan.Controls
         {
             Assembly ass = Assembly.GetEntryAssembly();
             return FileName.Directory(ass.FullName) + "Manual.pdf";
+        }
+
+        private void TitlePanel_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

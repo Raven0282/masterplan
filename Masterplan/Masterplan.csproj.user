@@ -5,6 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
+    <_LastSelectedProfileId>E:\source\repos\Git\MP_DEV6\Masterplan\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="UI\AboutBox.cs">
@@ -194,6 +195,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="UI\EndedEffectsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UI\ImageDisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="UI\GroupHealthForm.cs">

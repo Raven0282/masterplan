@@ -121,8 +121,8 @@ namespace Masterplan
                     Program.SplashScreen.Progress += 1;
                 }
 
-                // 1. Prioritized Load: Check for modern format first (.mpxpl)
-                string mpxFilename = Path.ChangeExtension(filename, ".mpxpl");
+                // 1. Prioritized Load: Check for modern format first (.mpxlib)
+                string mpxFilename = Path.ChangeExtension(filename, ".mpxlib");
                 string legacyFilename = Path.ChangeExtension(filename, ".library");
 
                 Library lib = null;
@@ -173,8 +173,8 @@ namespace Masterplan
         {
             try
             {
-                // 1. Prioritized Load: Check for modern format first (.mpxpm)
-                string mpxFilename = Path.ChangeExtension(filename, ".mpxpm");
+                // 1. Prioritized Load: Check for modern format first (.mpxplan)
+                string mpxFilename = Path.ChangeExtension(filename, ".mpxplan");
                 Project p = null;
 
                 if (File.Exists(mpxFilename))
@@ -190,7 +190,7 @@ namespace Masterplan
                     // 3. Immediate Conversion Staging (Issue #3)
                     if (p != null)
                     {
-                        string targetPath = Path.ChangeExtension(filename, ".mpxpm");
+                        string targetPath = Path.ChangeExtension(filename, ".mpxplan");
                         LibraryConversionService.Instance.SaveXProject(p, targetPath);
                     }
                 }
@@ -217,7 +217,7 @@ namespace Masterplan
             }
 
             // Delete modern file
-            string mpxFilename = filename.Replace(".library", ".mpxpl");
+            string mpxFilename = filename.Replace(".library", ".mpxlib");
             if (File.Exists(mpxFilename))
             {
                 FileInfo fi = new FileInfo(mpxFilename);

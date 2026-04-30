@@ -568,7 +568,7 @@ namespace Masterplan.UI
             {
                 int index = Session.Libraries.IndexOf(SelectedLibrary);
                 string legacy_old_filename = Session.GetLibraryFilename(SelectedLibrary);
-                string mpx_old_filename = legacy_old_filename.Replace(".library", ".mpxpl");
+                string mpx_old_filename = legacy_old_filename.Replace(".library", ".mpxlib");
 
                 if (!File.Exists(legacy_old_filename) && !File.Exists(mpx_old_filename))
                 {
@@ -586,7 +586,7 @@ namespace Masterplan.UI
 
                     // Has the name changed?
                     string legacy_new_filename = Session.GetLibraryFilename(dlg.Library);
-                    string mpx_new_filename = legacy_new_filename.Replace(".library", ".mpxpl");
+                    string mpx_new_filename = legacy_new_filename.Replace(".library", ".mpxlib");
 
                     if (legacy_old_filename != legacy_new_filename)
                     {
@@ -3579,7 +3579,7 @@ namespace Masterplan.UI
             Serialisation<Library>.Save(legacyFilename, lib, SerialisationMode.Binary);
 
             // 2. Synchronize modern MessagePack format (Issue #3)
-            string mpxFilename = legacyFilename.Replace(".library", ".mpxpl");
+            string mpxFilename = legacyFilename.Replace(".library", ".mpxlib");
             LibraryConversionService.Instance.SaveXLibrary(lib, mpxFilename);
         }
         void Show_help(bool show)

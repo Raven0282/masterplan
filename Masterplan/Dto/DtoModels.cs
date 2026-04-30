@@ -47,6 +47,134 @@ namespace Masterplan.Dto
         [Key(19)] public string Password { get; set; }
         [Key(20)] public string PasswordHint { get; set; }
         [Key(21)] public LibraryDto Library { get; set; }
+        [Key(22)] public List<CombatStateDto> SavedCombats { get; set; } = new();
+        [Key(23)] public Dictionary<string, string> AddInData { get; set; } = new();
+    }
+    #endregion
+
+    #region Combat State
+    [MessagePackObject]
+    public partial class CombatStateDto
+    {
+        [Key(0)] public DateTime Timestamp { get; set; }
+        [Key(1)] public int PartyLevel { get; set; }
+        [Key(2)] public EncounterDto Encounter { get; set; }
+        [Key(3)] public int CurrentRound { get; set; }
+        [Key(4)] public Dictionary<Guid, CombatDataDto> HeroData { get; set; } = new();
+        [Key(5)] public Dictionary<Guid, CombatDataDto> TrapData { get; set; } = new();
+        [Key(6)] public List<TokenLinkDto> TokenLinks { get; set; } = new();
+        [Key(7)] public int RemovedCreatureXP { get; set; }
+        [Key(8)] public Guid CurrentActor { get; set; }
+        [Key(9)] public int ViewpointX { get; set; }
+        [Key(10)] public int ViewpointY { get; set; }
+        [Key(11)] public int ViewpointWidth { get; set; }
+        [Key(12)] public int ViewpointHeight { get; set; }
+        [Key(13)] public List<MapSketchDto> Sketches { get; set; } = new();
+        [Key(14)] public List<OngoingConditionDto> QuickEffects { get; set; } = new();
+        [Key(15)] public EncounterLogDto Log { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class TokenLinkDto
+    {
+        [Key(0)] public string Text { get; set; }
+        [Key(1)] public List<TokenDto> Tokens { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class TokenDto
+    {
+        [Key(0)] public string Type { get; set; } // "Creature", "Custom", or "Hero"
+        [Key(1)] public Guid SlotID { get; set; } // For CreatureToken
+        [Key(2)] public CombatDataDto Data { get; set; } // For CreatureToken or CustomToken
+        [Key(3)] public CustomTokenDto CustomToken { get; set; } // For CustomToken
+        [Key(4)] public Guid HeroID { get; set; } // For HeroToken
+    }
+
+    [MessagePackObject]
+    public partial class MapSketchDto
+    {
+        [Key(0)] public int ARGB { get; set; }
+        [Key(1)] public int Width { get; set; }
+        [Key(2)] public List<MapSketchPointDto> Points { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class MapSketchPointDto
+    {
+        [Key(0)] public int SquareX { get; set; }
+        [Key(1)] public int SquareY { get; set; }
+        [Key(2)] public float LocationX { get; set; }
+        [Key(3)] public float LocationY { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class EncounterLogDto
+    {
+        [Key(0)] public List<LogEntryDto> Entries { get; set; } = new();
+        [Key(1)] public bool Active { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class LogEntryDto
+    {
+        [Key(0)] public string Type { get; set; }
+        [Key(1)] public Guid CombatantID { get; set; }
+        [Key(2)] public DateTime Timestamp { get; set; }
+        [Key(3)] public byte[] Data { get; set; } // Serialized specific entry data
+    }
+
+    // Specific Log Entry Data DTOs
+    [MessagePackObject]
+    public partial class StartRoundEntryDto
+    {
+        [Key(0)] public int Round { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class DamageEntryDto
+    {
+        [Key(0)] public int Amount { get; set; }
+        [Key(1)] public List<string> Types { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class StateEntryDto
+    {
+        [Key(0)] public string State { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class EffectEntryDto
+    {
+        [Key(0)] public string EffectText { get; set; }
+        [Key(1)] public bool Added { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class PowerEntryDto
+    {
+        [Key(0)] public string PowerName { get; set; }
+        [Key(1)] public bool Added { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class SkillEntryDto
+    {
+        [Key(0)] public string SkillName { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class SkillChallengeLogEntryDto
+    {
+        [Key(0)] public bool Success { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class MoveEntryDto
+    {
+        [Key(0)] public int Distance { get; set; }
+        [Key(1)] public string Details { get; set; }
     }
     #endregion
 
@@ -326,7 +454,20 @@ namespace Masterplan.Dto
     public partial class CustomTokenDto
     {
         [Key(0)] public Guid ID { get; set; }
-        [Key(1)] public string Name { get; set; }
+        [Key(1)] public string Type { get; set; } // CustomTokenType
+        [Key(2)] public string Name { get; set; }
+        [Key(3)] public string Details { get; set; }
+        [Key(4)] public string TokenSize { get; set; } // CreatureSize
+        [Key(5)] public int OverlaySizeWidth { get; set; }
+        [Key(6)] public int OverlaySizeHeight { get; set; }
+        [Key(7)] public string OverlayStyle { get; set; } // OverlayStyle
+        [Key(8)] public int ARGB { get; set; }
+        [Key(9)] public byte[] ImageData { get; set; }
+        [Key(10)] public bool DifficultTerrain { get; set; }
+        [Key(11)] public bool Opaque { get; set; }
+        [Key(12)] public CombatDataDto Data { get; set; }
+        [Key(13)] public TerrainPowerDto TerrainPower { get; set; }
+        [Key(14)] public Guid CreatureID { get; set; }
     }
 
     [MessagePackObject]
@@ -401,6 +542,14 @@ namespace Masterplan.Dto
         [Key(6)] public string RoleplayingTips { get; set; }
         [Key(7)] public List<SectionDto> Sections { get; set; } = new();
         [Key(8)] public List<ArtifactConcordanceDto> ConcordanceLevels { get; set; } = new();
+        [Key(9)] public List<PairDto<string, string>> ConcordanceRules { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class PairDto<T1, T2>
+    {
+        [Key(0)] public T1 First { get; set; }
+        [Key(1)] public T2 Second { get; set; }
     }
 
     [MessagePackObject]
@@ -422,8 +571,7 @@ namespace Masterplan.Dto
         [Key(3)] public int Height { get; set; }
         [Key(4)] public byte[] ImageData { get; set; }
         [Key(5)] public string Keywords { get; set; }
-        [Key(6)] public int Area { get; set; }
-        [Key(7)] public byte[] BlankImageData { get; set; }
+        [Key(6)] public int ARGB { get; set; }
     }
 
     [MessagePackObject]
@@ -450,6 +598,16 @@ namespace Masterplan.Dto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
+        [Key(2)] public List<ThemePowerDataDto> Powers { get; set; } = new();
+        [Key(3)] public List<PairDto<string, int>> SkillBonuses { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class ThemePowerDataDto
+    {
+        [Key(0)] public CreaturePowerDto Power { get; set; }
+        [Key(1)] public string Type { get; set; }
+        [Key(2)] public List<string> Roles { get; set; } = new();
     }
 
     [MessagePackObject]
@@ -457,6 +615,34 @@ namespace Masterplan.Dto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Type { get; set; }
+        [Key(3)] public string Role { get; set; }
+        [Key(4)] public bool Leader { get; set; }
+        [Key(5)] public string Senses { get; set; }
+        [Key(6)] public string Movement { get; set; }
+        [Key(7)] public int HP { get; set; }
+        [Key(8)] public int Initiative { get; set; }
+        [Key(9)] public int AC { get; set; }
+        [Key(10)] public int Fortitude { get; set; }
+        [Key(11)] public int Reflex { get; set; }
+        [Key(12)] public int Will { get; set; }
+        [Key(13)] public RegenerationDto Regeneration { get; set; }
+        [Key(14)] public List<AuraDto> Auras { get; set; } = new();
+        [Key(15)] public List<CreaturePowerDto> Powers { get; set; } = new();
+        [Key(16)] public List<DamageModifierTemplateDto> DamageModifierTemplates { get; set; } = new();
+        [Key(17)] public string Resist { get; set; }
+        [Key(18)] public string Vulnerable { get; set; }
+        [Key(19)] public string Immune { get; set; }
+        [Key(20)] public string Tactics { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class DamageModifierTemplateDto
+    {
+        [Key(0)] public string Type { get; set; }
+        [Key(1)] public int HeroicValue { get; set; }
+        [Key(2)] public int ParagonValue { get; set; }
+        [Key(3)] public int EpicValue { get; set; }
     }
 
     [MessagePackObject]
@@ -501,6 +687,7 @@ namespace Masterplan.Dto
         [Key(19)] public string Languages { get; set; }
         [Key(20)] public byte[] PortraitData { get; set; }
         [Key(21)] public string Info { get; set; }
+        [Key(22)] public List<CustomTokenDto> Tokens { get; set; } = new();
     }
 
     [MessagePackObject]
@@ -597,6 +784,9 @@ namespace Masterplan.Dto
         [Key(3)] public Guid ThemeID { get; set; }
         [Key(4)] public string Title { get; set; }
         [Key(5)] public int XP { get; set; }
+        [Key(6)] public Guid ThemeAttackPowerID { get; set; }
+        [Key(7)] public Guid ThemeUtilityPowerID { get; set; }
+        [Key(8)] public bool Drawn { get; set; }
     }
 
     [MessagePackObject]

@@ -2913,7 +2913,7 @@ namespace Masterplan.UI
             bool ok = Serialisation<Project>.Save(legacyFilename, Session.Project, SerialisationMode.Binary);
 
             // 2. Save modern MessagePack format
-            string mpxFilename = Path.ChangeExtension(filename, ".mpxpm");
+            string mpxFilename = Path.ChangeExtension(filename, ".mpxplan");
             LibraryConversionService.Instance.SaveXProject(Session.Project, mpxFilename);
 
             Session.Project.SimplifyProjectLibrary();
@@ -4397,7 +4397,7 @@ namespace Masterplan.UI
                         string legacyFilename = Path.ChangeExtension(dlg.FileName, ".masterplan");
                         Serialisation<Project>.Save(legacyFilename, p, SerialisationMode.Binary);
 
-                        string mpxFilename = Path.ChangeExtension(dlg.FileName, ".mpxpm");
+                        string mpxFilename = Path.ChangeExtension(dlg.FileName, ".mpxplan");
                         LibraryConversionService.Instance.SaveXProject(p, mpxFilename);
                     }
                 }

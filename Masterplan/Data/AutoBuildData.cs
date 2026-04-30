@@ -29,7 +29,7 @@ namespace Masterplan.Data
             get { return fLevel; }
             set { fLevel = value; }
         }
-        int fLevel = Session.Project.Party.Level;
+        int fLevel = (Session.Project != null && Session.Project.Party != null) ? Session.Project.Party.Level : 1;
 
         /// <summary>
         /// Gets or sets the party size.

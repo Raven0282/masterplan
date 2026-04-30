@@ -30,7 +30,7 @@ namespace Masterplan.Data
             get { return fPartyLevel; }
             set { fPartyLevel = value; }
         }
-        int fPartyLevel = Session.Project.Party.Level;
+        int fPartyLevel = (Session.Project != null && Session.Project.Party != null) ? Session.Project.Party.Level : 1;
 
         /// <summary>
         /// Gets or sets the encounter data.
@@ -60,7 +60,7 @@ namespace Masterplan.Data
             get { return fHeroData; }
             set { fHeroData = value; }
         }
-        Dictionary<Guid, CombatData> fHeroData = null;
+        Dictionary<Guid, CombatData> fHeroData = new Dictionary<Guid, CombatData>();
 
         /// <summary>
         /// Gets or sets the combat data for traps in the encounter.
@@ -70,7 +70,7 @@ namespace Masterplan.Data
             get { return fTrapData; }
             set { fTrapData = value; }
         }
-        Dictionary<Guid, CombatData> fTrapData = null;
+        Dictionary<Guid, CombatData> fTrapData = new Dictionary<Guid, CombatData>();
 
         /// <summary>
         /// Gets or sets the links between tokens.
@@ -80,7 +80,7 @@ namespace Masterplan.Data
             get { return fTokenLinks; }
             set { fTokenLinks = value; }
         }
-        List<TokenLink> fTokenLinks = null;
+        List<TokenLink> fTokenLinks = new List<TokenLink>();
 
         /// <summary>
         /// Gets or sets the XP gained from creatures which are no longer in the combat.
