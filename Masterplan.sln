@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{F7F557FC-1888-43F1-85DE-F7D4E81134E7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.Core", "01_Core\MasterplanXP.Core\MasterplanXP.Core.csproj", "{4874ED75-FBA2-4297-A760-FFD4612A6294}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.Infrastructure", "02_Infrastructure\MasterplanXP.Infrastructure\MasterplanXP.Infrastructure.csproj", "{D23B369F-3890-4626-8EAD-AC42E4C95C08}"
@@ -22,15 +20,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.Modules.Monste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.Modules.CharacterBuilder", "03_Modules\MasterplanXP.Modules.CharacterBuilder\MasterplanXP.Modules.CharacterBuilder.csproj", "{0DEE1C63-7EC5-4CE7-BC63-5E7025514AAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI", "04_Apps\MasterplanXP.UI\MasterplanXP.UI\MasterplanXP.UI.csproj", "{78893EB1-1B1A-4DBB-B43B-C4C751D9B37C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI", "04_Apps\MasterplanXP.UI\MasterplanXP.UI\MasterplanXP.UI.csproj", "{8FC9A3E4-5135-4403-B104-AC2D8A6E2DF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.Android", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.Android\MasterplanXP.UI.Android.csproj", "{F917397F-6A55-402F-A188-B093F8999B5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.Android", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.Android\MasterplanXP.UI.Android.csproj", "{957ECB8B-BB20-45E3-AEFF-77282D3A4350}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.Desktop", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.Desktop\MasterplanXP.UI.Desktop.csproj", "{44ED8D42-95EE-40EC-BFAD-5890F5AB760F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.Desktop", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.Desktop\MasterplanXP.UI.Desktop.csproj", "{9552A36B-C4B1-4D45-A59F-3ED56389BE7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.iOS", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.iOS\MasterplanXP.UI.iOS.csproj", "{21AF8FD2-A59D-4512-8A81-43EBCDA1DB12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.iOS", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.iOS\MasterplanXP.UI.iOS.csproj", "{D0DA1B2B-A11A-405E-936F-430AE7A625F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.Browser", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.Browser\MasterplanXP.UI.Browser.csproj", "{50A5F421-B925-472D-AF2A-C06F07AB6258}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterplanXP.UI.Browser", "04_Apps\MasterplanXP.UI\MasterplanXP.UI.Browser\MasterplanXP.UI.Browser.csproj", "{58BA11AA-C70B-447A-AFBE-3A865FF74054}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,10 +40,6 @@ Global
 		{C1FE3BA8-4B4F-4494-AE1F-44FF56674BE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1FE3BA8-4B4F-4494-AE1F-44FF56674BE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1FE3BA8-4B4F-4494-AE1F-44FF56674BE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7F557FC-1888-43F1-85DE-F7D4E81134E7}.Debug|Any CPU.ActiveCfg = Debug
-		{F7F557FC-1888-43F1-85DE-F7D4E81134E7}.Debug|Any CPU.Build.0 = Debug
-		{F7F557FC-1888-43F1-85DE-F7D4E81134E7}.Release|Any CPU.ActiveCfg = Release
-		{F7F557FC-1888-43F1-85DE-F7D4E81134E7}.Release|Any CPU.Build.0 = Release
 		{4874ED75-FBA2-4297-A760-FFD4612A6294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4874ED75-FBA2-4297-A760-FFD4612A6294}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4874ED75-FBA2-4297-A760-FFD4612A6294}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,30 +56,29 @@ Global
 		{0DEE1C63-7EC5-4CE7-BC63-5E7025514AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DEE1C63-7EC5-4CE7-BC63-5E7025514AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DEE1C63-7EC5-4CE7-BC63-5E7025514AAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78893EB1-1B1A-4DBB-B43B-C4C751D9B37C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78893EB1-1B1A-4DBB-B43B-C4C751D9B37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78893EB1-1B1A-4DBB-B43B-C4C751D9B37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78893EB1-1B1A-4DBB-B43B-C4C751D9B37C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F917397F-6A55-402F-A188-B093F8999B5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F917397F-6A55-402F-A188-B093F8999B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F917397F-6A55-402F-A188-B093F8999B5B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{F917397F-6A55-402F-A188-B093F8999B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F917397F-6A55-402F-A188-B093F8999B5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F917397F-6A55-402F-A188-B093F8999B5B}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{44ED8D42-95EE-40EC-BFAD-5890F5AB760F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44ED8D42-95EE-40EC-BFAD-5890F5AB760F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44ED8D42-95EE-40EC-BFAD-5890F5AB760F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44ED8D42-95EE-40EC-BFAD-5890F5AB760F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21AF8FD2-A59D-4512-8A81-43EBCDA1DB12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21AF8FD2-A59D-4512-8A81-43EBCDA1DB12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21AF8FD2-A59D-4512-8A81-43EBCDA1DB12}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{21AF8FD2-A59D-4512-8A81-43EBCDA1DB12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21AF8FD2-A59D-4512-8A81-43EBCDA1DB12}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21AF8FD2-A59D-4512-8A81-43EBCDA1DB12}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{50A5F421-B925-472D-AF2A-C06F07AB6258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50A5F421-B925-472D-AF2A-C06F07AB6258}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50A5F421-B925-472D-AF2A-C06F07AB6258}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50A5F421-B925-472D-AF2A-C06F07AB6258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC9A3E4-5135-4403-B104-AC2D8A6E2DF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC9A3E4-5135-4403-B104-AC2D8A6E2DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC9A3E4-5135-4403-B104-AC2D8A6E2DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC9A3E4-5135-4403-B104-AC2D8A6E2DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{957ECB8B-BB20-45E3-AEFF-77282D3A4350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{957ECB8B-BB20-45E3-AEFF-77282D3A4350}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{957ECB8B-BB20-45E3-AEFF-77282D3A4350}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{957ECB8B-BB20-45E3-AEFF-77282D3A4350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{957ECB8B-BB20-45E3-AEFF-77282D3A4350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9552A36B-C4B1-4D45-A59F-3ED56389BE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9552A36B-C4B1-4D45-A59F-3ED56389BE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9552A36B-C4B1-4D45-A59F-3ED56389BE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9552A36B-C4B1-4D45-A59F-3ED56389BE7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0DA1B2B-A11A-405E-936F-430AE7A625F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0DA1B2B-A11A-405E-936F-430AE7A625F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0DA1B2B-A11A-405E-936F-430AE7A625F9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D0DA1B2B-A11A-405E-936F-430AE7A625F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0DA1B2B-A11A-405E-936F-430AE7A625F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0DA1B2B-A11A-405E-936F-430AE7A625F9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{58BA11AA-C70B-447A-AFBE-3A865FF74054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58BA11AA-C70B-447A-AFBE-3A865FF74054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58BA11AA-C70B-447A-AFBE-3A865FF74054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58BA11AA-C70B-447A-AFBE-3A865FF74054}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

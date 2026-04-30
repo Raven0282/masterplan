@@ -47,6 +47,10 @@
     <EmbeddedResource Remove="UI\x_ExportOptions.resx" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="masterplan_scroll.ico" />
+    <None Remove="Resources\Export_Function.png" />
+    <None Remove="Resources\Full_Edit.png" />
+    <None Remove="Resources\masterplan_scroll.ico" />
     <None Remove="Resources\masterplan_scroll.svg" />
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +293,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tools\MessagePack\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="masterplan_scroll.ico" />
+    <Resource Include="Resources\Export_Function.png" />
+    <Resource Include="Resources\Full_Edit.png" />
+    <Resource Include="Resources\masterplan_scroll.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">

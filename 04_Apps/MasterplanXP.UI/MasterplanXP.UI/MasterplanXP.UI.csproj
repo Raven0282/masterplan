@@ -19,10 +19,5 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" />
-    <PackageReference Include="Dock.Avalonia" />
-    <PackageReference Include="Dock.Avalonia.Themes.Browser" />
-    <PackageReference Include="Dock.Avalonia.Themes.Fluent" />
-    <PackageReference Include="ReactiveUI.Avalonia" />
-    <PackageReference Include="Svg.Skia" />
   </ItemGroup>
 </Project>
