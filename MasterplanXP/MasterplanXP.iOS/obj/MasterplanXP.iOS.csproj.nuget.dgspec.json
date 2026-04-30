@@ -1,0 +1,95 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.iOS\\MasterplanXP.iOS.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.iOS\\MasterplanXP.iOS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.iOS\\MasterplanXP.iOS.csproj",
+        "projectName": "MasterplanXP.iOS",
+        "projectPath": "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.iOS\\MasterplanXP.iOS.csproj",
+        "packagesPath": "C:\\Users\\raven\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.iOS\\obj\\",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\raven\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0-ios"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0-ios1.0": {
+            "targetAlias": "net8.0-ios",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net8.0-ios1.0": {
+          "targetAlias": "net8.0-ios",
+          "dependencies": {
+            "Avalonia.iOS": {
+              "target": "Package",
+              "version": "[11.3.9, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Avalonia": "11.3.9",
+            "Avalonia.Android": "11.3.9",
+            "Avalonia.Browser": "11.3.9",
+            "Avalonia.Desktop": "11.3.9",
+            "Avalonia.Diagnostics": "11.3.9",
+            "Avalonia.Fonts.Inter": "11.3.9",
+            "Avalonia.iOS": "11.3.9",
+            "Avalonia.Themes.Fluent": "11.3.9",
+            "CommunityToolkit.Mvvm": "8.4.0",
+            "Xamarin.AndroidX.Core.SplashScreen": "1.0.1.15"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

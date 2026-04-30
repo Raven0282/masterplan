@@ -1,0 +1,15 @@
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\bin\Debug\net8.0\MasterplanXP.deps.json
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\bin\Debug\net8.0\MasterplanXP.dll
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\bin\Debug\net8.0\MasterplanXP.pdb
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.csproj.AssemblyReference.cache
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\Avalonia\Resources.Inputs.cache
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\Avalonia\resources
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.AssemblyInfoInputs.cache
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.AssemblyInfo.cs
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.csproj.CoreCompileInputs.cache
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.sourcelink.json
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.dll
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\refint\MasterplanXP.dll
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\MasterplanXP.pdb
+C:\Users\raven\source\repos\Git\MP_DEV6\MasterplanXP\MasterplanXP\obj\Debug\net8.0\ref\MasterplanXP.dll

@@ -1,0 +1,173 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0-android21.0": {
+      "Avalonia.Android/11.3.9": {
+        "type": "package"
+      },
+      "Xamarin.AndroidX.Core.SplashScreen/1.0.1.15": {
+        "type": "package"
+      }
+    }
+  },
+  "libraries": {
+    "Avalonia.Android/11.3.9": {
+      "sha512": "gbw4JCx7Jk7+Cf2W6HWt83JLZm2M3IPwNemXWjUUao5EJFom2xg48uWJ8vrRkchKqJiomwmRWrjV/AnIvYMCRg==",
+      "type": "package",
+      "path": "avalonia.android/11.3.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "avalonia.android.11.3.9.nupkg.sha512",
+        "avalonia.android.nuspec",
+        "lib/net8.0-android34.0/Avalonia.Android.dll",
+        "lib/net8.0-android34.0/Avalonia.Android.xml"
+      ]
+    },
+    "Xamarin.AndroidX.Core.SplashScreen/1.0.1.15": {
+      "sha512": "lIrwgrscmgm3lAa6orpTPb27MoUeg5RdgUSshSga3wdAS503pK8OWQ8l+7QzTM4/mypop8RpHg0LHNv9y0WX4Q==",
+      "type": "package",
+      "path": "xamarin.androidx.core.splashscreen/1.0.1.15",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "THIRD-PARTY-NOTICES.txt",
+        "aar/androidx.core.core-splashscreen.aar",
+        "build/net8.0-android34.0/Xamarin.AndroidX.Core.SplashScreen.targets",
+        "buildTransitive/net8.0-android34.0/Xamarin.AndroidX.Core.SplashScreen.targets",
+        "icon.png",
+        "lib/net8.0-android34.0/Xamarin.AndroidX.Core.SplashScreen.dll",
+        "lib/net8.0-android34.0/Xamarin.AndroidX.Core.SplashScreen.pdb",
+        "lib/net8.0-android34.0/Xamarin.AndroidX.Core.SplashScreen.xml",
+        "readme.md",
+        "xamarin.androidx.core.splashscreen.1.0.1.15.nupkg.sha512",
+        "xamarin.androidx.core.splashscreen.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0-android21.0": [
+      "Avalonia.Android >= 11.3.9",
+      "Xamarin.AndroidX.Core.SplashScreen >= 1.0.1.15"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\raven\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.Android\\MasterplanXP.Android.csproj",
+      "projectName": "MasterplanXP.Android",
+      "projectPath": "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.Android\\MasterplanXP.Android.csproj",
+      "packagesPath": "C:\\Users\\raven\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\raven\\source\\repos\\Git\\MP_DEV6\\MasterplanXP\\MasterplanXP.Android\\obj\\",
+      "projectStyle": "PackageReference",
+      "centralPackageVersionsManagementEnabled": true,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\raven\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0-android"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0-android21.0": {
+          "targetAlias": "net8.0-android",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "10.0.100"
+    },
+    "frameworks": {
+      "net8.0-android21.0": {
+        "targetAlias": "net8.0-android",
+        "dependencies": {
+          "Avalonia.Android": {
+            "target": "Package",
+            "version": "[11.3.9, )",
+            "versionCentrallyManaged": true
+          },
+          "Xamarin.AndroidX.Core.SplashScreen": {
+            "target": "Package",
+            "version": "[1.0.1.15, )",
+            "versionCentrallyManaged": true
+          }
+        },
+        "centralPackageVersions": {
+          "Avalonia": "11.3.9",
+          "Avalonia.Android": "11.3.9",
+          "Avalonia.Browser": "11.3.9",
+          "Avalonia.Desktop": "11.3.9",
+          "Avalonia.Diagnostics": "11.3.9",
+          "Avalonia.Fonts.Inter": "11.3.9",
+          "Avalonia.iOS": "11.3.9",
+          "Avalonia.Themes.Fluent": "11.3.9",
+          "CommunityToolkit.Mvvm": "8.4.0",
+          "Xamarin.AndroidX.Core.SplashScreen": "1.0.1.15"
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1202",
+      "level": "Error",
+      "message": "Package Avalonia.Android 11.3.9 is not compatible with net8.0-android21.0 (.NETCoreApp,Version=v8.0). Package Avalonia.Android 11.3.9 supports: net8.0-android34.0 (.NETCoreApp,Version=v8.0)",
+      "libraryId": "Avalonia.Android",
+      "targetGraphs": [
+        "net8.0-android21.0"
+      ]
+    },
+    {
+      "code": "NU1202",
+      "level": "Error",
+      "message": "Package Xamarin.AndroidX.Core.SplashScreen 1.0.1.15 is not compatible with net8.0-android21.0 (.NETCoreApp,Version=v8.0). Package Xamarin.AndroidX.Core.SplashScreen 1.0.1.15 supports: net8.0-android34.0 (.NETCoreApp,Version=v8.0)",
+      "libraryId": "Xamarin.AndroidX.Core.SplashScreen",
+      "targetGraphs": [
+        "net8.0-android21.0"
+      ]
+    }
+  ]
+}
