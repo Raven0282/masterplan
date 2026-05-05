@@ -15,8 +15,4 @@
     <PackageReference Include="NCalcSync" Version="5.12.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\01_Core\MasterplanXP.Core\MasterplanXP.Core.csproj" />
-  </ItemGroup>
-
 </Project>

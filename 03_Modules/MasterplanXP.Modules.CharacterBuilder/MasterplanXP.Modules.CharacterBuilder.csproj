@@ -17,9 +17,4 @@
     <PackageReference Include="Svg.Skia" Version="4.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\01_Core\MasterplanXP.Core\MasterplanXP.Core.csproj" />
-    <ProjectReference Include="..\..\02_Infrastructure\MasterplanXP.Infrastructure\MasterplanXP.Infrastructure.csproj" />
-  </ItemGroup>
-
 </Project>
