@@ -75,7 +75,23 @@ namespace Masterplan.Data
         /// <summary>
         /// Shadow origin.
         /// </summary>
-        Shadow
+        Shadow,
+
+        /// <summary>
+        /// GW Terrestrial origin.
+        /// </summary>
+        Terrestrial,
+
+        /// <summary>
+        /// GW Extraterrestrial origin.
+        /// </summary>
+        Extraterrestrial,
+
+        /// <summary>
+        /// GW Extradimensional origin.
+        /// </summary>
+        Extradimensional      
+
     }
 
     /// <summary>

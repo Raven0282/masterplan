@@ -63,7 +63,28 @@ namespace Masterplan.Data
         /// <summary>
         /// Thunder damage.
         /// </summary>
-        Thunder
+        Thunder,
+        
+        /// <summary>
+        /// GW Electric damage.
+        /// </summary>
+        Electric,
+
+        /// <summary>
+        /// GW Physical damage.
+        /// </summary>
+        Physical,
+
+        /// <summary>
+        /// Radiation damage.
+        /// </summary>
+        Radiation,
+        
+        /// <summary>
+        /// GW Sonic damage.
+        /// </summary>
+        Sonic
+
     }
 
     /// <summary>
