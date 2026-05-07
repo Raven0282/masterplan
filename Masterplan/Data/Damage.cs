@@ -68,7 +68,12 @@ namespace Masterplan.Data
         /// <summary>
         /// GW Electric damage.
         /// </summary>
-        Electric,
+        Electricity,
+
+        /// <summary>
+        /// GW Laser damage.
+        /// </summary>
+        Laser,
 
         /// <summary>
         /// GW Physical damage.
