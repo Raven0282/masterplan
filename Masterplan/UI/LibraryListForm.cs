@@ -510,6 +510,13 @@ namespace Masterplan.UI
 
         private void LibrariesForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (timerAutoSave.Enabled)
+            {
+                //MessageBox.Show("Shutting down auto-save before exit...", "Masterplan");
+                timerAutoSave.Stop();
+                timerAutoSave.Dispose();
+            }
+
             foreach (Library lib in Session.Libraries)
             {
                 if ((fModified.ContainsKey(lib)) && (!fModified[lib]))
