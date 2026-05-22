@@ -151,7 +151,7 @@ namespace Masterplan.Data
             get { return fAttack; }
             set { fAttack = value; }
         }
-        TrapAttack fAttack = new TrapAttack();
+        TrapAttack fAttack = null;
 
         /// <summary>
         /// Gets or sets the trap's secondary attacks.
