@@ -49,6 +49,8 @@ namespace Masterplan.Dto
         [Key(21)] public LibraryDto Library { get; set; }
         [Key(22)] public List<CombatStateDto> SavedCombats { get; set; } = new();
         [Key(23)] public Dictionary<string, string> AddInData { get; set; } = new();
+        [Key(24)] public List<PlotPointDto> AllPlotPoints { get; set; } = new();
+        [Key(25)] public List<ParcelDto> AllTreasureParcels { get; set; } = new();
     }
     #endregion
 
@@ -84,7 +86,7 @@ namespace Masterplan.Dto
     [MessagePackObject]
     public partial class TokenDto
     {
-        [Key(0)] public string Type { get; set; } // "Creature", "Custom", or "Hero"
+        [Key(0)] public string Type { get; set; } // \"Creature\", \"Custom\", or \"Hero\"
         [Key(1)] public Guid SlotID { get; set; } // For CreatureToken
         [Key(2)] public CombatDataDto Data { get; set; } // For CreatureToken or CustomToken
         [Key(3)] public CustomTokenDto CustomToken { get; set; } // For CustomToken
@@ -132,6 +134,12 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
+    public partial class StartTurnEntryDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+    }
+
+    [MessagePackObject]
     public partial class DamageEntryDto
     {
         [Key(0)] public int Amount { get; set; }
@@ -175,6 +183,16 @@ namespace Masterplan.Dto
     {
         [Key(0)] public int Distance { get; set; }
         [Key(1)] public string Details { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class PauseEntryDto
+    {
+    }
+
+    [MessagePackObject]
+    public partial class ResumeEntryDto
+    {
     }
     #endregion
 
@@ -221,6 +239,12 @@ namespace Masterplan.Dto
         [Key(36)] public byte[] ImageData { get; set; }
         [Key(37)] public string Info { get; set; }
         [Key(38)] public string Phenotype { get; set; }
+        [Key(39)] public int InitiativeModifier { get; set; }
+        [Key(40)] public int HPModifier { get; set; }
+        [Key(41)] public int ACModifier { get; set; }
+        [Key(42)] public int FortitudeModifier { get; set; }
+        [Key(43)] public int ReflexModifier { get; set; }
+        [Key(44)] public int WillModifier { get; set; }
     }
 
     [MessagePackObject]
@@ -367,6 +391,10 @@ namespace Masterplan.Dto
         [Key(8)] public ElementDto Element { get; set; }
         [Key(9)] public List<ParcelDto> Parcels { get; set; } = new();
         [Key(10)] public List<Guid> EncyclopediaEntryIDs { get; set; } = new();
+        [Key(11)] public CalendarDateDto Date { get; set; }
+        [Key(12)] public Guid RegionalMapID { get; set; }
+        [Key(13)] public Guid MapLocationID { get; set; }
+        [Key(14)] public int AdditionalXP { get; set; }
     }
 
     [MessagePackObject]
@@ -688,6 +716,8 @@ namespace Masterplan.Dto
         [Key(20)] public byte[] PortraitData { get; set; }
         [Key(21)] public string Info { get; set; }
         [Key(22)] public List<CustomTokenDto> Tokens { get; set; } = new();
+        [Key(23)] public CombatDataDto CombatData { get; set; }
+        [Key(24)] public List<OngoingConditionDto> Effects { get; set; } = new();
     }
 
     [MessagePackObject]
@@ -787,13 +817,18 @@ namespace Masterplan.Dto
         [Key(6)] public Guid ThemeAttackPowerID { get; set; }
         [Key(7)] public Guid ThemeUtilityPowerID { get; set; }
         [Key(8)] public bool Drawn { get; set; }
+        [Key(9)] public int HP { get; set; }
+        [Key(10)] public int AC { get; set; }
+        [Key(11)] public int Fortitude { get; set; }
+        [Key(12)] public int Reflex { get; set; }
+        [Key(13)] public int Will { get; set; }
+        [Key(14)] public int Initiative { get; set; }
     }
 
     [MessagePackObject]
-    public partial class NPCDto
+    public partial class NPCDto : CreatureDto
     {
-        [Key(0)] public Guid ID { get; set; }
-        [Key(1)] public Guid TemplateID { get; set; }
+        [Key(45)] public Guid TemplateID { get; set; }
     }
 
     [MessagePackObject]
@@ -803,6 +838,56 @@ namespace Masterplan.Dto
         [Key(1)] public string Name { get; set; }
         [Key(2)] public string Details { get; set; }
         [Key(3)] public int CampaignYear { get; set; }
+        [Key(4)] public List<MonthInfoDto> Months { get; set; } = new();
+        [Key(5)] public List<DayInfoDto> Days { get; set; } = new();
+        [Key(6)] public List<CalendarEventDto> Seasons { get; set; } = new();
+        [Key(7)] public List<CalendarEventDto> Events { get; set; } = new();
+        [Key(8)] public List<SatelliteDto> Satellites { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class MonthInfoDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public int DayCount { get; set; }
+        [Key(3)] public int LeapModifier { get; set; }
+        [Key(4)] public int LeapPeriod { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class DayInfoDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class CalendarEventDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public Guid MonthID { get; set; }
+        [Key(3)] public int DayIndex { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class SatelliteDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public int Period { get; set; }
+        [Key(3)] public int Offset { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class CalendarDateDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public Guid CalendarID { get; set; }
+        [Key(2)] public int Year { get; set; }
+        [Key(3)] public Guid MonthID { get; set; }
+        [Key(4)] public int DayIndex { get; set; }
     }
 
     [MessagePackObject]
@@ -837,6 +922,62 @@ namespace Masterplan.Dto
     {
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Quote { get; set; }
+        [Key(3)] public string Role { get; set; }
+        [Key(4)] public string PowerSource { get; set; }
+        [Key(5)] public string KeyAbilities { get; set; }
+        [Key(6)] public string ArmourProficiencies { get; set; }
+        [Key(7)] public string WeaponProficiencies { get; set; }
+        [Key(8)] public string Implements { get; set; }
+        [Key(9)] public string DefenceBonuses { get; set; }
+        [Key(10)] public int HPFirst { get; set; }
+        [Key(11)] public int HPSubsequent { get; set; }
+        [Key(12)] public int HealingSurges { get; set; }
+        [Key(13)] public string TrainedSkills { get; set; }
+        [Key(14)] public string Description { get; set; }
+        [Key(15)] public string OverviewCharacteristics { get; set; }
+        [Key(16)] public string OverviewReligion { get; set; }
+        [Key(17)] public string OverviewRaces { get; set; }
+        [Key(18)] public LevelDataDto FeatureData { get; set; }
+        [Key(19)] public List<LevelDataDto> Levels { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class LevelDataDto
+    {
+        [Key(0)] public int Level { get; set; }
+        [Key(1)] public List<FeatureDto> Features { get; set; } = new();
+        [Key(2)] public List<PlayerPowerDto> Powers { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class FeatureDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Details { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class PlayerPowerDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public string Type { get; set; }
+        [Key(3)] public string ReadAloud { get; set; }
+        [Key(4)] public string Keywords { get; set; }
+        [Key(5)] public string Action { get; set; }
+        [Key(6)] public string Range { get; set; }
+        [Key(7)] public List<PlayerPowerSectionDto> Sections { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class PlayerPowerSectionDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Header { get; set; }
+        [Key(2)] public string Details { get; set; }
+        [Key(3)] public int Indent { get; set; }
     }
 
     [MessagePackObject]

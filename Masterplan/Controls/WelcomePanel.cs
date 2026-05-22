@@ -101,6 +101,7 @@ namespace Masterplan.Controls
                 {
                     Artifact a = new Artifact();
                     a.Name = "New Artifact";
+                    a.AddStandardConcordanceLevels();
 
                     Masterplan.UI.ArtifactBuilderForm dlg = new Masterplan.UI.ArtifactBuilderForm(a);
                     dlg.ShowDialog();

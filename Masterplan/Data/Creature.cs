@@ -7,8 +7,26 @@ using System.Drawing;
 
 namespace Masterplan.Data
 {
+    /*
+     * JUNIOR DEVELOPER GUIDE:
+     * This class is the primary representation of a D&D 4th Edition creature (Monster or NPC).
+     * It implements ICreature, which is the common interface for all combatants.
+     * 
+     * Key D&D 4e Concepts:
+     * - Level & Role: Defines the challenge rating and combat archetype (e.g., Brute, Controller).
+     * - Phenotype: A composite description of the creature's Size, Origin (e.g., Fey), and Type (e.g., Humanoid).
+     * - Defences: AC (Armor Class), Fortitude, Reflex, and Will.
+     * - Ability Scores: Strength, Constitution, Dexterity, Intelligence, Wisdom, and Charisma.
+     * 
+     * THINNING PROCESS NOTES (MasterplanXP Migration):
+     * 1. [Serializable]: Legacy attribute used for BinaryFormatter. This will be removed in favor of MessagePack DTOs in the Bridge project.
+     * 2. System.Drawing.Image: GDI+ dependency. This must be replaced with byte[] or a platform-agnostic image abstraction for AvaloniaUI.
+     * 3. CreatureHelper.CopyFields: Manual property copying. In MasterplanXP, use AutoMapper or the LegacyConversionService in the Bridge.
+     * 4. Legacy Naming: Uses 'f' prefix for private fields (e.g., fID). New code should use '_' prefix.
+     */
+
     /// <summary>
-    /// Enumeration containing the various string fields.
+    /// Enumeration containing the various string fields used for detailed creature descriptions.
     /// </summary>
     enum DetailsField
     {
@@ -27,29 +45,31 @@ namespace Masterplan.Data
     }
 
     /// <summary>
-    /// Class representing a creature.
+    /// Represents a creature in the Masterplan system. 
+    /// This is a core data object used for encounter building and combat tracking.
     /// </summary>
     [Serializable]
     public class Creature : ICreature
     {
         /// <summary>
-        /// Default constructor.
+        /// Default constructor. Initializes a new instance of the Creature class.
         /// </summary>
         public Creature()
         {
         }
 
         /// <summary>
-        /// Constructor.
+        /// Copy constructor. Initializes a new instance by copying fields from another ICreature.
         /// </summary>
         /// <param name="c">The creature to copy from.</param>
         public Creature(ICreature c)
         {
+            // THINNING NOTE: This relies on CreatureHelper, which is a candidate for refactoring into a Mapper.
             CreatureHelper.CopyFields(c, this);
         }
 
         /// <summary>
-        /// Gets or sets the unique ID.
+        /// Gets or sets the unique identifier for this creature instance.
         /// </summary>
         public Guid ID
         {
@@ -59,7 +79,7 @@ namespace Masterplan.Data
         Guid fID = Guid.NewGuid();
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the name of the creature (e.g., "Goblin Slasher").
         /// </summary>
         public string Name
         {
@@ -69,7 +89,7 @@ namespace Masterplan.Data
         string fName = "";
 
         /// <summary>
-        /// Gets or sets the details.
+        /// Gets or sets general descriptive details about the creature.
         /// </summary>
         public string Details
         {
@@ -79,7 +99,7 @@ namespace Masterplan.Data
         string fDetails = "";
 
         /// <summary>
-        /// Gets or sets the size.
+        /// Gets or sets the creature's physical size (Tiny to Gargantuan).
         /// </summary>
         public CreatureSize Size
         {
@@ -89,7 +109,7 @@ namespace Masterplan.Data
         CreatureSize fSize = CreatureSize.Medium;
 
         /// <summary>
-        /// Gets or sets the creature origin.
+        /// Gets or sets the creature's cosmic origin (e.g., Natural, Fey, Shadow).
         /// </summary>
         public CreatureOrigin Origin
         {
@@ -99,7 +119,7 @@ namespace Masterplan.Data
         CreatureOrigin fOrigin = CreatureOrigin.Natural;
 
         /// <summary>
-        /// Gets or sets the creature type.
+        /// Gets or sets the biological/magical type (e.g., Humanoid, Beast).
         /// </summary>
         public CreatureType Type
         {
@@ -109,7 +129,7 @@ namespace Masterplan.Data
         CreatureType fType = CreatureType.MagicalBeast;
 
         /// <summary>
-        /// Gets or sets the creature keywords.
+        /// Gets or sets any descriptive keywords (e.g., "Undead", "Fire", "Swarm").
         /// </summary>
         public string Keywords
         {
@@ -119,7 +139,7 @@ namespace Masterplan.Data
         string fKeywords = "";
 
         /// <summary>
-        /// Gets or sets the level.
+        /// Gets or sets the creature's level.
         /// </summary>
         public int Level
         {
@@ -129,7 +149,7 @@ namespace Masterplan.Data
         int fLevel = 1;
 
         /// <summary>
-        /// Gets or sets the role.
+        /// Gets or sets the combat role (e.g., Brute, Skirmisher, Elite, Solo).
         /// </summary>
         public IRole Role
         {
@@ -139,7 +159,7 @@ namespace Masterplan.Data
         IRole fRole = new ComplexRole();
 
         /// <summary>
-        /// Gets or sets the senses.
+        /// Gets or sets the senses and perception notes (e.g., "Darkvision", "Perception +10").
         /// </summary>
         public string Senses
         {
@@ -149,7 +169,8 @@ namespace Masterplan.Data
         string fSenses = "";
 
         /// <summary>
-        /// Gets or sets the movement.
+        /// Gets or sets the movement speed and modes.
+        /// If empty, returns default speed based on size.
         /// </summary>
         public string Movement
         {
@@ -165,7 +186,7 @@ namespace Masterplan.Data
         string fMovement = "6";
 
         /// <summary>
-        /// Gets or sets the alignment.
+        /// Gets or sets the ethical/moral alignment.
         /// </summary>
         public string Alignment
         {
@@ -175,7 +196,7 @@ namespace Masterplan.Data
         string fAlignment = "";
 
         /// <summary>
-        /// Gets or sets the languages.
+        /// Gets or sets the known languages.
         /// </summary>
         public string Languages
         {
@@ -185,7 +206,7 @@ namespace Masterplan.Data
         string fLanguages = "";
 
         /// <summary>
-        /// Gets or sets the skills.
+        /// Gets or sets skill bonuses (e.g., "Acrobatics +12", "Stealth +15").
         /// </summary>
         public string Skills
         {
@@ -195,7 +216,7 @@ namespace Masterplan.Data
         string fSkills = "";
 
         /// <summary>
-        /// Gets or sets the equipment.
+        /// Gets or sets carried equipment.
         /// </summary>
         public string Equipment
         {
@@ -205,7 +226,7 @@ namespace Masterplan.Data
         string fEquipment = "";
 
         /// <summary>
-        /// Gets or sets the category.
+        /// Gets or sets the organizational category (e.g., for library grouping).
         /// </summary>
         public string Category
         {
@@ -217,7 +238,7 @@ namespace Masterplan.Data
         #region Abilities
 
         /// <summary>
-        /// Gets or sets the strength ability.
+        /// Gets or sets the Strength ability score.
         /// </summary>
         public Ability Strength
         {
@@ -227,7 +248,7 @@ namespace Masterplan.Data
         Ability fStrength = new Ability();
 
         /// <summary>
-        /// Gets or sets the constitution ability.
+        /// Gets or sets the Constitution ability score.
         /// </summary>
         public Ability Constitution
         {
@@ -237,7 +258,7 @@ namespace Masterplan.Data
         Ability fConstitution = new Ability();
 
         /// <summary>
-        /// Gets or sets the dexterity ability.
+        /// Gets or sets the Dexterity ability score.
         /// </summary>
         public Ability Dexterity
         {
@@ -247,7 +268,7 @@ namespace Masterplan.Data
         Ability fDexterity = new Ability();
 
         /// <summary>
-        /// Gets or sets the intelligence ability.
+        /// Gets or sets the Intelligence ability score.
         /// </summary>
         public Ability Intelligence
         {
@@ -257,7 +278,7 @@ namespace Masterplan.Data
         Ability fIntelligence = new Ability();
 
         /// <summary>
-        /// Gets or sets the wisdom ability.
+        /// Gets or sets the Wisdom ability score.
         /// </summary>
         public Ability Wisdom
         {
@@ -267,7 +288,7 @@ namespace Masterplan.Data
         Ability fWisdom = new Ability();
 
         /// <summary>
-        /// Gets or sets the charisma ability.
+        /// Gets or sets the Charisma ability score.
         /// </summary>
         public Ability Charisma
         {
@@ -279,7 +300,7 @@ namespace Masterplan.Data
         #endregion
 
         /// <summary>
-        /// Gets or sets the HP total.
+        /// Gets or sets the total Hit Points.
         /// </summary>
         public int HP
         {
@@ -289,7 +310,7 @@ namespace Masterplan.Data
         int fHP = 0;
 
         /// <summary>
-        /// Gets or sets the initiative bonus.
+        /// Gets or sets the base initiative bonus.
         /// </summary>
         public int Initiative
         {
@@ -301,7 +322,7 @@ namespace Masterplan.Data
         #region Defences
 
         /// <summary>
-        /// Gets or sets the AC defence.
+        /// Gets or sets Armor Class.
         /// </summary>
         public int AC
         {
@@ -311,7 +332,7 @@ namespace Masterplan.Data
         int fAC = 10;
 
         /// <summary>
-        /// Gets or sets the Fortitude defence.
+        /// Gets or sets Fortitude defence.
         /// </summary>
         public int Fortitude
         {
@@ -321,7 +342,7 @@ namespace Masterplan.Data
         int fFortitude = 10;
 
         /// <summary>
-        /// Gets or sets the Reflex defence.
+        /// Gets or sets Reflex defence.
         /// </summary>
         public int Reflex
         {
@@ -331,7 +352,7 @@ namespace Masterplan.Data
         int fReflex = 10;
 
         /// <summary>
-        /// Gets or sets the Will defence.
+        /// Gets or sets Will defence.
         /// </summary>
         public int Will
         {
@@ -343,7 +364,7 @@ namespace Masterplan.Data
         #endregion
 
         /// <summary>
-        /// Gets or sets the creature's regeneration.
+        /// Gets or sets the regeneration properties.
         /// </summary>
         public Regeneration Regeneration
         {
@@ -353,7 +374,7 @@ namespace Masterplan.Data
         Regeneration fRegeneration = null;
 
         /// <summary>
-        /// Gets or sets the list of auras.
+        /// Gets or sets the collection of passive Auras.
         /// </summary>
         public List<Aura> Auras
         {
@@ -363,7 +384,7 @@ namespace Masterplan.Data
         List<Aura> fAuras = new List<Aura>();
 
         /// <summary>
-        /// Gets or sets the list of powers.
+        /// Gets or sets the collection of combat powers.
         /// </summary>
         public List<CreaturePower> CreaturePowers
         {
@@ -373,7 +394,7 @@ namespace Masterplan.Data
         List<CreaturePower> fCreaturePowers = new List<CreaturePower>();
 
         /// <summary>
-        /// Gets or sets the list of damage modifiers.
+        /// Gets or sets damage modifications like Resistances or Vulnerabilities.
         /// </summary>
         public List<DamageModifier> DamageModifiers
         {
@@ -383,7 +404,7 @@ namespace Masterplan.Data
         List<DamageModifier> fDamageModifiers = new List<DamageModifier>();
 
         /// <summary>
-        /// Gets or sets the resistances.
+        /// Gets or sets the resistance string (e.g., "Fire 10").
         /// </summary>
         public string Resist
         {
@@ -393,7 +414,7 @@ namespace Masterplan.Data
         string fResist = "";
 
         /// <summary>
-        /// Gets or sets the vulnerabilities.
+        /// Gets or sets the vulnerability string (e.g., "Cold 5").
         /// </summary>
         public string Vulnerable
         {
@@ -403,7 +424,7 @@ namespace Masterplan.Data
         string fVulnerable = "";
 
         /// <summary>
-        /// Gets or sets the immunities.
+        /// Gets or sets the immunity string (e.g., "Poison").
         /// </summary>
         public string Immune
         {
@@ -413,7 +434,7 @@ namespace Masterplan.Data
         string fImmune = "";
 
         /// <summary>
-        /// Gets or sets the tactics.
+        /// Gets or sets combat tactics for the DM.
         /// </summary>
         public string Tactics
         {
@@ -423,7 +444,8 @@ namespace Masterplan.Data
         string fTactics = "";
 
         /// <summary>
-        /// Gets or sets the picture to display on the map.
+        /// Gets or sets the image to display on the tactical map.
+        /// THINNING NOTE: GDI+ Dependency (System.Drawing.Image).
         /// </summary>
         public Image Image
         {
@@ -433,7 +455,7 @@ namespace Masterplan.Data
         Image fImage = null;
 
         /// <summary>
-        /// Level N [role]
+        /// Gets a summary info string: "Level N [role]".
         /// </summary>
         public string Info
         {
@@ -441,7 +463,8 @@ namespace Masterplan.Data
         }
 
         /// <summary>
-        /// [origin] [type] [keywords]
+        /// Gets the phenotype string: "[Size] [Origin] [Type] ([Keywords])".
+        /// Example: "Medium natural humanoid (goblin)".
         /// </summary>
         public string Phenotype
         {
@@ -462,18 +485,18 @@ namespace Masterplan.Data
         }
 
         /// <summary>
-        /// Gets a string representation of the creature.
+        /// Returns a string that represents the current creature.
         /// </summary>
-        /// <returns>Returns the name of the creature, followed by level and role.</returns>
+        /// <returns>The creature's name and info string.</returns>
         public override string ToString()
         {
             return fName + " (" + Info + ")";
         }
 
         /// <summary>
-        /// Creates a copy of the creature.
+        /// Creates a deep copy of the creature instance.
         /// </summary>
-        /// <returns>Returns the copy.</returns>
+        /// <returns>A new Creature instance with copied values.</returns>
         public Creature Copy()
         {
             Creature c = new Creature();
@@ -486,7 +509,7 @@ namespace Masterplan.Data
             c.Type = fType;
             c.Keywords = fKeywords;
             c.Level = fLevel;
-            c.Role = fRole.Copy();
+            c.Role = (fRole != null) ? fRole.Copy() : null;
             c.Senses = fSenses;
             c.Movement = fMovement;
             c.Alignment = fAlignment;
@@ -495,12 +518,12 @@ namespace Masterplan.Data
             c.Equipment = fEquipment;
             c.Category = fCategory;
 
-            c.Strength = fStrength.Copy();
-            c.Constitution = fConstitution.Copy();
-            c.Dexterity = fDexterity.Copy();
-            c.Intelligence = fIntelligence.Copy();
-            c.Wisdom = fWisdom.Copy();
-            c.Charisma = fCharisma.Copy();
+            c.Strength = (fStrength != null) ? fStrength.Copy() : new Ability();
+            c.Constitution = (fConstitution != null) ? fConstitution.Copy() : new Ability();
+            c.Dexterity = (fDexterity != null) ? fDexterity.Copy() : new Ability();
+            c.Intelligence = (fIntelligence != null) ? fIntelligence.Copy() : new Ability();
+            c.Wisdom = (fWisdom != null) ? fWisdom.Copy() : new Ability();
+            c.Charisma = (fCharisma != null) ? fCharisma.Copy() : new Ability();
 
             c.HP = fHP;
             c.Initiative = fInitiative;
@@ -511,14 +534,23 @@ namespace Masterplan.Data
 
             c.Regeneration = (fRegeneration != null) ? fRegeneration.Copy() : null;
 
-            foreach (Aura aura in fAuras)
-                c.Auras.Add(aura.Copy());
+            if (fAuras != null)
+            {
+                foreach (Aura aura in fAuras)
+                    c.Auras.Add(aura.Copy());
+            }
 
-            foreach (CreaturePower cp in fCreaturePowers)
-                c.CreaturePowers.Add(cp.Copy());
+            if (fCreaturePowers != null)
+            {
+                foreach (CreaturePower cp in fCreaturePowers)
+                    c.CreaturePowers.Add(cp.Copy());
+            }
 
-            foreach (DamageModifier dm in fDamageModifiers)
-                c.DamageModifiers.Add(dm.Copy());
+            if (fDamageModifiers != null)
+            {
+                foreach (DamageModifier dm in fDamageModifiers)
+                    c.DamageModifiers.Add(dm.Copy());
+            }
 
             c.Resist = fResist;
             c.Vulnerable = fVulnerable;
@@ -531,20 +563,21 @@ namespace Masterplan.Data
         }
 
         /// <summary>
-        /// Compares this creature to another.
+        /// Compares this creature's name to another creature's name.
         /// </summary>
-        /// <param name="rhs">The other creature.</param>
-        /// <returns>Returns -1 if this creature should be sorted before the other, +1 if the other should be sorted before this; 0 otherwise.</returns>
+        /// <param name="rhs">The creature to compare to.</param>
+        /// <returns>Comparison result based on Name.</returns>
         public int CompareTo(ICreature rhs)
         {
+            if (rhs == null) return 1;
             return fName.CompareTo(rhs.Name);
         }
 
         /// <summary>
-        /// Gets the square size of a creature of the given size.
+        /// Gets the square size on a tactical grid for a given CreatureSize.
         /// </summary>
-        /// <param name="size">The creature size.</param>
-        /// <returns>Returns the size in squares.</returns>
+        /// <param name="size">The size category.</param>
+        /// <returns>The dimension in squares (e.g., Large = 2x2).</returns>
         public static int GetSize(CreatureSize size)
         {
             switch (size)
@@ -561,10 +594,10 @@ namespace Masterplan.Data
         }
 
         /// <summary>
-        /// Gets the typical speed of a creature of the given size.
+        /// Gets the typical tactical speed (in squares) for a given CreatureSize.
         /// </summary>
-        /// <param name="size">The creature size.</param>
-        /// <returns>Returns the spee din squares.</returns>
+        /// <param name="size">The size category.</param>
+        /// <returns>Speed in squares.</returns>
         public static int GetSpeed(CreatureSize size)
         {
             switch (size)
@@ -573,7 +606,6 @@ namespace Masterplan.Data
                 case CreatureSize.Small:
                     return 4;
                 case CreatureSize.Medium:
-                    return 6;
                 case CreatureSize.Large:
                     return 6;
                 case CreatureSize.Huge:

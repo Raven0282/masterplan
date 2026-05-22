@@ -6,8 +6,38 @@ using System.Collections.Generic;
 
 namespace Masterplan.Tools
 {
+    /*
+     * JUNIOR DEVELOPER GUIDE:
+     * CreatureHelper is a utility class containing static methods for manipulating Creature data.
+     * It handles three main types of tasks:
+     * 1. Data Management: Copying fields between creature instances.
+     * 2. Statblock Parsing: Extracting structured data (like Regeneration or Range) from raw text fields.
+     * 3. Math & Scaling: Adjusting a creature's level and automatically scaling its stats (HP, Defences, Attack Bonuses) 
+     *    according to D&D 4th Edition rules.
+     * 
+     * THINNING PROCESS NOTES (MasterplanXP Migration):
+     * 1. Scaling Logic (AdjustCreatureLevel): This contains pure D&D 4e business rules. It should be moved 
+     *    to 'MasterplanXP.Core' so it can be reused by both the UI and any CLI tools without legacy dependencies.
+     * 2. Parsing Logic (UpdatePowerRange, ConvertAura, ParseSkills): Legacy Masterplan relies heavily on 
+     *    string parsing of "Details" fields. In MasterplanXP, we should prefer structured data at the DTO level, 
+     *    but these methods should be moved to a 'StatblockParsingService' in 'MasterplanXP.Infrastructure'.
+     * 3. CopyFields: This manual mapping is fragile. In the new architecture, we use DTOs and the Bridge project 
+     *    to handle object state transitions.
+     * 4. Logging: Replaces 'LogSystem.Trace' with 'Microsoft.Extensions.Logging' in the new projects.
+     */
+
+    /// <summary>
+    /// Utility class for creature-related operations, including deep copying, 
+    /// level scaling, and text parsing.
+    /// </summary>
     class CreatureHelper
     {
+        /// <summary>
+        /// Performs a deep copy of all fields from one ICreature to another.
+        /// THINNING NOTE: Replace with AutoMapper or DTO mapping in MasterplanXP.
+        /// </summary>
+        /// <param name="copy_from">The source creature.</param>
+        /// <param name="copy_to">The destination creature.</param>
         public static void CopyFields(ICreature copy_from, ICreature copy_to)
         {
             try
@@ -31,12 +61,12 @@ namespace Masterplan.Tools
                     copy_to.Equipment = copy_from.Equipment;
                     copy_to.Category = copy_from.Category;
 
-                    copy_to.Strength = copy_from.Strength.Copy();
-                    copy_to.Constitution = copy_from.Constitution.Copy();
-                    copy_to.Dexterity = copy_from.Dexterity.Copy();
-                    copy_to.Intelligence = copy_from.Intelligence.Copy();
-                    copy_to.Wisdom = copy_from.Wisdom.Copy();
-                    copy_to.Charisma = copy_from.Charisma.Copy();
+                    copy_to.Strength = (copy_from.Strength != null) ? copy_from.Strength.Copy() : new Ability();
+                    copy_to.Constitution = (copy_from.Constitution != null) ? copy_from.Constitution.Copy() : new Ability();
+                    copy_to.Dexterity = (copy_from.Dexterity != null) ? copy_from.Dexterity.Copy() : new Ability();
+                    copy_to.Intelligence = (copy_from.Intelligence != null) ? copy_from.Intelligence.Copy() : new Ability();
+                    copy_to.Wisdom = (copy_from.Wisdom != null) ? copy_from.Wisdom.Copy() : new Ability();
+                    copy_to.Charisma = (copy_from.Charisma != null) ? copy_from.Charisma.Copy() : new Ability();
 
                     copy_to.HP = copy_from.HP;
                     copy_to.Initiative = copy_from.Initiative;
@@ -71,6 +101,11 @@ namespace Masterplan.Tools
             }
         }
 
+        /// <summary>
+        /// Searches for "Regeneration" in a creature's auras and promotes it to the structured Regeneration property.
+        /// THINNING NOTE: This is parsing logic. Move to a parsing service.
+        /// </summary>
+        /// <param name="c">The creature to update.</param>
         public static void UpdateRegen(ICreature c)
         {
             Aura regen_aura = FindAura(c, "Regeneration");
@@ -88,6 +123,12 @@ namespace Masterplan.Tools
             }
         }
 
+        /// <summary>
+        /// Attempts to parse and update a power's Range field based on keywords in its Details text.
+        /// THINNING NOTE: Move to a 'StatblockParsingService'.
+        /// </summary>
+        /// <param name="c">The creature owning the power.</param>
+        /// <param name="power">The power to analyze.</param>
         public static void UpdatePowerRange(ICreature c, CreaturePower power)
         {
             // DB Cleanup - change any existing entry in the range field from Self to Personal
@@ -161,6 +202,12 @@ namespace Masterplan.Tools
             power.Details = originalDetails;
         }
 
+        /// <summary>
+        /// Finds an aura by its case-sensitive name.
+        /// </summary>
+        /// <param name="c">The creature.</param>
+        /// <param name="name">Aura name.</param>
+        /// <returns>The Aura if found, otherwise null.</returns>
         public static Aura FindAura(ICreature c, string name)
         {
             foreach (Aura a in c.Auras)
@@ -172,6 +219,12 @@ namespace Masterplan.Tools
             return null;
         }
 
+        /// <summary>
+        /// Parses a string like "5 (when bloodied)" into a Regeneration object.
+        /// THINNING NOTE: Move to parsing service.
+        /// </summary>
+        /// <param name="aura_details">The raw detail string.</param>
+        /// <returns>A structured Regeneration object.</returns>
         public static Regeneration ConvertAura(string aura_details)
         {
             aura_details = aura_details.Trim();
@@ -214,6 +267,12 @@ namespace Masterplan.Tools
             }
         }
 
+        /// <summary>
+        /// Filters creature powers by their category (Standard, Minor, etc.).
+        /// </summary>
+        /// <param name="c">The creature.</param>
+        /// <param name="category">The category to filter by.</param>
+        /// <returns>A list of matching powers.</returns>
         public static List<CreaturePower> CreaturePowersByCategory(ICreature c, CreaturePowerCategory category)
         {
             List<CreaturePower> powers = new List<CreaturePower>();
@@ -227,9 +286,15 @@ namespace Masterplan.Tools
             return powers;
         }
 
+        /// <summary>
+        /// Mathematically adjusts a creature's level, scaling HP, Defences, and Powers accordingly.
+        /// THINNING NOTE: CORE BUSINESS LOGIC. Move to MasterplanXP.Core.
+        /// </summary>
+        /// <param name="creature">The creature to scale.</param>
+        /// <param name="delta">The number of levels to add or subtract.</param>
         public static void AdjustCreatureLevel(ICreature creature, int delta)
         {
-            // HP
+            // HP Scaling Logic
             if (creature.Role is ComplexRole)
             {
                 ComplexRole role = creature.Role as ComplexRole;
@@ -260,21 +325,21 @@ namespace Masterplan.Tools
                 creature.HP = Math.Max(creature.HP, 1);
             }
 
-            // Init
+            // Initiative Scaling
             int init_bonus = creature.Initiative - (creature.Level / 2);
             creature.Initiative = init_bonus + ((creature.Level + delta) / 2);
 
-            // Defences
+            // Defences Scaling (Flat +1 per level)
             creature.AC += delta;
             creature.Fortitude += delta;
             creature.Reflex += delta;
             creature.Will += delta;
 
-            // Powers
+            // Powers Scaling
             foreach (CreaturePower cp in creature.CreaturePowers)
                 AdjustPowerLevel(cp, delta);
 
-            // Skills
+            // Skills Scaling
             if (creature.Skills != "")
             {
                 // Parse string
@@ -306,16 +371,21 @@ namespace Masterplan.Tools
                 creature.Skills = skill_str;
             }
 
-            // Level
+            // Level Update
             creature.Level += delta;
         }
 
+        /// <summary>
+        /// Adjusts a power's attack bonus and damage based on level delta.
+        /// </summary>
+        /// <param name="cp">The power to adjust.</param>
+        /// <param name="delta">The level delta.</param>
         public static void AdjustPowerLevel(CreaturePower cp, int delta)
         {
             if (cp.Attack != null)
                 cp.Attack.Bonus += delta;
 
-            // Adjust power damage
+            // Adjust power damage strings
             string dmg_str = AI.ExtractDamage(cp.Details);
             if (dmg_str != "")
             {
@@ -331,6 +401,12 @@ namespace Masterplan.Tools
             }
         }
 
+        /// <summary>
+        /// Parses a skills string (e.g. "Acrobatics +10, Stealth +12") into a dictionary.
+        /// THINNING NOTE: Move to parsing service.
+        /// </summary>
+        /// <param name="source">The skills string.</param>
+        /// <returns>A dictionary of skill names and their bonuses.</returns>
         public static Dictionary<string, int> ParseSkills(string source)
         {
             Dictionary<string, int> skill_list = new Dictionary<string, int>();

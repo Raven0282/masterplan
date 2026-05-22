@@ -6,22 +6,45 @@ using System.Collections.Generic;
 
 namespace Masterplan.Data
 {
+    /*
+     * JUNIOR DEVELOPER GUIDE:
+     * This class represents a Magical Artifact in D&D 4th Edition.
+     * Unlike standard Magic Items, Artifacts are often sentient or semi-sentient and possess 
+     * a "Concordance" score that measures the wielder's relationship with the item.
+     * 
+     * Key D&D 4e Concepts:
+     * - Tier: The power level suitable for the item (Heroic, Paragon, or Epic).
+     * - Concordance: A numeric score (typically 1-20) that changes based on the wielder's actions.
+     * - Concordance Levels: Different states of the item (e.g., Pleased, Angered) that grant 
+     *   different powers or penalties.
+     * - Goals: The artifact's own objectives, which the DM uses to determine concordance changes.
+     * 
+     * THINNING PROCESS NOTES (MasterplanXP Migration):
+     * 1. [Serializable]: Legacy attribute used for BinaryFormatter. Remove in MasterplanXP.
+     * 2. Pair<string, string>: Generic utility class. In MPX, use a more descriptive DTO 
+     *    (e.g., ConcordanceRuleDTO) or a C# Tuple.
+     * 3. MagicItemSection: The artifact inherits/uses sections from the MagicItem system. 
+     *    Ensure this dependency is mapped in the Bridge.
+     * 4. AddStandardConcordanceLevels: This method seeds default business data. This logic 
+     *    should be moved to a Factory or a DefaultDataService in MasterplanXP.Core.
+     * 5. Manual Copying: Use AutoMapper or a dedicated mapping service in the new project.
+     */
+
     /// <summary>
-    /// Class representing a magical artifact.
+    /// Represents a unique, powerful magical artifact with concordance-based progression.
     /// </summary>
     [Serializable]
     public class Artifact
     {
         /// <summary>
-        /// Default constructor.
+        /// Default constructor. Initializes a new instance of the Artifact class.
         /// </summary>
         public Artifact()
         {
-            AddStandardConcordanceLevels();
         }
 
         /// <summary>
-        /// Gets or sets the unique ID of the artifact.
+        /// Gets or sets the unique identifier for the artifact.
         /// </summary>
         public Guid ID
         {
@@ -31,7 +54,7 @@ namespace Masterplan.Data
         Guid fID = Guid.NewGuid();
 
         /// <summary>
-        /// Gets or sets the name of the artifact.
+        /// Gets or sets the name of the artifact (e.g., "The Axe of the Dwarvish Lords").
         /// </summary>
         public string Name
         {
@@ -41,7 +64,7 @@ namespace Masterplan.Data
         string fName = "";
 
         /// <summary>
-        /// The tier for which the artifact is suitable.
+        /// Gets or sets the tier (Heroic, Paragon, Epic) for which the artifact is designed.
         /// </summary>
         public Tier Tier
         {
@@ -51,7 +74,7 @@ namespace Masterplan.Data
         Tier fTier = Tier.Heroic;
 
         /// <summary>
-        /// The artifact's description.
+        /// Gets or sets the artifact's flavor text or visual description.
         /// </summary>
         public string Description
         {
@@ -61,7 +84,7 @@ namespace Masterplan.Data
         string fDescription = "";
 
         /// <summary>
-        /// The artifact's details.
+        /// Gets or sets the mechanical details and backstory of the artifact.
         /// </summary>
         public string Details
         {
@@ -71,7 +94,7 @@ namespace Masterplan.Data
         string fDetails = "";
 
         /// <summary>
-        /// The artifact's goals.
+        /// Gets or sets the artifact's objectives, which guide concordance changes.
         /// </summary>
         public string Goals
         {
@@ -81,7 +104,7 @@ namespace Masterplan.Data
         string fGoals = "";
 
         /// <summary>
-        /// Roleplaying tips for the artifact.
+        /// Gets or sets roleplaying tips for the DM to use when the artifact "speaks" or influences the wielder.
         /// </summary>
         public string RoleplayingTips
         {
@@ -91,7 +114,7 @@ namespace Masterplan.Data
         string fRoleplayingTips = "";
 
         /// <summary>
-        /// The artifact's enhancement / properties
+        /// Gets or sets the collection of powers and properties associated with the artifact.
         /// </summary>
         public List<MagicItemSection> Sections
         {
@@ -101,7 +124,8 @@ namespace Masterplan.Data
         List<MagicItemSection> fSections = new List<MagicItemSection>();
 
         /// <summary>
-        /// The artifact's concordance rules.
+        /// Gets or sets the rules that increase or decrease concordance (e.g., "Kill a giant: +1").
+        /// THINNING NOTE: Replace Pair<string, string> with a concrete ConcordanceRule class.
         /// </summary>
         public List<Pair<string, string>> ConcordanceRules
         {
@@ -111,7 +135,7 @@ namespace Masterplan.Data
         List<Pair<string, string>> fConcordanceRules = new List<Pair<string, string>>();
 
         /// <summary>
-        /// The artifact's concordance levels.
+        /// Gets or sets the various concordance states (Pleased, Satisfied, etc.).
         /// </summary>
         public List<ArtifactConcordance> ConcordanceLevels
         {
@@ -121,10 +145,12 @@ namespace Masterplan.Data
         List<ArtifactConcordance> fConcordanceLevels = new List<ArtifactConcordance>();
 
         /// <summary>
-        /// Adds the standard concordance levels to the artifact.
+        /// Seeds the artifact with standard D&D 4e concordance levels and value ranges.
+        /// THINNING NOTE: Move to a DataFactory in the Core project.
         /// </summary>
         public void AddStandardConcordanceLevels()
         {
+            fConcordanceLevels.Clear();
             fConcordanceLevels.Add(new ArtifactConcordance("Pleased", "16-20"));
             fConcordanceLevels.Add(new ArtifactConcordance("Satisfied", "12-15"));
             fConcordanceLevels.Add(new ArtifactConcordance("Normal", "5-11"));
@@ -134,9 +160,9 @@ namespace Masterplan.Data
         }
 
         /// <summary>
-        /// Creates a copy of the artifact.
+        /// Creates a deep copy of the artifact instance.
         /// </summary>
-        /// <returns>Returns the copy.</returns>
+        /// <returns>A new Artifact instance with copied values.</returns>
         public Artifact Copy()
         {
             Artifact a = new Artifact();
@@ -170,7 +196,7 @@ namespace Masterplan.Data
         /// <summary>
         /// Returns the name of the artifact.
         /// </summary>
-        /// <returns>Returns the name of the artifact.</returns>
+        /// <returns>The artifact's name.</returns>
         public override string ToString()
         {
             return fName;
@@ -178,7 +204,7 @@ namespace Masterplan.Data
     }
 
     /// <summary>
-    /// Class representing a concordance level for an artifact.
+    /// Represents a specific state of an artifact's concordance (e.g., "Pleased").
     /// </summary>
     [Serializable]
     public class ArtifactConcordance
@@ -191,10 +217,10 @@ namespace Masterplan.Data
         }
 
         /// <summary>
-        /// Constructor taking a name and a value range.
+        /// Initializes a new instance of the ArtifactConcordance class.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="value_range">The value range.</param>
+        /// <param name="name">The name of the state (e.g., "Normal").</param>
+        /// <param name="value_range">The numeric range for this state (e.g., "5-11").</param>
         public ArtifactConcordance(string name, string value_range)
         {
             fName = name;
@@ -202,7 +228,7 @@ namespace Masterplan.Data
         }
 
         /// <summary>
-        /// The concordance level's name.
+        /// Gets or sets the name of the concordance level.
         /// </summary>
         public string Name
         {
@@ -212,7 +238,7 @@ namespace Masterplan.Data
         string fName = "";
 
         /// <summary>
-        /// The concordance level's value range.
+        /// Gets or sets the range of concordance scores that trigger this level (e.g., "16-20").
         /// </summary>
         public string ValueRange
         {
@@ -222,7 +248,7 @@ namespace Masterplan.Data
         string fValueRange = "";
 
         /// <summary>
-        /// The concordance level's quote.
+        /// Gets or sets a quote from the artifact representing this state.
         /// </summary>
         public string Quote
         {
@@ -232,7 +258,7 @@ namespace Masterplan.Data
         string fQuote = "";
 
         /// <summary>
-        /// The concordance level's description.
+        /// Gets or sets a description of how the wielder feels or how the item's appearance changes.
         /// </summary>
         public string Description
         {
@@ -242,7 +268,7 @@ namespace Masterplan.Data
         string fDescription = "";
 
         /// <summary>
-        /// The concordance level's enhancements and properties.
+        /// Gets or sets the powers or properties unlocked at this level.
         /// </summary>
         public List<MagicItemSection> Sections
         {
@@ -252,9 +278,9 @@ namespace Masterplan.Data
         List<MagicItemSection> fSections = new List<MagicItemSection>();
 
         /// <summary>
-        /// Creates a copy of the artifact concordance.
+        /// Creates a deep copy of the concordance level.
         /// </summary>
-        /// <returns>Returns the copy.</returns>
+        /// <returns>A new ArtifactConcordance instance with copied values.</returns>
         public ArtifactConcordance Copy()
         {
             ArtifactConcordance ac = new ArtifactConcordance();

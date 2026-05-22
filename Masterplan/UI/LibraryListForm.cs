@@ -3344,6 +3344,7 @@ namespace Masterplan.UI
         {
             Artifact a = new Artifact();
             a.Name = "New Artifact";
+            a.AddStandardConcordanceLevels();
 
             ArtifactBuilderForm dlg = new ArtifactBuilderForm(a);
             if (dlg.ShowDialog() == DialogResult.OK)
