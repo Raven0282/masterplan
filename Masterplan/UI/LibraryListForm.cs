@@ -13,9 +13,13 @@ namespace Masterplan.UI
 {
     partial class LibraryListForm : Form
     {
+        private Timer timerAutoSave;
+                
         public LibraryListForm()
         {
             InitializeComponent();
+            InitializeAutoSave();
+
 
             CreatureSearchToolbar.Visible = false;
 
@@ -25,6 +29,85 @@ namespace Masterplan.UI
             Application.Idle += new EventHandler(Application_Idle);
 
             Update_libraries();
+        }
+
+        private void InitializeAutoSave()
+        {
+            // Initialize Timer
+            timerAutoSave = new Timer();
+            timerAutoSave.Interval = 500000; // 10 minutes for testing
+            timerAutoSave.Tick += TimerAutoSave_Tick;
+
+        }
+        private void ChkAutoSave_CheckedChanged(object sender, EventArgs e)
+        {
+            
+
+            if (chkAutoSave.Checked)
+            {
+                // Start the timer when checked
+                timerAutoSave.Start();      
+            }
+            else
+            {
+                // Stop the timer when unchecked
+                timerAutoSave.Stop();
+            }
+        }
+        private void TimerAutoSave_Tick(object sender, EventArgs e)
+        {
+            // Stop timer immediately to prevent recursive ticks during save
+            timerAutoSave.Stop();
+
+            try
+            {
+                foreach (Library lib in Session.Libraries)
+                {
+                    if ((fModified.ContainsKey(lib)) && (!fModified[lib]))
+                        continue;
+
+                    PerformSave(lib);
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+                // Handle save errors appropriately
+                MessageBox.Show("Save failed: " + ex.Message);
+            }
+            finally
+            {
+                // Restart timer if auto-save is still enabled
+                if (chkAutoSave.Checked)
+                {
+                    timerAutoSave.Start();
+                }
+            }
+        }
+
+        private void PerformSave(Library lib)
+        {
+            // Implement your save logic here
+            // Example: Save settings, save file, update database
+            GC.Collect();
+
+            // 1. Save legacy Binary format
+            string legacyFilename = Session.GetLibraryFilename(lib);
+            Serialisation<Library>.Save(legacyFilename, lib, SerialisationMode.Binary);
+
+            // 2. Synchronize modern MessagePack format (Issue #3)
+            string mpxFilename = legacyFilename.Replace(".library", ".mpxlib");
+            LibraryConversionService.Instance.SaveXLibrary(lib, mpxFilename);
+
+
+            // Simple informational popup
+            MessageBox.Show("Auto-saving data...", "Autosave");
+            //System.Diagnostics.Debug.WriteLine("Auto-saving data...");
+
+            // Example: Save a checkbox state to user settings
+            // Properties.Settings.Default.MySetting = true;
+            // Properties.Settings.Default.Save();
         }
 
         ~LibraryListForm()
@@ -427,6 +510,13 @@ namespace Masterplan.UI
 
         private void LibrariesForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (timerAutoSave.Enabled)
+            {
+                //MessageBox.Show("Shutting down auto-save before exit...", "Masterplan");
+                timerAutoSave.Stop();
+                timerAutoSave.Dispose();
+            }
+
             foreach (Library lib in Session.Libraries)
             {
                 if ((fModified.ContainsKey(lib)) && (!fModified[lib]))
@@ -3762,6 +3852,24 @@ namespace Masterplan.UI
             MessageBox.Show("BETA - Coming Feature");
         }
 
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        private void LibraryListForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

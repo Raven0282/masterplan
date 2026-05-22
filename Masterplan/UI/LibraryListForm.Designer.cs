@@ -30,21 +30,23 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryListForm));
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Functional Templates", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Class Templates", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Themes", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Traps", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Hazards", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Traps", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Hazards", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Heroic Tier", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Paragon Tier", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Epic Tier", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup15 = new System.Windows.Forms.ListViewGroup("Functional Templates", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup16 = new System.Windows.Forms.ListViewGroup("Class Templates", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup17 = new System.Windows.Forms.ListViewGroup("Themes", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Traps", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Hazards", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Traps", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Hazards", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Heroic Tier", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup18 = new System.Windows.Forms.ListViewGroup("Paragon Tier", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup19 = new System.Windows.Forms.ListViewGroup("Epic Tier", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup20 = new System.Windows.Forms.ListViewGroup("Traps", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup21 = new System.Windows.Forms.ListViewGroup("Hazards", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("Traps", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("Hazards", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("Traps", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("Hazards", System.Windows.Forms.HorizontalAlignment.Left);
             Splitter = new System.Windows.Forms.SplitContainer();
+            panel1 = new System.Windows.Forms.Panel();
+            chkAutoSave = new System.Windows.Forms.CheckBox();
             LibraryTree = new System.Windows.Forms.TreeView();
             LibraryToolbar = new System.Windows.Forms.ToolStrip();
             FileMenu = new System.Windows.Forms.ToolStripDropDownButton();
@@ -194,6 +196,7 @@
             MagicItemPasteBtn = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             MagicItemStatBlockBtn = new System.Windows.Forms.ToolStripButton();
+            MagicItemUniExportBtn = new System.Windows.Forms.ToolStripButton();
             TilesPage = new System.Windows.Forms.TabPage();
             TileList = new System.Windows.Forms.ListView();
             TileSetNameHdr = new System.Windows.Forms.ColumnHeader();
@@ -272,11 +275,11 @@
             HelpPanel = new Masterplan.Controls.LibraryHelpPanel();
             ChallengeContext = new System.Windows.Forms.ContextMenuStrip(components);
             ChallengeContextRemove = new System.Windows.Forms.ToolStripMenuItem();
-            MagicItemUniExportBtn = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)Splitter).BeginInit();
             Splitter.Panel1.SuspendLayout();
             Splitter.Panel2.SuspendLayout();
             Splitter.SuspendLayout();
+            panel1.SuspendLayout();
             LibraryToolbar.SuspendLayout();
             Pages.SuspendLayout();
             CreaturesPage.SuspendLayout();
@@ -321,30 +324,55 @@
             // 
             // Splitter.Panel1
             // 
+            Splitter.Panel1.BackColor = System.Drawing.SystemColors.Control;
+            Splitter.Panel1.Controls.Add(panel1);
             Splitter.Panel1.Controls.Add(LibraryTree);
             Splitter.Panel1.Controls.Add(LibraryToolbar);
             Splitter.Panel1.Controls.Add(HelpBtn);
+            Splitter.Panel1.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
+            Splitter.Panel1.Padding = new System.Windows.Forms.Padding(2);
             // 
             // Splitter.Panel2
             // 
             Splitter.Panel2.Controls.Add(Pages);
             Splitter.Panel2.Controls.Add(HelpPanel);
-            Splitter.Size = new System.Drawing.Size(1026, 329);
-            Splitter.SplitterDistance = 290;
+            Splitter.Size = new System.Drawing.Size(984, 401);
+            Splitter.SplitterDistance = 306;
             Splitter.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(chkAutoSave);
+            panel1.Location = new System.Drawing.Point(2, 27);
+            panel1.Name = "panel1";
+            panel1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 6);
+            panel1.Size = new System.Drawing.Size(302, 26);
+            panel1.TabIndex = 5;
+            panel1.Paint += panel1_Paint;
+            // 
+            // chkAutoSave
+            // 
+            chkAutoSave.AutoSize = true;
+            chkAutoSave.Location = new System.Drawing.Point(7, 4);
+            chkAutoSave.Name = "chkAutoSave";
+            chkAutoSave.Size = new System.Drawing.Size(75, 19);
+            chkAutoSave.TabIndex = 4;
+            chkAutoSave.Text = "Autosave";
+            chkAutoSave.UseVisualStyleBackColor = true;
+            chkAutoSave.CheckedChanged += this.ChkAutoSave_CheckedChanged;
             // 
             // LibraryTree
             // 
             LibraryTree.AllowDrop = true;
-            LibraryTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            LibraryTree.Anchor = System.Windows.Forms.AnchorStyles.Left;
             LibraryTree.FullRowSelect = true;
             LibraryTree.HideSelection = false;
-            LibraryTree.Location = new System.Drawing.Point(0, 25);
-            LibraryTree.Margin = new System.Windows.Forms.Padding(4);
+            LibraryTree.Location = new System.Drawing.Point(2, 53);
+            LibraryTree.Margin = new System.Windows.Forms.Padding(4, 30, 4, 30);
             LibraryTree.Name = "LibraryTree";
             LibraryTree.ShowPlusMinus = false;
             LibraryTree.ShowRootLines = false;
-            LibraryTree.Size = new System.Drawing.Size(290, 278);
+            LibraryTree.Size = new System.Drawing.Size(302, 320);
             LibraryTree.TabIndex = 1;
             LibraryTree.ItemDrag += LibraryList_ItemDrag;
             LibraryTree.AfterSelect += LibraryTree_AfterSelect;
@@ -356,9 +384,9 @@
             // 
             LibraryToolbar.ImageScalingSize = new System.Drawing.Size(20, 20);
             LibraryToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { FileMenu, LibraryRemoveBtn, LibraryEditBtn, toolStripSeparator17, LibraryMergeBtn, toolStripSeparator36, LibraryBtnConvert });
-            LibraryToolbar.Location = new System.Drawing.Point(0, 0);
+            LibraryToolbar.Location = new System.Drawing.Point(2, 2);
             LibraryToolbar.Name = "LibraryToolbar";
-            LibraryToolbar.Size = new System.Drawing.Size(290, 25);
+            LibraryToolbar.Size = new System.Drawing.Size(302, 25);
             LibraryToolbar.TabIndex = 0;
             LibraryToolbar.Text = "toolStrip1";
             // 
@@ -446,10 +474,10 @@
             // HelpBtn
             // 
             HelpBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            HelpBtn.Location = new System.Drawing.Point(0, 303);
+            HelpBtn.Location = new System.Drawing.Point(2, 373);
             HelpBtn.Margin = new System.Windows.Forms.Padding(4);
             HelpBtn.Name = "HelpBtn";
-            HelpBtn.Size = new System.Drawing.Size(290, 26);
+            HelpBtn.Size = new System.Drawing.Size(302, 26);
             HelpBtn.TabIndex = 3;
             HelpBtn.Text = "Show Help";
             HelpBtn.UseVisualStyleBackColor = true;
@@ -470,7 +498,7 @@
             Pages.Margin = new System.Windows.Forms.Padding(4);
             Pages.Name = "Pages";
             Pages.SelectedIndex = 0;
-            Pages.Size = new System.Drawing.Size(732, 145);
+            Pages.Size = new System.Drawing.Size(674, 217);
             Pages.TabIndex = 2;
             Pages.SelectedIndexChanged += Pages_SelectedIndexChanged;
             // 
@@ -483,7 +511,7 @@
             CreaturesPage.Margin = new System.Windows.Forms.Padding(4);
             CreaturesPage.Name = "CreaturesPage";
             CreaturesPage.Padding = new System.Windows.Forms.Padding(4);
-            CreaturesPage.Size = new System.Drawing.Size(724, 117);
+            CreaturesPage.Size = new System.Drawing.Size(666, 189);
             CreaturesPage.TabIndex = 0;
             CreaturesPage.Text = "Creatures";
             CreaturesPage.UseVisualStyleBackColor = true;
@@ -498,7 +526,7 @@
             CreatureList.Location = new System.Drawing.Point(4, 54);
             CreatureList.Margin = new System.Windows.Forms.Padding(4);
             CreatureList.Name = "CreatureList";
-            CreatureList.Size = new System.Drawing.Size(716, 59);
+            CreatureList.Size = new System.Drawing.Size(658, 131);
             CreatureList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             CreatureList.TabIndex = 1;
             CreatureList.UseCompatibleStateImageBehavior = false;
@@ -543,7 +571,7 @@
             CreatureSearchToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { SearchLbl, SearchBox, toolStripSeparator11, CategorisedBtn, UncategorisedBtn });
             CreatureSearchToolbar.Location = new System.Drawing.Point(4, 29);
             CreatureSearchToolbar.Name = "CreatureSearchToolbar";
-            CreatureSearchToolbar.Size = new System.Drawing.Size(716, 25);
+            CreatureSearchToolbar.Size = new System.Drawing.Size(658, 25);
             CreatureSearchToolbar.TabIndex = 2;
             CreatureSearchToolbar.Text = "toolStrip1";
             // 
@@ -591,7 +619,7 @@
             CreatureToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { CreatureAddBtn, OppRemoveBtn, OppEditBtn, toolStripSeparator1, CreatureCutBtn, CreatureCopyBtn, CreaturePasteBtn, toolStripSeparator4, CreatureStatBlockBtn, toolStripSeparator10, CreatureTools, toolStripSeparator37, CreatureUniExportBtn });
             CreatureToolbar.Location = new System.Drawing.Point(4, 4);
             CreatureToolbar.Name = "CreatureToolbar";
-            CreatureToolbar.Size = new System.Drawing.Size(716, 25);
+            CreatureToolbar.Size = new System.Drawing.Size(658, 25);
             CreatureToolbar.TabIndex = 0;
             CreatureToolbar.Text = "toolStrip2";
             // 
@@ -760,7 +788,7 @@
             TemplatesPage.Margin = new System.Windows.Forms.Padding(4);
             TemplatesPage.Name = "TemplatesPage";
             TemplatesPage.Padding = new System.Windows.Forms.Padding(4);
-            TemplatesPage.Size = new System.Drawing.Size(724, 117);
+            TemplatesPage.Size = new System.Drawing.Size(666, 189);
             TemplatesPage.TabIndex = 1;
             TemplatesPage.Text = "Templates";
             TemplatesPage.UseVisualStyleBackColor = true;
@@ -771,18 +799,18 @@
             TemplateList.ContextMenuStrip = TemplateContext;
             TemplateList.Dock = System.Windows.Forms.DockStyle.Fill;
             TemplateList.FullRowSelect = true;
-            listViewGroup1.Header = "Functional Templates";
-            listViewGroup1.Name = "FunctionalGroup";
-            listViewGroup2.Header = "Class Templates";
-            listViewGroup2.Name = "ClassGroup";
-            listViewGroup3.Header = "Themes";
-            listViewGroup3.Name = "ThemeGroup";
-            TemplateList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
+            listViewGroup15.Header = "Functional Templates";
+            listViewGroup15.Name = "FunctionalGroup";
+            listViewGroup16.Header = "Class Templates";
+            listViewGroup16.Name = "ClassGroup";
+            listViewGroup17.Header = "Themes";
+            listViewGroup17.Name = "ThemeGroup";
+            TemplateList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup15, listViewGroup16, listViewGroup17 });
             TemplateList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             TemplateList.Location = new System.Drawing.Point(4, 29);
             TemplateList.Margin = new System.Windows.Forms.Padding(4);
             TemplateList.Name = "TemplateList";
-            TemplateList.Size = new System.Drawing.Size(716, 84);
+            TemplateList.Size = new System.Drawing.Size(658, 156);
             TemplateList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             TemplateList.TabIndex = 2;
             TemplateList.UseCompatibleStateImageBehavior = false;
@@ -841,7 +869,7 @@
             TemplateToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TemplateAddBtn, TemplateRemoveBtn, TemplateEditBtn, toolStripSeparator2, TemplateCutBtn, TemplateCopyBtn, TemplatePasteBtn, toolStripSeparator18, TemplateStatBlock, toolStripSeparator21, TemplateTools, TemplateUniExportBtn });
             TemplateToolbar.Location = new System.Drawing.Point(4, 4);
             TemplateToolbar.Name = "TemplateToolbar";
-            TemplateToolbar.Size = new System.Drawing.Size(716, 25);
+            TemplateToolbar.Size = new System.Drawing.Size(658, 25);
             TemplateToolbar.TabIndex = 1;
             TemplateToolbar.Text = "toolStrip2";
             // 
@@ -991,7 +1019,7 @@
             TrapsPage.Margin = new System.Windows.Forms.Padding(4);
             TrapsPage.Name = "TrapsPage";
             TrapsPage.Padding = new System.Windows.Forms.Padding(4);
-            TrapsPage.Size = new System.Drawing.Size(724, 117);
+            TrapsPage.Size = new System.Drawing.Size(666, 189);
             TrapsPage.TabIndex = 3;
             TrapsPage.Text = "Traps / Hazards";
             TrapsPage.UseVisualStyleBackColor = true;
@@ -1002,16 +1030,16 @@
             TrapList.ContextMenuStrip = TrapContext;
             TrapList.Dock = System.Windows.Forms.DockStyle.Fill;
             TrapList.FullRowSelect = true;
-            listViewGroup4.Header = "Traps";
-            listViewGroup4.Name = "TrapGroup";
-            listViewGroup5.Header = "Hazards";
-            listViewGroup5.Name = "HazardGroup";
-            TrapList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup4, listViewGroup5 });
+            listViewGroup1.Header = "Traps";
+            listViewGroup1.Name = "TrapGroup";
+            listViewGroup2.Header = "Hazards";
+            listViewGroup2.Name = "HazardGroup";
+            TrapList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup1, listViewGroup2 });
             TrapList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             TrapList.Location = new System.Drawing.Point(4, 29);
             TrapList.Margin = new System.Windows.Forms.Padding(4);
             TrapList.Name = "TrapList";
-            TrapList.Size = new System.Drawing.Size(716, 84);
+            TrapList.Size = new System.Drawing.Size(658, 156);
             TrapList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             TrapList.TabIndex = 4;
             TrapList.UseCompatibleStateImageBehavior = false;
@@ -1070,7 +1098,7 @@
             TrapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TrapAdd, TrapRemoveBtn, TrapEditBtn, toolStripSeparator6, TrapCutBtn, TrapCopyBtn, TrapPasteBtn, toolStripSeparator8, TrapStatBlockBtn, toolStripSeparator13, TrapTools, TrapUniExportBtn });
             TrapToolbar.Location = new System.Drawing.Point(4, 4);
             TrapToolbar.Name = "TrapToolbar";
-            TrapToolbar.Size = new System.Drawing.Size(716, 25);
+            TrapToolbar.Size = new System.Drawing.Size(658, 25);
             TrapToolbar.TabIndex = 3;
             TrapToolbar.Text = "toolStrip2";
             // 
@@ -1220,7 +1248,7 @@
             ChallengePage.Margin = new System.Windows.Forms.Padding(4);
             ChallengePage.Name = "ChallengePage";
             ChallengePage.Padding = new System.Windows.Forms.Padding(4);
-            ChallengePage.Size = new System.Drawing.Size(724, 117);
+            ChallengePage.Size = new System.Drawing.Size(666, 189);
             ChallengePage.TabIndex = 4;
             ChallengePage.Text = "Skill Challenges";
             ChallengePage.UseVisualStyleBackColor = true;
@@ -1230,16 +1258,16 @@
             ChallengeList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { ChallengeNameHdr, ChallengeInfoHdr });
             ChallengeList.Dock = System.Windows.Forms.DockStyle.Fill;
             ChallengeList.FullRowSelect = true;
-            listViewGroup6.Header = "Traps";
-            listViewGroup6.Name = "TrapGroup";
-            listViewGroup7.Header = "Hazards";
-            listViewGroup7.Name = "HazardGroup";
-            ChallengeList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup6, listViewGroup7 });
+            listViewGroup3.Header = "Traps";
+            listViewGroup3.Name = "TrapGroup";
+            listViewGroup4.Header = "Hazards";
+            listViewGroup4.Name = "HazardGroup";
+            ChallengeList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup3, listViewGroup4 });
             ChallengeList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             ChallengeList.Location = new System.Drawing.Point(4, 29);
             ChallengeList.Margin = new System.Windows.Forms.Padding(4);
             ChallengeList.Name = "ChallengeList";
-            ChallengeList.Size = new System.Drawing.Size(716, 84);
+            ChallengeList.Size = new System.Drawing.Size(658, 156);
             ChallengeList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             ChallengeList.TabIndex = 6;
             ChallengeList.UseCompatibleStateImageBehavior = false;
@@ -1263,7 +1291,7 @@
             ChallengeToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ChallengeAdd, ChallengeRemoveBtn, ChallengeEditBtn, toolStripSeparator7, ChallengeCutBtn, ChallengeCopyBtn, ChallengePasteBtn, toolStripSeparator9, ChallengeStatBlockBtn, toolStripSeparator22, ChallengeTools, SkillChallengeUniExportBtn });
             ChallengeToolbar.Location = new System.Drawing.Point(4, 4);
             ChallengeToolbar.Name = "ChallengeToolbar";
-            ChallengeToolbar.Size = new System.Drawing.Size(716, 25);
+            ChallengeToolbar.Size = new System.Drawing.Size(658, 25);
             ChallengeToolbar.TabIndex = 5;
             ChallengeToolbar.Text = "toolStrip2";
             // 
@@ -1405,7 +1433,7 @@
             MagicItemsPage.Margin = new System.Windows.Forms.Padding(4);
             MagicItemsPage.Name = "MagicItemsPage";
             MagicItemsPage.Padding = new System.Windows.Forms.Padding(4);
-            MagicItemsPage.Size = new System.Drawing.Size(724, 117);
+            MagicItemsPage.Size = new System.Drawing.Size(666, 189);
             MagicItemsPage.TabIndex = 6;
             MagicItemsPage.Text = "Magic Items";
             MagicItemsPage.UseVisualStyleBackColor = true;
@@ -1426,8 +1454,8 @@
             // 
             splitContainer1.Panel2.Controls.Add(MagicItemVersionList);
             splitContainer1.Panel2.Controls.Add(MagicItemVersionToolbar);
-            splitContainer1.Size = new System.Drawing.Size(716, 109);
-            splitContainer1.SplitterDistance = 360;
+            splitContainer1.Size = new System.Drawing.Size(658, 181);
+            splitContainer1.SplitterDistance = 329;
             splitContainer1.TabIndex = 7;
             // 
             // MagicItemList
@@ -1441,7 +1469,7 @@
             MagicItemList.Margin = new System.Windows.Forms.Padding(4);
             MagicItemList.MultiSelect = false;
             MagicItemList.Name = "MagicItemList";
-            MagicItemList.Size = new System.Drawing.Size(360, 84);
+            MagicItemList.Size = new System.Drawing.Size(329, 156);
             MagicItemList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             MagicItemList.TabIndex = 6;
             MagicItemList.UseCompatibleStateImageBehavior = false;
@@ -1473,7 +1501,7 @@
             MagicItemToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { MagicItemAdd, toolStripSeparator14, MagicItemTools });
             MagicItemToolbar.Location = new System.Drawing.Point(0, 0);
             MagicItemToolbar.Name = "MagicItemToolbar";
-            MagicItemToolbar.Size = new System.Drawing.Size(360, 25);
+            MagicItemToolbar.Size = new System.Drawing.Size(329, 25);
             MagicItemToolbar.TabIndex = 5;
             MagicItemToolbar.Text = "toolStrip2";
             // 
@@ -1540,18 +1568,18 @@
             MagicItemVersionList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { MagicItemInfoHdr });
             MagicItemVersionList.Dock = System.Windows.Forms.DockStyle.Fill;
             MagicItemVersionList.FullRowSelect = true;
-            listViewGroup8.Header = "Heroic Tier";
-            listViewGroup8.Name = "listViewGroup1";
-            listViewGroup9.Header = "Paragon Tier";
-            listViewGroup9.Name = "listViewGroup2";
-            listViewGroup10.Header = "Epic Tier";
-            listViewGroup10.Name = "listViewGroup3";
-            MagicItemVersionList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup8, listViewGroup9, listViewGroup10 });
+            listViewGroup5.Header = "Heroic Tier";
+            listViewGroup5.Name = "listViewGroup1";
+            listViewGroup18.Header = "Paragon Tier";
+            listViewGroup18.Name = "listViewGroup2";
+            listViewGroup19.Header = "Epic Tier";
+            listViewGroup19.Name = "listViewGroup3";
+            MagicItemVersionList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup5, listViewGroup18, listViewGroup19 });
             MagicItemVersionList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            MagicItemVersionList.Location = new System.Drawing.Point(0, 27);
+            MagicItemVersionList.Location = new System.Drawing.Point(0, 25);
             MagicItemVersionList.Margin = new System.Windows.Forms.Padding(4);
             MagicItemVersionList.Name = "MagicItemVersionList";
-            MagicItemVersionList.Size = new System.Drawing.Size(352, 82);
+            MagicItemVersionList.Size = new System.Drawing.Size(325, 156);
             MagicItemVersionList.TabIndex = 1;
             MagicItemVersionList.UseCompatibleStateImageBehavior = false;
             MagicItemVersionList.View = System.Windows.Forms.View.Details;
@@ -1569,7 +1597,7 @@
             MagicItemVersionToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { MagicItemRemoveBtn, toolStripSeparator5, MagicItemEditBtn, MagicItemCutBtn, MagicItemCopyBtn, MagicItemPasteBtn, toolStripSeparator12, MagicItemStatBlockBtn, MagicItemUniExportBtn });
             MagicItemVersionToolbar.Location = new System.Drawing.Point(0, 0);
             MagicItemVersionToolbar.Name = "MagicItemVersionToolbar";
-            MagicItemVersionToolbar.Size = new System.Drawing.Size(352, 27);
+            MagicItemVersionToolbar.Size = new System.Drawing.Size(325, 25);
             MagicItemVersionToolbar.TabIndex = 0;
             MagicItemVersionToolbar.Text = "toolStrip1";
             // 
@@ -1579,14 +1607,14 @@
             MagicItemRemoveBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemRemoveBtn.Image");
             MagicItemRemoveBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemRemoveBtn.Name = "MagicItemRemoveBtn";
-            MagicItemRemoveBtn.Size = new System.Drawing.Size(54, 24);
+            MagicItemRemoveBtn.Size = new System.Drawing.Size(54, 22);
             MagicItemRemoveBtn.Text = "Remove";
             MagicItemRemoveBtn.Click += MagicItemRemoveBtn_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
+            toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
             // MagicItemEditBtn
             // 
@@ -1594,7 +1622,7 @@
             MagicItemEditBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemEditBtn.Image");
             MagicItemEditBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemEditBtn.Name = "MagicItemEditBtn";
-            MagicItemEditBtn.Size = new System.Drawing.Size(31, 24);
+            MagicItemEditBtn.Size = new System.Drawing.Size(31, 22);
             MagicItemEditBtn.Text = "Edit";
             MagicItemEditBtn.Click += MagicItemEditBtn_Click;
             // 
@@ -1604,7 +1632,7 @@
             MagicItemCutBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemCutBtn.Image");
             MagicItemCutBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemCutBtn.Name = "MagicItemCutBtn";
-            MagicItemCutBtn.Size = new System.Drawing.Size(30, 24);
+            MagicItemCutBtn.Size = new System.Drawing.Size(30, 22);
             MagicItemCutBtn.Text = "Cut";
             MagicItemCutBtn.Click += MagicItemCutBtn_Click;
             // 
@@ -1614,7 +1642,7 @@
             MagicItemCopyBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemCopyBtn.Image");
             MagicItemCopyBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemCopyBtn.Name = "MagicItemCopyBtn";
-            MagicItemCopyBtn.Size = new System.Drawing.Size(39, 24);
+            MagicItemCopyBtn.Size = new System.Drawing.Size(39, 22);
             MagicItemCopyBtn.Text = "Copy";
             MagicItemCopyBtn.Click += MagicItemCopyBtn_Click;
             // 
@@ -1624,14 +1652,14 @@
             MagicItemPasteBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemPasteBtn.Image");
             MagicItemPasteBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemPasteBtn.Name = "MagicItemPasteBtn";
-            MagicItemPasteBtn.Size = new System.Drawing.Size(39, 24);
+            MagicItemPasteBtn.Size = new System.Drawing.Size(39, 22);
             MagicItemPasteBtn.Text = "Paste";
             MagicItemPasteBtn.Click += MagicItemPasteBtn_Click;
             // 
             // toolStripSeparator12
             // 
             toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new System.Drawing.Size(6, 27);
+            toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
             // 
             // MagicItemStatBlockBtn
             // 
@@ -1639,9 +1667,19 @@
             MagicItemStatBlockBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemStatBlockBtn.Image");
             MagicItemStatBlockBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             MagicItemStatBlockBtn.Name = "MagicItemStatBlockBtn";
-            MagicItemStatBlockBtn.Size = new System.Drawing.Size(63, 24);
+            MagicItemStatBlockBtn.Size = new System.Drawing.Size(63, 22);
             MagicItemStatBlockBtn.Text = "Stat Block";
             MagicItemStatBlockBtn.Click += MagicItemStatBlockBtn_Click;
+            // 
+            // MagicItemUniExportBtn
+            // 
+            MagicItemUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            MagicItemUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemUniExportBtn.Image");
+            MagicItemUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            MagicItemUniExportBtn.Name = "MagicItemUniExportBtn";
+            MagicItemUniExportBtn.Size = new System.Drawing.Size(44, 22);
+            MagicItemUniExportBtn.Text = "Export";
+            MagicItemUniExportBtn.Click += MagicItemUniExportBtn_Click;
             // 
             // TilesPage
             // 
@@ -1651,7 +1689,7 @@
             TilesPage.Margin = new System.Windows.Forms.Padding(4);
             TilesPage.Name = "TilesPage";
             TilesPage.Padding = new System.Windows.Forms.Padding(4);
-            TilesPage.Size = new System.Drawing.Size(724, 117);
+            TilesPage.Size = new System.Drawing.Size(666, 189);
             TilesPage.TabIndex = 2;
             TilesPage.Text = "Map Tiles";
             TilesPage.UseVisualStyleBackColor = true;
@@ -1666,7 +1704,7 @@
             TileList.Location = new System.Drawing.Point(4, 29);
             TileList.Margin = new System.Windows.Forms.Padding(4);
             TileList.Name = "TileList";
-            TileList.Size = new System.Drawing.Size(716, 84);
+            TileList.Size = new System.Drawing.Size(658, 156);
             TileList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             TileList.TabIndex = 4;
             TileList.UseCompatibleStateImageBehavior = false;
@@ -1764,7 +1802,7 @@
             TileToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TileAddBtn, TileRemoveBtn, TileEditBtn, toolStripSeparator3, TileCutBtn, TileCopyBtn, TilePasteBtn, toolStripSeparator23, TileTools });
             TileToolbar.Location = new System.Drawing.Point(4, 4);
             TileToolbar.Name = "TileToolbar";
-            TileToolbar.Size = new System.Drawing.Size(716, 25);
+            TileToolbar.Size = new System.Drawing.Size(658, 25);
             TileToolbar.TabIndex = 3;
             TileToolbar.Text = "toolStrip2";
             // 
@@ -1889,7 +1927,7 @@
             TerrainPowersPage.Margin = new System.Windows.Forms.Padding(4);
             TerrainPowersPage.Name = "TerrainPowersPage";
             TerrainPowersPage.Padding = new System.Windows.Forms.Padding(4);
-            TerrainPowersPage.Size = new System.Drawing.Size(724, 117);
+            TerrainPowersPage.Size = new System.Drawing.Size(666, 189);
             TerrainPowersPage.TabIndex = 7;
             TerrainPowersPage.Text = "Terrain Powers";
             TerrainPowersPage.UseVisualStyleBackColor = true;
@@ -1900,16 +1938,16 @@
             TerrainPowerList.ContextMenuStrip = TPContext;
             TerrainPowerList.Dock = System.Windows.Forms.DockStyle.Fill;
             TerrainPowerList.FullRowSelect = true;
-            listViewGroup11.Header = "Traps";
-            listViewGroup11.Name = "TrapGroup";
-            listViewGroup12.Header = "Hazards";
-            listViewGroup12.Name = "HazardGroup";
-            TerrainPowerList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup11, listViewGroup12 });
+            listViewGroup20.Header = "Traps";
+            listViewGroup20.Name = "TrapGroup";
+            listViewGroup21.Header = "Hazards";
+            listViewGroup21.Name = "HazardGroup";
+            TerrainPowerList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup20, listViewGroup21 });
             TerrainPowerList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             TerrainPowerList.Location = new System.Drawing.Point(4, 29);
             TerrainPowerList.Margin = new System.Windows.Forms.Padding(4);
             TerrainPowerList.Name = "TerrainPowerList";
-            TerrainPowerList.Size = new System.Drawing.Size(716, 84);
+            TerrainPowerList.Size = new System.Drawing.Size(658, 156);
             TerrainPowerList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             TerrainPowerList.TabIndex = 6;
             TerrainPowerList.UseCompatibleStateImageBehavior = false;
@@ -1947,7 +1985,7 @@
             TerrainPowerToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TPAdd, TPRemoveBtn, TPEditBtn, toolStripSeparator29, TPCutBtn, TPCopyBtn, TPPasteBtn, toolStripSeparator30, TPStatBlockBtn, toolStripSeparator35, TPTools });
             TerrainPowerToolbar.Location = new System.Drawing.Point(4, 4);
             TerrainPowerToolbar.Name = "TerrainPowerToolbar";
-            TerrainPowerToolbar.Size = new System.Drawing.Size(716, 25);
+            TerrainPowerToolbar.Size = new System.Drawing.Size(658, 25);
             TerrainPowerToolbar.TabIndex = 5;
             TerrainPowerToolbar.Text = "toolStrip2";
             // 
@@ -2080,7 +2118,7 @@
             ArtifactPage.Margin = new System.Windows.Forms.Padding(4);
             ArtifactPage.Name = "ArtifactPage";
             ArtifactPage.Padding = new System.Windows.Forms.Padding(4);
-            ArtifactPage.Size = new System.Drawing.Size(724, 117);
+            ArtifactPage.Size = new System.Drawing.Size(666, 189);
             ArtifactPage.TabIndex = 8;
             ArtifactPage.Text = "Artifacts";
             ArtifactPage.UseVisualStyleBackColor = true;
@@ -2091,16 +2129,16 @@
             ArtifactList.ContextMenuStrip = ArtifactContext;
             ArtifactList.Dock = System.Windows.Forms.DockStyle.Fill;
             ArtifactList.FullRowSelect = true;
-            listViewGroup13.Header = "Traps";
-            listViewGroup13.Name = "TrapGroup";
-            listViewGroup14.Header = "Hazards";
-            listViewGroup14.Name = "HazardGroup";
-            ArtifactList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup13, listViewGroup14 });
+            listViewGroup11.Header = "Traps";
+            listViewGroup11.Name = "TrapGroup";
+            listViewGroup12.Header = "Hazards";
+            listViewGroup12.Name = "HazardGroup";
+            ArtifactList.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] { listViewGroup11, listViewGroup12 });
             ArtifactList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             ArtifactList.Location = new System.Drawing.Point(4, 29);
             ArtifactList.Margin = new System.Windows.Forms.Padding(4);
             ArtifactList.Name = "ArtifactList";
-            ArtifactList.Size = new System.Drawing.Size(716, 84);
+            ArtifactList.Size = new System.Drawing.Size(658, 156);
             ArtifactList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             ArtifactList.TabIndex = 6;
             ArtifactList.UseCompatibleStateImageBehavior = false;
@@ -2138,7 +2176,7 @@
             ArtifactToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ArtifactAdd, ArtifactRemove, ArtifactEdit, toolStripSeparator32, ArtifactCut, ArtifactCopy, ArtifactPaste, toolStripSeparator33, ArtifactStatBlockBtn, toolStripSeparator34, ArtifactTools, ArtifactUniExportBtn });
             ArtifactToolbar.Location = new System.Drawing.Point(4, 4);
             ArtifactToolbar.Name = "ArtifactToolbar";
-            ArtifactToolbar.Size = new System.Drawing.Size(716, 25);
+            ArtifactToolbar.Size = new System.Drawing.Size(658, 25);
             ArtifactToolbar.TabIndex = 5;
             ArtifactToolbar.Text = "toolStrip2";
             // 
@@ -2277,10 +2315,10 @@
             // 
             HelpPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             HelpPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            HelpPanel.Location = new System.Drawing.Point(0, 145);
+            HelpPanel.Location = new System.Drawing.Point(0, 217);
             HelpPanel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             HelpPanel.Name = "HelpPanel";
-            HelpPanel.Size = new System.Drawing.Size(732, 184);
+            HelpPanel.Size = new System.Drawing.Size(674, 184);
             HelpPanel.TabIndex = 3;
             HelpPanel.Visible = false;
             // 
@@ -2298,21 +2336,11 @@
             ChallengeContextRemove.Text = "Remove";
             ChallengeContextRemove.Click += ChallengeContextRemove_Click;
             // 
-            // MagicItemUniExportBtn
-            // 
-            MagicItemUniExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            MagicItemUniExportBtn.Image = (System.Drawing.Image)resources.GetObject("MagicItemUniExportBtn.Image");
-            MagicItemUniExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            MagicItemUniExportBtn.Name = "MagicItemUniExportBtn";
-            MagicItemUniExportBtn.Size = new System.Drawing.Size(24, 24);
-            MagicItemUniExportBtn.Text = "Export";
-            MagicItemUniExportBtn.Click += this.MagicItemUniExportBtn_Click;
-            // 
             // LibraryListForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1026, 329);
+            ClientSize = new System.Drawing.Size(984, 401);
             Controls.Add(Splitter);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(4);
@@ -2323,11 +2351,14 @@
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "Libraries";
             FormClosed += LibrariesForm_FormClosed;
+            Load += LibraryListForm_Load;
             Splitter.Panel1.ResumeLayout(false);
             Splitter.Panel1.PerformLayout();
             Splitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Splitter).EndInit();
             Splitter.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             LibraryToolbar.ResumeLayout(false);
             LibraryToolbar.PerformLayout();
             Pages.ResumeLayout(false);
@@ -2615,5 +2646,7 @@
         private System.Windows.Forms.ToolStripButton SkillChallengeUniExportBtn;
         private System.Windows.Forms.ToolStripButton ArtifactUniExportBtn;
         private System.Windows.Forms.ToolStripButton MagicItemUniExportBtn;
+        private System.Windows.Forms.CheckBox chkAutoSave;
+        private System.Windows.Forms.Panel panel1;
     }
 }
