@@ -4876,6 +4876,17 @@ namespace Masterplan.Tools
                 lines.Add("<TR class=shaded>");
                 lines.Add("<TD colspan=3>");
                 lines.Add("<B>" + name + "</B>");
+                if (builder)
+                {
+                    lines.Add("<BR>");
+                    lines.Add("<A href=concordanceedit:" + ac_index + ">edit level</A>");
+                    lines.Add("|");
+                    lines.Add("<A href=concordanceremove:" + ac_index + ">remove level</A>");
+                    lines.Add("|");
+                    lines.Add("<A href=concordancemoveup:" + ac_index + ">move up</A>");
+                    lines.Add("|");
+                    lines.Add("<A href=concordancemovedown:" + ac_index + ">move down</A>");
+                }
                 lines.Add("</TD>");
                 lines.Add("</TR>");
 

@@ -97,10 +97,13 @@ namespace Masterplan.UI
                     e.Cancel = true;
 
                     MagicItemSection mis = new MagicItemSection();
-                    MagicItemSectionForm dlg = new MagicItemSectionForm(mis);
+                    SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        fArtifact.Sections.Add(dlg.Section);
+                        mis.Header = dlg.Header;
+                        mis.Details = dlg.Details;
+
+                        fArtifact.Sections.Add(mis);
                         update_statblock();
                     }
                 }
@@ -116,10 +119,13 @@ namespace Masterplan.UI
                         ArtifactConcordance ac = fArtifact.ConcordanceLevels[n];
 
                         MagicItemSection mis = new MagicItemSection();
-                        MagicItemSectionForm dlg = new MagicItemSectionForm(mis);
+                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
-                            ac.Sections.Add(dlg.Section);
+                            mis.Header = dlg.Header;
+                            mis.Details = dlg.Details;
+
+                            ac.Sections.Add(mis);
                             update_statblock();
                         }
                     }
@@ -138,7 +144,7 @@ namespace Masterplan.UI
 
                     int comma = e.Url.LocalPath.IndexOf(",");
                     string pre = e.Url.LocalPath.Substring(0, comma);
-                    string post = e.Url.LocalPath.Substring(comma);
+                    string post = e.Url.LocalPath.Substring(comma + 1);
 
                     try
                     {
@@ -147,10 +153,12 @@ namespace Masterplan.UI
 
                         ArtifactConcordance ac = fArtifact.ConcordanceLevels[ac_index];
                         MagicItemSection mis = ac.Sections[section_index];
-                        MagicItemSectionForm dlg = new MagicItemSectionForm(mis);
+                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
-                            ac.Sections[section_index] = dlg.Section;
+                            mis.Header = dlg.Header;
+                            mis.Details = dlg.Details;
+
                             update_statblock();
                         }
                     }
@@ -168,10 +176,12 @@ namespace Masterplan.UI
                         int n = int.Parse(e.Url.LocalPath);
                         MagicItemSection mis = fArtifact.Sections[n];
 
-                        MagicItemSectionForm dlg = new MagicItemSectionForm(mis);
+                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
-                            fArtifact.Sections[n] = dlg.Section;
+                            mis.Header = dlg.Header;
+                            mis.Details = dlg.Details;
+
                             update_statblock();
                         }
                     }
@@ -221,6 +231,78 @@ namespace Masterplan.UI
                     {
                         // Not a number
                     }
+                }
+            }
+
+            if (e.Url.Scheme == "concordancenew")
+            {
+                e.Cancel = true;
+
+                ArtifactConcordance ac = new ArtifactConcordance("New Level", "0");
+                ConcordanceLevelForm dlg = new ConcordanceLevelForm(ac);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    fArtifact.ConcordanceLevels.Add(ac);
+                    update_statblock();
+                }
+            }
+
+            if (e.Url.Scheme == "concordanceedit")
+            {
+                e.Cancel = true;
+
+                int n = int.Parse(e.Url.LocalPath);
+                ArtifactConcordance ac = fArtifact.ConcordanceLevels[n];
+
+                ConcordanceLevelForm dlg = new ConcordanceLevelForm(ac);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    update_statblock();
+                }
+            }
+
+            if (e.Url.Scheme == "concordanceremove")
+            {
+                e.Cancel = true;
+
+                int n = int.Parse(e.Url.LocalPath);
+                ArtifactConcordance ac = fArtifact.ConcordanceLevels[n];
+
+                string msg = "Are you sure you want to remove this concordance level?";
+                if (MessageBox.Show(msg, "Masterplan", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    fArtifact.ConcordanceLevels.Remove(ac);
+                    update_statblock();
+                }
+            }
+
+            if (e.Url.Scheme == "concordancemoveup")
+            {
+                e.Cancel = true;
+
+                int n = int.Parse(e.Url.LocalPath);
+                if (n > 0)
+                {
+                    ArtifactConcordance ac = fArtifact.ConcordanceLevels[n];
+                    fArtifact.ConcordanceLevels.RemoveAt(n);
+                    fArtifact.ConcordanceLevels.Insert(n - 1, ac);
+
+                    update_statblock();
+                }
+            }
+
+            if (e.Url.Scheme == "concordancemovedown")
+            {
+                e.Cancel = true;
+
+                int n = int.Parse(e.Url.LocalPath);
+                if (n < fArtifact.ConcordanceLevels.Count - 1)
+                {
+                    ArtifactConcordance ac = fArtifact.ConcordanceLevels[n];
+                    fArtifact.ConcordanceLevels.RemoveAt(n);
+                    fArtifact.ConcordanceLevels.Insert(n + 1, ac);
+
+                    update_statblock();
                 }
             }
 

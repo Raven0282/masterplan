@@ -28,6 +28,8 @@ namespace Masterplan.UI
             TargetBox.Items.Add("(creatures in burst)");
             TargetBox.Items.Add("(enemies in blast)");
             TargetBox.Items.Add("(enemies in burst)");
+            TargetBox.Items.Add("(the triggering enemy)");
+            TargetBox.Items.Add("(the triggering creature)");
 
             if (power.Range != "" || power.Range is null) { CurrentRangeLbl.Text = power.Range; }
             else { CurrentRangeLbl.Text = "<Current range is not set>"; }

@@ -90,7 +90,7 @@ namespace Masterplan.Data
         /// <summary>
         /// GW Extradimensional origin.
         /// </summary>
-        Extradimensional      
+        Extradimensional
 
     }
 

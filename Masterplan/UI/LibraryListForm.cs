@@ -14,7 +14,7 @@ namespace Masterplan.UI
     partial class LibraryListForm : Form
     {
         private Timer timerAutoSave;
-                
+
         public LibraryListForm()
         {
             InitializeComponent();
@@ -41,12 +41,12 @@ namespace Masterplan.UI
         }
         private void ChkAutoSave_CheckedChanged(object sender, EventArgs e)
         {
-            
+
 
             if (chkAutoSave.Checked)
             {
                 // Start the timer when checked
-                timerAutoSave.Start();      
+                timerAutoSave.Start();
             }
             else
             {
@@ -69,7 +69,7 @@ namespace Masterplan.UI
                     PerformSave(lib);
                 }
 
-                
+
             }
             catch (Exception ex)
             {

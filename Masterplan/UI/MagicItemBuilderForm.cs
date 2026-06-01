@@ -66,10 +66,13 @@ namespace Masterplan.UI
                     MagicItemSection section = new MagicItemSection();
                     section.Header = "New Section";
 
-                    MagicItemSectionForm dlg = new MagicItemSectionForm(section);
+                    SectionForm dlg = new SectionForm(section.Header, section.Details, "Magic Item Section", new string[] { "Price", "Enhancement", "Property", "Power", "Critical" });
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        fMagicItem.Sections.Add(dlg.Section);
+                        section.Header = dlg.Header;
+                        section.Details = dlg.Details;
+
+                        fMagicItem.Sections.Add(section);
                         update_statblock();
                     }
                 }
@@ -80,11 +83,14 @@ namespace Masterplan.UI
                 e.Cancel = true;
 
                 int index = int.Parse(e.Url.LocalPath);
+                MagicItemSection section = fMagicItem.Sections[index];
 
-                MagicItemSectionForm dlg = new MagicItemSectionForm(fMagicItem.Sections[index]);
+                SectionForm dlg = new SectionForm(section.Header, section.Details, "Magic Item Section", new string[] { "Price", "Enhancement", "Property", "Power", "Critical" });
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    fMagicItem.Sections[index] = dlg.Section;
+                    section.Header = dlg.Header;
+                    section.Details = dlg.Details;
+
                     update_statblock();
                 }
             }

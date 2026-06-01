@@ -11,12 +11,12 @@
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
 	<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
     <NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
-    <AssemblyVersion>13.0.2.5</AssemblyVersion>
+    <AssemblyVersion>13.0.2.7</AssemblyVersion>
     <Copyright>Copyright © 2021 - 2026 - Habitual Indolence / Gamers' Syndicate - All rights reserved. This product is protected by copyright and distributed under licences restricting copying, distribution and decompilation.</Copyright>
-    <FileVersion>13.0.2.5</FileVersion>
+    <FileVersion>13.0.2.7</FileVersion>
     <Title>Masterplan</Title>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>13.0.2.5</Version>
+    <Version>13.0.2.7</Version>
     <Product>Masterplan Adventure Design Studio</Product>
     <Description>A Dungeons &amp; Dragons 4e Adventure Design Tool</Description>
   </PropertyGroup>
@@ -303,6 +303,6 @@
     </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="REM 1. Copy Manual.pdf only if it exists&#xA;if exist &quot;$(ProjectDir)..\Manual.pdf&quot; xcopy /y &quot;$(ProjectDir)..\Manual.pdf&quot; &quot;$(TargetDir)&quot;&#xA;&#xA;REM 2. Create Libraries folder if it does NOT exist (using &quot;if not exist&quot;)&#xA;if not exist &quot;$(TargetDir)Libraries&quot; md &quot;$(TargetDir)Libraries&quot;&#xA;&#xA;REM 3. Copy .library files only if the source directory exists&#xA;if exist &quot;$(ProjectDir)..\Libraries\&quot; xcopy /y &quot;$(ProjectDir)..\Libraries\*.library&quot; &quot;$(TargetDir)Libraries\&quot;" />
+    <Exec Command="REM 1. Copy Manual.pdf only if it exists&#xD;&#xA;if exist &quot;$(ProjectDir)..\Manual.pdf&quot; xcopy /y &quot;$(ProjectDir)..\Manual.pdf&quot; &quot;$(TargetDir)&quot;&#xD;&#xA;&#xD;&#xA;REM 2. Create Libraries folder if it does NOT exist (using &quot;if not exist&quot;)&#xD;&#xA;if not exist &quot;$(TargetDir)Libraries&quot; md &quot;$(TargetDir)Libraries&quot;&#xD;&#xA;&#xD;&#xA;REM 3. Copy .library files only if the source directory exists&#xD;&#xA;if exist &quot;$(ProjectDir)..\Libraries\&quot; xcopy /y &quot;$(ProjectDir)..\Libraries\*.library&quot; &quot;$(TargetDir)Libraries\&quot;&#xD;&#xA;&#xD;&#xA;REM 4. Copy README.MD file only if it exists&#xD;&#xA;if exist &quot;$(ProjectDir)..\Libraries\README.md.txt&quot; xcopy /y &quot;$(ProjectDir)..\Libraries\README.md.txt&quot; &quot;$(TargetDir)Libraries\&quot;&#xD;&#xA;&#xD;&#xA;REM 5. Create Converted folder if it does NOT exist (using &quot;if not exist&quot;)&#xD;&#xA;if not exist &quot;$(TargetDir)Libraries\Converted&quot; md &quot;$(TargetDir)Libraries\Converted&quot;&#xD;&#xA;&#xD;&#xA;REM 6. Copy README.MD file only if it exists&#xD;&#xA;if exist &quot;$(ProjectDir)..\Libraries\Converted\README.md.txt&quot; xcopy /y &quot;$(ProjectDir)..\Libraries\Converted\README.md.txt&quot; &quot;$(TargetDir)\Libraries\Converted\&quot; &#xD;&#xA;&#xD;&#xA;REM 7. Create LibraryArchive folder if it does NOT exist (using &quot;if not exist&quot;)&#xD;&#xA;if not exist &quot;$(TargetDir)Libraries\LibraryArchive&quot; md &quot;$(TargetDir)Libraries\LibraryArchive&quot;&#xD;&#xA;&#xD;&#xA;REM 8. Copy README.MD file only if it exists&#xD;&#xA;if exist &quot;$(ProjectDir)..\Libraries\LibraryArchive\README.md.txt&quot; xcopy /y &quot;$(ProjectDir)..\Libraries\LibraryArchive\README.md.txt&quot; &quot;$(TargetDir)Libraries\LibraryArchive\&quot; &#xD;&#xA;&#xD;&#xA;REM 9. Create Projects folder if it does NOT exist (using &quot;if not exist&quot;) &#xD;&#xA;if not exist &quot;$(TargetDir)Projects&quot; md &quot;$(TargetDir)Projects&quot;&#xD;&#xA;&#xD;&#xA;REM 10. Copy .masterplan files only if the source directory exists&#xD;&#xA;if exist &quot;$(ProjectDir)..\Projects\&quot; xcopy /y &quot;$(ProjectDir)..\Projects\*.masterplan&quot; &quot;$(TargetDir)Projects\&quot;&#xD;&#xA;&#xD;&#xA;REM 11. Create BETAInstructions folder if it does NOT exist (using &quot;if not exist&quot;) &#xD;&#xA;if not exist &quot;$(TargetDir)BETAInstructions&quot; md &quot;$(TargetDir)BETAInstructions&quot;&#xD;&#xA;&#xD;&#xA;REM 12. Copy Instructions_Masterplan13_0_2.pdf only if it exists&#xD;&#xA;if exist &quot;$(ProjectDir)..\Instructions_Masterplan13_0_2.pdf&quot; xcopy /y &quot;$(ProjectDir)..\Instructions_Masterplan13_0_2.pdf&quot; &quot;$(TargetDir)BETAInstructions\&quot;" />
   </Target>
 </Project>
