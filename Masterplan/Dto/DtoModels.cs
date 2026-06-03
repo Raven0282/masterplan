@@ -239,12 +239,6 @@ namespace Masterplan.Dto
         [Key(36)] public byte[] ImageData { get; set; }
         [Key(37)] public string Info { get; set; }
         [Key(38)] public string Phenotype { get; set; }
-        [Key(39)] public int InitiativeModifier { get; set; }
-        [Key(40)] public int HPModifier { get; set; }
-        [Key(41)] public int ACModifier { get; set; }
-        [Key(42)] public int FortitudeModifier { get; set; }
-        [Key(43)] public int ReflexModifier { get; set; }
-        [Key(44)] public int WillModifier { get; set; }
     }
 
     [MessagePackObject]
@@ -335,10 +329,11 @@ namespace Masterplan.Dto
         [Key(8)] public List<TrapSkillDto> Skills { get; set; } = new();
         [Key(9)] public int Initiative { get; set; }
         [Key(10)] public string Trigger { get; set; }
-        [Key(11)] public List<TrapAttackDto> Attacks { get; set; } = new();
-        [Key(12)] public string Countermeasures { get; set; }
-        [Key(13)] public int XP { get; set; }
-        [Key(14)] public string Info { get; set; }
+        [Key(11)] public TrapAttackDto Attack { get; set; }
+        [Key(12)] public List<TrapAttackDto> Attacks { get; set; } = new();
+        [Key(13)] public List<string> Countermeasures { get; set; } = new();
+        [Key(14)] public int XP { get; set; }
+        [Key(15)] public string Info { get; set; }
     }
 
     [MessagePackObject]
@@ -424,6 +419,7 @@ namespace Masterplan.Dto
         [Key(1)] public EncounterCardDto Card { get; set; }
         [Key(2)] public string Type { get; set; }
         [Key(3)] public List<CombatDataDto> CombatData { get; set; } = new();
+        [Key(4)] public int XP { get; set; }
     }
 
     [MessagePackObject]
@@ -724,6 +720,8 @@ namespace Masterplan.Dto
     public partial class EncyclopediaDto
     {
         [Key(0)] public List<EncyclopediaEntryDto> Entries { get; set; } = new();
+        [Key(1)] public List<EncyclopediaLinkDto> Links { get; set; } = new();
+        [Key(2)] public List<EncyclopediaGroupDto> Groups { get; set; } = new();
     }
 
     [MessagePackObject]
@@ -735,6 +733,21 @@ namespace Masterplan.Dto
         [Key(3)] public string Details { get; set; }
         [Key(4)] public string DMInfo { get; set; }
         [Key(5)] public List<EncyclopediaImageDto> Images { get; set; } = new();
+        [Key(6)] public Guid AttachmentID { get; set; }
+    }
+
+    [MessagePackObject]
+    public partial class EncyclopediaLinkDto
+    {
+        [Key(0)] public List<Guid> EntryIDs { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class EncyclopediaGroupDto
+    {
+        [Key(0)] public Guid ID { get; set; }
+        [Key(1)] public string Name { get; set; }
+        [Key(2)] public List<Guid> EntryIDs { get; set; } = new();
     }
 
     [MessagePackObject]
@@ -823,12 +836,36 @@ namespace Masterplan.Dto
         [Key(12)] public int Reflex { get; set; }
         [Key(13)] public int Will { get; set; }
         [Key(14)] public int Initiative { get; set; }
+        [Key(15)] public string Info { get; set; }
+        [Key(16)] public int Level { get; set; }
+        [Key(17)] public List<string> Roles { get; set; } = new();
+        [Key(18)] public string Flag { get; set; }
+        [Key(19)] public bool Leader { get; set; }
+        [Key(20)] public RegenerationDto Regeneration { get; set; }
+        [Key(21)] public List<AuraDto> Auras { get; set; } = new();
+        [Key(22)] public string Senses { get; set; }
+        [Key(23)] public string Movement { get; set; }
+        [Key(24)] public string Equipment { get; set; }
+        [Key(25)] public string Category { get; set; }
+        [Key(26)] public List<CreaturePowerDto> CreaturePowers { get; set; } = new();
+        [Key(27)] public List<DamageModifierDto> DamageModifiers { get; set; } = new();
+        [Key(28)] public string Resist { get; set; }
+        [Key(29)] public string Vulnerable { get; set; }
+        [Key(30)] public string Immune { get; set; }
+        [Key(31)] public string Tactics { get; set; }
+        [Key(32)] public string Skills { get; set; }
     }
 
     [MessagePackObject]
     public partial class NPCDto : CreatureDto
     {
         [Key(45)] public Guid TemplateID { get; set; }
+        [Key(46)] public int InitiativeModifier { get; set; }
+        [Key(47)] public int HPModifier { get; set; }
+        [Key(48)] public int ACModifier { get; set; }
+        [Key(49)] public int FortitudeModifier { get; set; }
+        [Key(50)] public int ReflexModifier { get; set; }
+        [Key(51)] public int WillModifier { get; set; }
     }
 
     [MessagePackObject]

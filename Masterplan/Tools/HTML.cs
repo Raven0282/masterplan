@@ -2739,6 +2739,9 @@ namespace Masterplan.Tools
 
         public static string Process(string raw_text, bool strip_html)
         {
+            if (raw_text == null)
+                return "";
+
             List<Pair<string, string>> pairs = new List<Pair<string, string>>();
 
             pairs.Add(new Pair<string, string>("&", "&amp;"));

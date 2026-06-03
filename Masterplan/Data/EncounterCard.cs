@@ -5,6 +5,7 @@ using Masterplan.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 namespace Masterplan.Data
 {
@@ -459,7 +460,13 @@ namespace Masterplan.Data
                 List<string> senses = new List<string>();
 
                 ICreature creature = (fCreature != null) ? fCreature : Session.FindCreature(fCreatureID, SearchType.Global);
-                if (creature.Senses != "")
+                if (creature == null)
+                {
+                    if (fCreatureID != Guid.Empty)
+                        Debug.WriteLine("EncounterCard.Senses: creature not found for ID " + fCreatureID + "; Templates=" + fTemplateIDs.Count + "; LevelAdjustment=" + fLevelAdjustment + "; Title=\"" + Title + "\"; Stack: " + Environment.StackTrace);
+                }
+
+                if ((creature != null) && (!string.IsNullOrEmpty(creature.Senses)))
                     senses.Add(creature.Senses);
 
                 foreach (Guid template_id in fTemplateIDs)
@@ -492,8 +499,26 @@ namespace Masterplan.Data
         {
             get
             {
-                ICreature creature = (fCreature != null) ? fCreature : Session.FindCreature(fCreatureID, SearchType.Global);
-                string speed = creature.Movement;
+                    ICreature creature;
+
+                    if (fCreature != null)
+                    {
+                        creature = fCreature;
+                    }
+                    else
+                    {
+                        // Session is a static type in this codebase; it cannot be null.
+                        // Call FindCreature directly and handle a null result.
+                        creature = Session.FindCreature(fCreatureID, SearchType.Global);
+                    }
+
+                    if (creature == null)
+                    {
+                        System.Diagnostics.Trace.TraceWarning($"EncounterCard.Movement: Creature not found for ID {fCreatureID}");
+                        return string.Empty;
+                    }
+
+                    string speed = creature.Movement;
 
                 foreach (Guid template_id in fTemplateIDs)
                 {
@@ -519,7 +544,7 @@ namespace Masterplan.Data
             get
             {
                 ICreature creature = (fCreature != null) ? fCreature : Session.FindCreature(fCreatureID, SearchType.Global);
-                return (creature.Equipment != null) ? creature.Equipment : "";
+                return (creature != null && creature.Equipment != null) ? creature.Equipment : "";
             }
         }
 
@@ -531,6 +556,9 @@ namespace Masterplan.Data
             get
             {
                 ICreature creature = (fCreature != null) ? fCreature : Session.FindCreature(fCreatureID, SearchType.Global);
+
+                if (creature == null)
+                    return CardCategory.SoldierBrute; // default when creature data missing
 
                 if (creature.Role is Minion)
                     return CardCategory.Minion;
@@ -579,7 +607,8 @@ namespace Masterplan.Data
                             max_hp_bonus = template.HP;
                     }
                     hp += (max_hp_bonus * Level);
-                    hp += creature.Constitution.Score;
+                    if (creature != null && creature.Constitution != null)
+                        hp += creature.Constitution.Score;
 
                     // If we're using templates to create a solo, multiply HP by 2
                     if (Flag == RoleFlag.Solo)
@@ -965,11 +994,12 @@ namespace Masterplan.Data
                         }
                         else
                         {
-                            int value = dmt.HeroicValue;
-                            if (creature.Level >= 10)
-                                value = dmt.ParagonValue;
-                            if (creature.Level >= 20)
-                                value = dmt.EpicValue;
+                        int creatureLevel = (creature != null) ? creature.Level : 0;
+                        int value = dmt.HeroicValue;
+                        if (creatureLevel >= 10)
+                            value = dmt.ParagonValue;
+                        if (creatureLevel >= 20)
+                            value = dmt.EpicValue;
 
                             current.Value += value;
 
@@ -1087,7 +1117,7 @@ namespace Masterplan.Data
                 foreach (Guid template_id in fTemplateIDs)
                 {
                     CreatureTemplate template = Session.FindTemplate(template_id, SearchType.Global);
-                    if ((template == null) && (template.Tactics == ""))
+                    if ((template == null) || (template.Tactics == ""))
                         continue;
 
                     if (str != "")
