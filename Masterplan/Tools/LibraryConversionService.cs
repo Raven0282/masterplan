@@ -51,7 +51,7 @@ namespace Masterplan.Tools
             {
                 byte[] data = File.ReadAllBytes(filePath);
                 var dto = MessagePackSerializer.Deserialize<LibraryDto>(data);
-                DumpDtoAsJson(dto, "LibraryDto_in");
+                //DumpDtoAsJson(dto, "LibraryDto_in");
                 return MapToLibrary(dto);
             }
             catch (Exception ex)
@@ -68,14 +68,14 @@ namespace Masterplan.Tools
             {
                 byte[] data = File.ReadAllBytes(filePath);
                 var dto = MessagePackSerializer.Deserialize<ProjectDto>(data);
-                DumpDtoAsJson(dto, "ProjectDto_in");
+                //DumpDtoAsJson(dto, "ProjectDto_in");
 
                 var project = MapToProject(dto);
 
                 try
                 {
                     var rt = MapToProjectDto(project);
-                    DumpDtoAsJson(rt, "ProjectDto_roundtrip");
+                    //DumpDtoAsJson(rt, "ProjectDto_roundtrip");
                 }
                 catch { }
 
@@ -193,30 +193,57 @@ namespace Masterplan.Tools
         private IPlayerOption MapToPlayerOption(PlayerOptionDto dto)
         {
             if (dto == null) return null;
-            var c = new Class
+            switch (dto.Type)
             {
-                ID = dto.ID,
-                Name = dto.Name,
-                Quote = dto.Quote,
-                Role = dto.Role,
-                PowerSource = dto.PowerSource,
-                KeyAbilities = dto.KeyAbilities,
-                ArmourProficiencies = dto.ArmourProficiencies,
-                WeaponProficiencies = dto.WeaponProficiencies,
-                Implements = dto.Implements,
-                DefenceBonuses = dto.DefenceBonuses,
-                HPFirst = dto.HPFirst,
-                HPSubsequent = dto.HPSubsequent,
-                HealingSurges = dto.HealingSurges,
-                TrainedSkills = dto.TrainedSkills,
-                Description = dto.Description,
-                OverviewCharacteristics = dto.OverviewCharacteristics,
-                OverviewReligion = dto.OverviewReligion,
-                OverviewRaces = dto.OverviewRaces,
-                FeatureData = MapToLevelData(dto.FeatureData)
-            };
-            if (dto.Levels != null) foreach (var l in dto.Levels) c.Levels.Add(MapToLevelData(l));
-            return c;
+                case "Class":
+                    var c = new Class { ID = dto.ID, Name = dto.Name ?? "", Quote = dto.Quote ?? "", Role = dto.Role ?? "", PowerSource = dto.PowerSource ?? "", KeyAbilities = dto.KeyAbilities ?? "", ArmourProficiencies = dto.ArmourProficiencies ?? "", WeaponProficiencies = dto.WeaponProficiencies ?? "", Implements = dto.Implements ?? "", DefenceBonuses = dto.DefenceBonuses ?? "", HPFirst = dto.HPFirst, HPSubsequent = dto.HPSubsequent, HealingSurges = dto.HealingSurges, TrainedSkills = dto.TrainedSkills ?? "", Description = dto.Description ?? "", OverviewCharacteristics = dto.OverviewCharacteristics ?? "", OverviewReligion = dto.OverviewReligion ?? "", OverviewRaces = dto.OverviewRaces ?? "", FeatureData = MapToLevelData(dto.FeatureData) };
+                    if (dto.Levels != null) foreach (var l in dto.Levels) c.Levels.Add(MapToLevelData(l));
+                    return c;
+                case "Race":
+                    var r = new Race { ID = dto.ID, Name = dto.Name ?? "", Quote = dto.Quote ?? "", HeightRange = dto.HeightRange ?? "", WeightRange = dto.WeightRange ?? "", AbilityScores = dto.AbilityScores ?? "", Size = SafeParseEnum<CreatureSize>(dto.Size, CreatureSize.Medium, "Race Size"), Speed = dto.Speed ?? "", Vision = dto.Vision ?? "", Languages = dto.Languages ?? "", SkillBonuses = dto.SkillBonuses ?? "", Details = dto.Details ?? "" };
+                    if (dto.Features != null) foreach (var f in dto.Features) r.Features.Add(new Feature { ID = f.ID, Name = f.Name ?? "", Details = f.Details ?? "" });
+                    if (dto.Powers != null) foreach (var p in dto.Powers) r.Powers.Add(MapToPlayerPower(p));
+                    return r;
+                case "Feat":
+                    return new Feat { ID = dto.ID, Name = dto.Name ?? "", Tier = SafeParseEnum<Tier>(dto.Tier, Tier.Heroic, "Feat Tier"), Prerequisites = dto.Prerequisites ?? "", Benefits = dto.Benefits ?? "" };
+                case "Background":
+                    return new PlayerBackground { ID = dto.ID, Name = dto.Name ?? "", Details = dto.Details ?? "", AssociatedSkills = dto.AssociatedSkills ?? "", RecommendedFeats = dto.RecommendedFeats ?? "" };
+                case "Theme":
+                    var th = new Theme { ID = dto.ID, Name = dto.Name ?? "", Quote = dto.Quote ?? "", Prerequisites = dto.Prerequisites ?? "", SecondaryRole = dto.SecondaryRole ?? "", PowerSource = dto.PowerSource ?? "", GrantedPower = MapToPlayerPower(dto.GrantedPower) ?? new PlayerPower(), Details = dto.Details ?? "" };
+                    if (dto.Levels != null) foreach (var l in dto.Levels) th.Levels.Add(MapToLevelData(l));
+                    return th;
+                case "ParagonPath":
+                    var pp = new ParagonPath { ID = dto.ID, Name = dto.Name ?? "", Quote = dto.Quote ?? "", Prerequisites = dto.Prerequisites ?? "", Details = dto.Details ?? "" };
+                    if (dto.Levels != null) foreach (var l in dto.Levels) pp.Levels.Add(MapToLevelData(l));
+                    return pp;
+                case "EpicDestiny":
+                    var ed = new EpicDestiny { ID = dto.ID, Name = dto.Name ?? "", Quote = dto.Quote ?? "", Prerequisites = dto.Prerequisites ?? "", Details = dto.Details ?? "", Immortality = dto.Immortality ?? "" };
+                    if (dto.Levels != null) foreach (var l in dto.Levels) ed.Levels.Add(MapToLevelData(l));
+                    return ed;
+                case "Weapon":
+                    return new Weapon { ID = dto.ID, Name = dto.Name ?? "", Category = SafeParseEnum<WeaponCategory>(dto.WeaponCategory, WeaponCategory.Simple, "Weapon Category"), Type = SafeParseEnum<WeaponType>(dto.WeaponType, WeaponType.Melee, "Weapon Type"), TwoHanded = dto.TwoHanded.GetValueOrDefault(), Proficiency = dto.Proficiency.GetValueOrDefault(), Damage = dto.Damage ?? "", Range = dto.Range ?? "", Price = dto.Price ?? "", Weight = dto.Weight ?? "", Group = dto.Group ?? "", Properties = dto.Properties ?? "", Description = dto.Description ?? "" };
+                case "Ritual":
+                    return new Ritual { ID = dto.ID, Name = dto.Name ?? "", ReadAloud = dto.ReadAloud ?? "", Level = dto.Level.GetValueOrDefault(1), Category = SafeParseEnum<RitualCategory>(dto.RitualCategory, RitualCategory.Binding, "Ritual Category"), Time = dto.Time ?? "", Duration = dto.Duration ?? "", ComponentCost = dto.ComponentCost ?? "", MarketPrice = dto.MarketPrice ?? "", KeySkill = dto.KeySkill ?? "", Details = dto.Details ?? "" };
+                case "CreatureLore":
+                    var cl = new CreatureLore { ID = dto.ID, Name = dto.Name ?? "", SkillName = dto.SkillName ?? "" };
+                    if (dto.Information != null) foreach (var info in dto.Information) cl.Information.Add(new Pair<int, string>(info.First, info.Second ?? ""));
+                    return cl;
+                case "Disease":
+                    var d = new Disease { ID = dto.ID, Name = dto.Name ?? "", Level = dto.DiseaseLevel ?? "", Details = dto.Details ?? "", Attack = dto.Attack ?? "", ImproveDC = dto.ImproveDC ?? "", MaintainDC = dto.MaintainDC ?? "" };
+                    if (dto.DiseaseLevels != null) d.Levels.AddRange(dto.DiseaseLevels);
+                    return d;
+                case "Poison":
+                    var poi = new Poison { ID = dto.ID, Name = dto.Name ?? "", Level = dto.Level.GetValueOrDefault(1), Details = dto.Details ?? "" };
+                    if (dto.Sections != null) foreach (var s in dto.Sections) poi.Sections.Add(new PlayerPowerSection { ID = s.ID, Header = s.Header ?? "", Details = s.Details ?? "", Indent = s.Indent });
+                    return poi;
+                case "PlayerPower":
+                    return MapToPlayerPower(new PlayerPowerDto { ID = dto.ID, Name = dto.Name, Type = dto.UsageType, ReadAloud = dto.ReadAloud, Keywords = dto.Keywords, Action = dto.Action, Range = dto.Range, Sections = dto.Sections });
+                default:
+                    // Fallback to Class as it was the previous default behavior
+                    var def = new Class { ID = dto.ID, Name = dto.Name ?? "", Quote = dto.Quote ?? "", Role = dto.Role ?? "", PowerSource = dto.PowerSource ?? "", KeyAbilities = dto.KeyAbilities ?? "", ArmourProficiencies = dto.ArmourProficiencies ?? "", WeaponProficiencies = dto.WeaponProficiencies ?? "", Implements = dto.Implements ?? "", DefenceBonuses = dto.DefenceBonuses ?? "", HPFirst = dto.HPFirst, HPSubsequent = dto.HPSubsequent, HealingSurges = dto.HealingSurges, TrainedSkills = dto.TrainedSkills ?? "", Description = dto.Description ?? "", OverviewCharacteristics = dto.OverviewCharacteristics ?? "", OverviewReligion = dto.OverviewReligion ?? "", OverviewRaces = dto.OverviewRaces ?? "", FeatureData = MapToLevelData(dto.FeatureData) };
+                    if (dto.Levels != null) foreach (var l in dto.Levels) def.Levels.Add(MapToLevelData(l));
+                    return def;
+            }
         }
 
         private PlayerOptionDto MapToPlayerOptionDto(IPlayerOption option)
@@ -225,6 +252,7 @@ namespace Masterplan.Tools
             var dto = new PlayerOptionDto { ID = option.ID, Name = option.Name };
             if (option is Class c)
             {
+                dto.Type = "Class";
                 dto.Quote = c.Quote;
                 dto.Role = c.Role;
                 dto.PowerSource = c.PowerSource;
@@ -244,6 +272,124 @@ namespace Masterplan.Tools
                 dto.FeatureData = MapToLevelDataDto(c.FeatureData);
                 foreach (var l in c.Levels) dto.Levels.Add(MapToLevelDataDto(l));
             }
+            else if (option is Race r)
+            {
+                dto.Type = "Race";
+                dto.Quote = r.Quote;
+                dto.HeightRange = r.HeightRange;
+                dto.WeightRange = r.WeightRange;
+                dto.AbilityScores = r.AbilityScores;
+                dto.Size = r.Size.ToString();
+                dto.Speed = r.Speed;
+                dto.Vision = r.Vision;
+                dto.Languages = r.Languages;
+                dto.SkillBonuses = r.SkillBonuses;
+                dto.Details = r.Details;
+                foreach (var f in r.Features) dto.Features.Add(new FeatureDto { ID = f.ID, Name = f.Name, Details = f.Details });
+                foreach (var p in r.Powers) dto.Powers.Add(MapToPlayerPowerDto(p));
+            }
+            else if (option is Feat ft)
+            {
+                dto.Type = "Feat";
+                dto.Tier = ft.Tier.ToString();
+                dto.Prerequisites = ft.Prerequisites;
+                dto.Benefits = ft.Benefits;
+            }
+            else if (option is PlayerBackground bg)
+            {
+                dto.Type = "Background";
+                dto.Details = bg.Details;
+                dto.AssociatedSkills = bg.AssociatedSkills;
+                dto.RecommendedFeats = bg.RecommendedFeats;
+            }
+            else if (option is Theme th)
+            {
+                dto.Type = "Theme";
+                dto.Quote = th.Quote;
+                dto.Prerequisites = th.Prerequisites;
+                dto.SecondaryRole = th.SecondaryRole;
+                dto.PowerSource = th.PowerSource;
+                dto.GrantedPower = MapToPlayerPowerDto(th.GrantedPower);
+                dto.Details = th.Details;
+                foreach (var l in th.Levels) dto.Levels.Add(MapToLevelDataDto(l));
+            }
+            else if (option is ParagonPath pp)
+            {
+                dto.Type = "ParagonPath";
+                dto.Quote = pp.Quote;
+                dto.Prerequisites = pp.Prerequisites;
+                dto.Details = pp.Details;
+                foreach (var l in pp.Levels) dto.Levels.Add(MapToLevelDataDto(l));
+            }
+            else if (option is EpicDestiny ed)
+            {
+                dto.Type = "EpicDestiny";
+                dto.Quote = ed.Quote;
+                dto.Prerequisites = ed.Prerequisites;
+                dto.Details = ed.Details;
+                dto.Immortality = ed.Immortality;
+                foreach (var l in ed.Levels) dto.Levels.Add(MapToLevelDataDto(l));
+            }
+            else if (option is Weapon w)
+            {
+                dto.Type = "Weapon";
+                dto.WeaponCategory = w.Category.ToString();
+                dto.WeaponType = w.Type.ToString();
+                dto.TwoHanded = w.TwoHanded;
+                dto.Proficiency = w.Proficiency;
+                dto.Damage = w.Damage;
+                dto.Range = w.Range;
+                dto.Price = w.Price;
+                dto.Weight = w.Weight;
+                dto.Group = w.Group;
+                dto.Properties = w.Properties;
+                dto.Description = w.Description;
+            }
+            else if (option is Ritual rit)
+            {
+                dto.Type = "Ritual";
+                dto.ReadAloud = rit.ReadAloud;
+                dto.Level = rit.Level;
+                dto.RitualCategory = rit.Category.ToString();
+                dto.Time = rit.Time;
+                dto.Duration = rit.Duration;
+                dto.ComponentCost = rit.ComponentCost;
+                dto.MarketPrice = rit.MarketPrice;
+                dto.KeySkill = rit.KeySkill;
+                dto.Details = rit.Details;
+            }
+            else if (option is CreatureLore cl)
+            {
+                dto.Type = "CreatureLore";
+                dto.SkillName = cl.SkillName;
+                foreach (var info in cl.Information) dto.Information.Add(new PairDto<int, string> { First = info.First, Second = info.Second });
+            }
+            else if (option is Disease dis)
+            {
+                dto.Type = "Disease";
+                dto.DiseaseLevel = dis.Level;
+                dto.Details = dis.Details;
+                dto.Attack = dis.Attack;
+                dto.ImproveDC = dis.ImproveDC;
+                dto.MaintainDC = dis.MaintainDC;
+                dto.DiseaseLevels = dis.Levels.ToList();
+            }
+            else if (option is Poison poi)
+            {
+                dto.Type = "Poison";
+                dto.Level = poi.Level;
+                dto.Details = poi.Details;
+                foreach (var s in poi.Sections) dto.Sections.Add(new PlayerPowerSectionDto { ID = s.ID, Header = s.Header, Details = s.Details, Indent = s.Indent });
+            }
+            else if (option is PlayerPower pow)
+            {
+                dto.Type = "PlayerPower";
+                dto.ReadAloud = pow.ReadAloud;
+                dto.Keywords = pow.Keywords;
+                dto.Action = pow.Action.ToString();
+                dto.Range = pow.Range;
+                foreach (var s in pow.Sections) dto.Sections.Add(new PlayerPowerSectionDto { ID = s.ID, Header = s.Header, Details = s.Details, Indent = s.Indent });
+            }
             return dto;
         }
 
@@ -251,7 +397,7 @@ namespace Masterplan.Tools
         {
             if (dto == null) return new LevelData();
             var ld = new LevelData { Level = dto.Level };
-            if (dto.Features != null) foreach (var f in dto.Features) ld.Features.Add(new Feature { ID = f.ID, Name = f.Name, Details = f.Details });
+            if (dto.Features != null) foreach (var f in dto.Features) ld.Features.Add(new Feature { ID = f.ID, Name = f.Name ?? "", Details = f.Details ?? "" });
             if (dto.Powers != null) foreach (var p in dto.Powers) ld.Powers.Add(MapToPlayerPower(p));
             return ld;
         }
@@ -271,14 +417,14 @@ namespace Masterplan.Tools
             var p = new PlayerPower
             {
                 ID = dto.ID,
-                Name = dto.Name,
+                Name = dto.Name ?? "",
                 Type = SafeParseEnum<PlayerPowerType>(dto.Type, PlayerPowerType.AtWill, "PlayerPower Type"),
                 Action = SafeParseEnum<ActionType>(dto.Action, ActionType.Standard, "PlayerPower Action"),
-                Range = dto.Range,
-                ReadAloud = dto.ReadAloud,
-                Keywords = dto.Keywords
+                Range = dto.Range ?? "",
+                ReadAloud = dto.ReadAloud ?? "",
+                Keywords = dto.Keywords ?? ""
             };
-            if (dto.Sections != null) foreach (var s in dto.Sections) p.Sections.Add(new PlayerPowerSection { ID = s.ID, Header = s.Header, Details = s.Details, Indent = s.Indent });
+            if (dto.Sections != null) foreach (var s in dto.Sections) p.Sections.Add(new PlayerPowerSection { ID = s.ID, Header = s.Header ?? "", Details = s.Details ?? "", Indent = s.Indent });
             return p;
         }
 

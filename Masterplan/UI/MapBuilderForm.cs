@@ -501,7 +501,7 @@ namespace Masterplan.UI
                     size = 32;
                     break;
                 case TileSize.Large:
-                    size = 64;
+                    size = 128;
                     break;
             }
 
