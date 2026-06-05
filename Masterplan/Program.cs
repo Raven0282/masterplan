@@ -172,7 +172,7 @@ namespace Masterplan
         {
             try
             {
-                SplashScreen.CurrentAction = "Loading libraries...";
+                SplashScreen.CurrentAction = "Working on libraries...";
 
                 Assembly ass = Assembly.GetEntryAssembly();
                 string root_dir = FileName.Directory(ass.Location);

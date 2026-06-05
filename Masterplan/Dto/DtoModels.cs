@@ -570,13 +570,6 @@ namespace Masterplan.Dto
     }
 
     [MessagePackObject]
-    public partial class PairDto<T1, T2>
-    {
-        [Key(0)] public T1? First { get; set; }
-        [Key(1)] public T2? Second { get; set; }
-    }
-
-    [MessagePackObject]
     public partial class ArtifactConcordanceDto
     {
         [Key(0)] public string? Name { get; set; }
@@ -584,6 +577,13 @@ namespace Masterplan.Dto
         [Key(2)] public string? Quote { get; set; }
         [Key(3)] public string? Description { get; set; }
         [Key(4)] public List<SectionDto> Sections { get; set; } = new();
+    }
+
+    [MessagePackObject]
+    public partial class PairDto<T1, T2>
+    {
+        [Key(0)] public T1? First { get; set; }
+        [Key(1)] public T2? Second { get; set; }
     }
 
     [MessagePackObject]
@@ -960,7 +960,6 @@ namespace Masterplan.Dto
         [Key(0)] public Guid ID { get; set; }
         [Key(1)] public string? Name { get; set; }
         [Key(2)] public string? Type { get; set; } // "Class", "Race", "Feat", etc.
-        [Key(66)] public string? UsageType { get; set; } // For PlayerPower (At-will, etc.)
 
         // Shared or common
         [Key(3)] public string? Quote { get; set; }
@@ -1050,6 +1049,7 @@ namespace Masterplan.Dto
         [Key(65)] public List<PlayerPowerSectionDto> Sections { get; set; } = new();
 
         // Standalone PlayerPower
+        [Key(66)] public string? UsageType { get; set; } // For PlayerPower (At-will, etc.)
         [Key(67)] public string? Keywords { get; set; }
         [Key(68)] public string? Action { get; set; }
     }

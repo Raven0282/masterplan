@@ -52,6 +52,7 @@ namespace Masterplan.Tools
                 byte[] data = File.ReadAllBytes(filePath);
                 var dto = MessagePackSerializer.Deserialize<LibraryDto>(data);
                 //DumpDtoAsJson(dto, "LibraryDto_in");
+                Program.SplashScreen.CurrentSubAction = "Loading MPX: " + Tools.FileName.Name(filePath);
                 return MapToLibrary(dto);
             }
             catch (Exception ex)

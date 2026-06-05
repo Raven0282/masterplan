@@ -97,7 +97,7 @@ namespace Masterplan.UI
                     e.Cancel = true;
 
                     MagicItemSection mis = new MagicItemSection();
-                    SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
+                    SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", new string[] { "Body Slot", "Enhancement", "Critical", "Property", "Power (At-Will)", "Power (Encounter)", "Power (Daily)" });
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
                         mis.Header = dlg.Header;
@@ -119,7 +119,7 @@ namespace Masterplan.UI
                         ArtifactConcordance ac = fArtifact.ConcordanceLevels[n];
 
                         MagicItemSection mis = new MagicItemSection();
-                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
+                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", new string[] { "Body Slot", "Enhancement", "Critical", "Property", "Power (At-Will)", "Power (Encounter)", "Power (Daily)" });
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
                             mis.Header = dlg.Header;
@@ -153,7 +153,7 @@ namespace Masterplan.UI
 
                         ArtifactConcordance ac = fArtifact.ConcordanceLevels[ac_index];
                         MagicItemSection mis = ac.Sections[section_index];
-                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
+                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", new string[] { "Body Slot", "Enhancement", "Critical", "Property", "Power (At-Will)", "Power (Encounter)", "Power (Daily)" });
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
                             mis.Header = dlg.Header;
@@ -176,7 +176,7 @@ namespace Masterplan.UI
                         int n = int.Parse(e.Url.LocalPath);
                         MagicItemSection mis = fArtifact.Sections[n];
 
-                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", null);
+                        SectionForm dlg = new SectionForm(mis.Header, mis.Details, "Artifact Section", new string[] { "Body Slot", "Enhancement", "Critical", "Property", "Power (At-Will)", "Power (Encounter)", "Power (Daily)" });
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
                             mis.Header = dlg.Header;

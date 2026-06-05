@@ -40,122 +40,126 @@ namespace Masterplan.UI
 
         private void InitializeComponent()
         {
-            this.HeaderLbl = new System.Windows.Forms.Label();
-            this.Pages = new System.Windows.Forms.TabControl();
-            this.DetailsPage = new System.Windows.Forms.TabPage();
-            this.DetailsBox = new System.Windows.Forms.TextBox();
-            this.OKBtn = new System.Windows.Forms.Button();
-            this.CancelBtn = new System.Windows.Forms.Button();
-            this.HeaderBox = new System.Windows.Forms.ComboBox();
-            this.Pages.SuspendLayout();
-            this.DetailsPage.SuspendLayout();
-            this.SuspendLayout();
+            HeaderLbl = new Label();
+            Pages = new TabControl();
+            DetailsPage = new TabPage();
+            DetailsBox = new TextBox();
+            OKBtn = new Button();
+            CancelBtn = new Button();
+            HeaderBox = new ComboBox();
+            Pages.SuspendLayout();
+            DetailsPage.SuspendLayout();
+            SuspendLayout();
             // 
             // HeaderLbl
             // 
-            this.HeaderLbl.AutoSize = true;
-            this.HeaderLbl.Location = new System.Drawing.Point(12, 15);
-            this.HeaderLbl.Name = "HeaderLbl";
-            this.HeaderLbl.Size = new System.Drawing.Size(45, 13);
-            this.HeaderLbl.TabIndex = 0;
-            this.HeaderLbl.Text = "Header:";
+            HeaderLbl.AutoSize = true;
+            HeaderLbl.Location = new System.Drawing.Point(14, 17);
+            HeaderLbl.Margin = new Padding(4, 0, 4, 0);
+            HeaderLbl.Name = "HeaderLbl";
+            HeaderLbl.Size = new System.Drawing.Size(48, 15);
+            HeaderLbl.TabIndex = 0;
+            HeaderLbl.Text = "Header:";
             // 
             // Pages
             // 
-            this.Pages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Pages.Controls.Add(this.DetailsPage);
-            this.Pages.Location = new System.Drawing.Point(12, 39);
-            this.Pages.Name = "Pages";
-            this.Pages.SelectedIndex = 0;
-            this.Pages.Size = new System.Drawing.Size(307, 146);
-            this.Pages.TabIndex = 2;
+            Pages.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            Pages.Controls.Add(DetailsPage);
+            Pages.Location = new System.Drawing.Point(14, 45);
+            Pages.Margin = new Padding(4, 3, 4, 3);
+            Pages.Name = "Pages";
+            Pages.SelectedIndex = 0;
+            Pages.Size = new System.Drawing.Size(358, 168);
+            Pages.TabIndex = 2;
             // 
             // DetailsPage
             // 
-            this.DetailsPage.Controls.Add(this.DetailsBox);
-            this.DetailsPage.Location = new System.Drawing.Point(4, 22);
-            this.DetailsPage.Name = "DetailsPage";
-            this.DetailsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DetailsPage.Size = new System.Drawing.Size(299, 120);
-            this.DetailsPage.TabIndex = 0;
-            this.DetailsPage.Text = "Details";
-            this.DetailsPage.UseVisualStyleBackColor = true;
+            DetailsPage.Controls.Add(DetailsBox);
+            DetailsPage.Location = new System.Drawing.Point(4, 24);
+            DetailsPage.Margin = new Padding(4, 3, 4, 3);
+            DetailsPage.Name = "DetailsPage";
+            DetailsPage.Padding = new Padding(4, 3, 4, 3);
+            DetailsPage.Size = new System.Drawing.Size(350, 140);
+            DetailsPage.TabIndex = 0;
+            DetailsPage.Text = "Details";
+            DetailsPage.UseVisualStyleBackColor = true;
             // 
             // DetailsBox
             // 
-            this.DetailsBox.AcceptsReturn = true;
-            this.DetailsBox.AcceptsTab = true;
-            this.DetailsBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DetailsBox.Location = new System.Drawing.Point(3, 3);
-            this.DetailsBox.Multiline = true;
-            this.DetailsBox.Name = "DetailsBox";
-            this.DetailsBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DetailsBox.Size = new System.Drawing.Size(293, 114);
-            this.DetailsBox.TabIndex = 0;
+            DetailsBox.AcceptsReturn = true;
+            DetailsBox.AcceptsTab = true;
+            DetailsBox.Dock = DockStyle.Fill;
+            DetailsBox.Location = new System.Drawing.Point(4, 3);
+            DetailsBox.Margin = new Padding(4, 3, 4, 3);
+            DetailsBox.Multiline = true;
+            DetailsBox.Name = "DetailsBox";
+            DetailsBox.ScrollBars = ScrollBars.Vertical;
+            DetailsBox.Size = new System.Drawing.Size(342, 134);
+            DetailsBox.TabIndex = 0;
             // 
             // OKBtn
             // 
-            this.OKBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.OKBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OKBtn.Location = new System.Drawing.Point(163, 191);
-            this.OKBtn.Name = "OKBtn";
-            this.OKBtn.Size = new System.Drawing.Size(75, 23);
-            this.OKBtn.TabIndex = 3;
-            this.OKBtn.Text = "OK";
-            this.OKBtn.UseVisualStyleBackColor = true;
-            this.OKBtn.Click += new System.EventHandler(this.OKBtn_Click);
+            OKBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            OKBtn.DialogResult = DialogResult.OK;
+            OKBtn.Location = new System.Drawing.Point(190, 220);
+            OKBtn.Margin = new Padding(4, 3, 4, 3);
+            OKBtn.Name = "OKBtn";
+            OKBtn.Size = new System.Drawing.Size(88, 27);
+            OKBtn.TabIndex = 3;
+            OKBtn.Text = "OK";
+            OKBtn.UseVisualStyleBackColor = true;
+            OKBtn.Click += OKBtn_Click;
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelBtn.Location = new System.Drawing.Point(244, 191);
-            this.CancelBtn.Name = "CancelBtn";
-            this.CancelBtn.Size = new System.Drawing.Size(75, 23);
-            this.CancelBtn.TabIndex = 4;
-            this.CancelBtn.Text = "Cancel";
-            this.CancelBtn.UseVisualStyleBackColor = true;
+            CancelBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            CancelBtn.DialogResult = DialogResult.Cancel;
+            CancelBtn.Location = new System.Drawing.Point(285, 220);
+            CancelBtn.Margin = new Padding(4, 3, 4, 3);
+            CancelBtn.Name = "CancelBtn";
+            CancelBtn.Size = new System.Drawing.Size(88, 27);
+            CancelBtn.TabIndex = 4;
+            CancelBtn.Text = "Cancel";
+            CancelBtn.UseVisualStyleBackColor = true;
             // 
             // HeaderBox
             // 
-            this.HeaderBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.HeaderBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
-            this.HeaderBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.HeaderBox.FormattingEnabled = true;
-            this.HeaderBox.Location = new System.Drawing.Point(63, 12);
-            this.HeaderBox.Name = "HeaderBox";
-            this.HeaderBox.Size = new System.Drawing.Size(256, 21);
-            this.HeaderBox.Sorted = true;
-            this.HeaderBox.TabIndex = 1;
+            HeaderBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            HeaderBox.AutoCompleteMode = AutoCompleteMode.Append;
+            HeaderBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            HeaderBox.FormattingEnabled = true;
+            HeaderBox.Location = new System.Drawing.Point(74, 14);
+            HeaderBox.Margin = new Padding(4, 3, 4, 3);
+            HeaderBox.Name = "HeaderBox";
+            HeaderBox.Size = new System.Drawing.Size(298, 23);
+            HeaderBox.Sorted = true;
+            HeaderBox.TabIndex = 1;
             // 
             // SectionForm
             // 
-            this.AcceptButton = this.OKBtn;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.CancelBtn;
-            this.ClientSize = new System.Drawing.Size(331, 226);
-            this.Controls.Add(this.HeaderBox);
-            this.Controls.Add(this.CancelBtn);
-            this.Controls.Add(this.OKBtn);
-            this.Controls.Add(this.Pages);
-            this.Controls.Add(this.HeaderLbl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "SectionForm";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Section";
-            this.Pages.ResumeLayout(false);
-            this.DetailsPage.ResumeLayout(false);
-            this.DetailsPage.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AcceptButton = OKBtn;
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = CancelBtn;
+            ClientSize = new System.Drawing.Size(386, 261);
+            Controls.Add(HeaderBox);
+            Controls.Add(CancelBtn);
+            Controls.Add(OKBtn);
+            Controls.Add(Pages);
+            Controls.Add(HeaderLbl);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4, 3, 4, 3);
+            MinimizeBox = false;
+            Name = "SectionForm";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Section";
+            Pages.ResumeLayout(false);
+            DetailsPage.ResumeLayout(false);
+            DetailsPage.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

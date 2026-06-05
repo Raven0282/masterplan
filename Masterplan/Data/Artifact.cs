@@ -8,7 +8,7 @@ namespace Masterplan.Data
 {
     /*
      * JUNIOR DEVELOPER GUIDE:
-     * This class represents a Magical Artifact in D&D 4th Edition.
+     * This class represents an Artifact in D&D 4th Edition.
      * Unlike standard Magic Items, Artifacts are often sentient or semi-sentient and possess 
      * a "Concordance" score that measures the wielder's relationship with the item.
      * 

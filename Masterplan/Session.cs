@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Masterplan
@@ -117,7 +118,7 @@ namespace Masterplan
             {
                 if (Program.SplashScreen != null)
                 {
-                    Program.SplashScreen.CurrentSubAction = Tools.FileName.Name(filename);
+                    Program.SplashScreen.CurrentSubAction = "Loading: " + Tools.FileName.Name(filename);
                     Program.SplashScreen.Progress += 1;
                 }
 
@@ -145,6 +146,13 @@ namespace Masterplan
 
                         string targetPath = Path.Combine(convertedDir, Path.GetFileName(mpxFilename));
                         LibraryConversionService.Instance.SaveXLibrary(lib, targetPath);
+                        
+                        if (Program.SplashScreen != null)
+                        {
+                            Program.SplashScreen.CurrentSubAction = "Converting: " + Tools.FileName.Name(filename);
+                            Thread.Sleep(100);
+                        }
+
                     }
                 }
 
@@ -192,6 +200,13 @@ namespace Masterplan
                     {
                         string targetPath = Path.ChangeExtension(filename, ".mpxplan");
                         LibraryConversionService.Instance.SaveXProject(p, targetPath);
+                        
+                        if (Program.SplashScreen != null)
+                        {
+                            Program.SplashScreen.CurrentSubAction = "Converting:" + filename;
+                            
+                        }
+                      
                     }
                 }
 

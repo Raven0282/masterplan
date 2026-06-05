@@ -11,12 +11,12 @@
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
 	<GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
     <NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
-    <AssemblyVersion>13.0.2.8</AssemblyVersion>
+    <AssemblyVersion>13.0.2.9</AssemblyVersion>
     <Copyright>Copyright © 2021 - 2026 - Habitual Indolence / Gamers' Syndicate - All rights reserved. This product is protected by copyright and distributed under licences restricting copying, distribution and decompilation.</Copyright>
-    <FileVersion>13.0.2.8</FileVersion>
+    <FileVersion>13.0.2.9</FileVersion>
     <Title>Masterplan</Title>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>13.0.2.8</Version>
+    <Version>13.0.2.9</Version>
     <Product>Masterplan Adventure Design Studio</Product>
     <Description>A Dungeons &amp; Dragons 4e Adventure Design Tool</Description>
   </PropertyGroup>
@@ -279,6 +279,8 @@
 
   <ItemGroup>
     <Folder Include="gemini\" />
+    <Folder Include="NewData\" />
+    <Folder Include="NewLogic\" />
     <Folder Include="ScratchFiles\" />
     <Folder Include="Tools\MessagePack\" />
   </ItemGroup>
