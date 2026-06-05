@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <ApplicationIcon>MasterplanScroll.ico</ApplicationIcon>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -24,6 +24,17 @@
     <Optimize>false</Optimize>
     <DocumentationFile>bin\Release\Masterplan.XML</DocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="NewData\**" />
+    <Compile Remove="NewDTO\**" />
+    <Compile Remove="NewLogic\**" />
+    <EmbeddedResource Remove="NewData\**" />
+    <EmbeddedResource Remove="NewDTO\**" />
+    <EmbeddedResource Remove="NewLogic\**" />
+    <None Remove="NewData\**" />
+    <None Remove="NewDTO\**" />
+    <None Remove="NewLogic\**" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Remove="Tools\DiscoveryService - Copy.cs" />
     <Compile Remove="Tools\HtmlCore.cs" />
@@ -279,8 +290,6 @@
 
   <ItemGroup>
     <Folder Include="gemini\" />
-    <Folder Include="NewData\" />
-    <Folder Include="NewLogic\" />
     <Folder Include="ScratchFiles\" />
     <Folder Include="Tools\MessagePack\" />
   </ItemGroup>
